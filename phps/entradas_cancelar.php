@@ -33,7 +33,7 @@ $linhas = mysql_num_rows($query);
 if (!$query)
     die("Erro SQL1: " . mysql_error());
 
-//Se não há nenhum produto na entrada então excluir direto
+//Se nï¿½o hï¿½ nenhum produto na entrada entï¿½o excluir direto
 if ($linhas == 0) {
     $sql = "DELETE FROM entradas WHERE ent_codigo=$entrada";
     $query = mysql_query($sql);
@@ -44,10 +44,10 @@ if ($linhas == 0) {
     $tpl->LINK="entradas.php";    
     $tpl->block("BLOCK_APAGADO");    
     $tpl->block("BLOCK_BOTAO");      
-} else { //Se há produto pedir confirmação
+} else { //Se hï¿½ produto pedir confirmaï¿½ï¿½o
     $tpl->block("BLOCK_ATENCAO");
     $tpl->LINK="entradas_cancelar2.php?codigo=$entrada";    
-    $tpl->MOTIVO="Se vocÃª cancelar esta entrada todos os produtos adicionados nela serão removidos também!";
+    $tpl->MOTIVO="Se vocÃª cancelar esta entrada todos os produtos adicionados nela serÃ£o removidos tambÃ©m!";
     $tpl->block("BLOCK_MOTIVO");    
     $tpl->PERGUNTA="Tem certeza que deseja cancelar esta entrada?";
     $tpl->block("BLOCK_PERGUNTA");

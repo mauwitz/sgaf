@@ -1,6 +1,6 @@
 <?php
 
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 if ($permissao_entradas_cadastrar <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -9,7 +9,7 @@ if ($permissao_entradas_cadastrar <> 1) {
 
 include "includes.php";
 
-//Verifica se há fornecedores na cooperativa
+//Verifica se hï¿½ fornecedores na cooperativa
 $sql = "
     SELECT pes_nome,pes_codigo
 FROM 
@@ -21,13 +21,13 @@ WHERE
 ";
 $query = mysql_query($sql);
 if (!$query)
-    die("Erro SQL (Não Tem Fornecedor):" . mysql_error());
+    die("Erro SQL (Nï¿½o Tem Fornecedor):" . mysql_error());
 $linhas = mysql_num_rows($query);
 if ($linhas == 0) {
     $tpl11 = new Template("templates/notificacao.html");
     $tpl11->ICONES = $icones;            
     $tpl11->block("BLOCK_ATENCAO");
-    $tpl11->MOTIVO = "Não há fornecedores cadastrados! Portanto não é possÃ­vel realizar entradas!";
+    $tpl11->MOTIVO = "Nï¿½o hï¿½ fornecedores cadastrados! Portanto nï¿½o ï¿½ possÃ­vel realizar entradas!";
     $tpl11->block("BLOCK_MOTIVO");
     $tpl11->block("BLOCK_BOTAO_VOLTAR");                
     $tpl11->show();
@@ -36,7 +36,7 @@ if ($linhas == 0) {
 
 $tpl = new Template("entradas_cadastrar.html");
 $tpl->ICONES_CAMINHO = "$icones";
-$operacao = $_GET["operacao"]; //Operação 1=Cadastras 2=Editar 3=Ver
+$operacao = $_GET["operacao"]; //Operaï¿½ï¿½o 1=Cadastras 2=Editar 3=Ver
 //Cadastro de uma nova entrada
 $passo = $_POST['passo'];
 $entrada = $_POST['entrada'];
@@ -54,7 +54,7 @@ $qtd = str_replace(',', '.', $qtd);
 $valuni = $_POST['valuni'];
 $valuni2 = $_POST['valuni2'];
 
-//Se o valor unitário estiver desabilitado então devemos pegar o valuni2 que veio por hidden e alimentado via javascript
+//Se o valor unitï¿½rio estiver desabilitado entï¿½o devemos pegar o valuni2 que veio por hidden e alimentado via javascript
 if (($valuni2 != "") && ($valuni == "")) {
     $valuni = $valuni2;
 } else {
@@ -81,7 +81,7 @@ if (($validade2 != "") && ($validade == "")) {
 $local = strtoupper($_POST['local']);
 
 
-//Caso seja precionado o botão cancelar a entrada deve ser pego por GET
+//Caso seja precionado o botï¿½o cancelar a entrada deve ser pego por GET
 $cancelar = $_GET["cancelar"];
 if ($cancelar == 1) {
     $entrada = $_GET['entrada'];
@@ -91,7 +91,7 @@ if ($cancelar == 1) {
     $passo = $_GET["passo"];
 }
 
-//Caso seja uma operação seja ver ou editar
+//Caso seja uma operaï¿½ï¿½o seja ver ou editar
 if (($operacao == 3) || ($operacao == 2)) {
     $entrada = $_GET['codigo'];
     $sql = "SELECT * FROM entradas join pessoas on (ent_fornecedor=pes_codigo)WHERE ent_codigo=$entrada";
@@ -103,7 +103,7 @@ if (($operacao == 3) || ($operacao == 2)) {
 }
 $tpl->FORNECEDOR = $fornecedor;
 
-//Caso seja uma operação de Editar então ir para o passo2
+//Caso seja uma operaï¿½ï¿½o de Editar entï¿½o ir para o passo2
 if ($operacao == 2) {
     $tpl->SUBTITULO = "EDITAR";
     $passo = 3;
@@ -144,7 +144,7 @@ if ($query) {
     } else {
         $tpl->SELECT_DESABILITADO = " disabled ";
     }
-    //Caso a operação seja VER então desabilitar o select e trocar a classe
+    //Caso a operaï¿½ï¿½o seja VER entï¿½o desabilitar o select e trocar a classe
     if ($operacao == 3) {
         $tpl->SELECT_DESABILITADO = " disabled ";
     }
@@ -211,7 +211,7 @@ if ($passo != "") {
     $tpl->block("BLOCK_BOTAO_PASSO2");
 
 
-    //PASSO 3 - Mostra os produtos já inseridos na entrada e/ou faz a insersão!
+    //PASSO 3 - Mostra os produtos jï¿½ inseridos na entrada e/ou faz a insersï¿½o!
     $sql5 = "
 	SELECT
 		pro_nome, protip_nome, entpro_quantidade,pro_codigo,entpro_valorunitario,entpro_validade,entpro_local,entpro_numero,protip_sigla
@@ -227,7 +227,7 @@ if ($passo != "") {
 	";
     if ($passo == "3") {
 
-        //Verifica se será feita um exclusão da lista ou inclusão
+        //Verifica se serï¿½ feita um exclusï¿½o da lista ou inclusï¿½o
         if ($cancelar == 1) {
 
             //Devolver para o estoque
@@ -268,7 +268,7 @@ if ($passo != "") {
             $dados3 = mysql_fetch_array($query3);
             $qtd_noestoque = $dados3[0];
             if ($qtd_noestoque == 0) {
-                //Como a quantidade do produto é zero então eliminar o produto do estoque
+                //Como a quantidade do produto ï¿½ zero entï¿½o eliminar o produto do estoque
                 $sql4 = "
                 DELETE FROM 
                     estoque
@@ -296,7 +296,7 @@ if ($passo != "") {
                 die("Erro de SQL 8:" . mysql_error());
 
             //Troca o status da entrada para Incompleto.
-            //OBS: Quando é realizado alguma alteração é necessário que seja clicado no salvar para atualizar o estoque
+            //OBS: Quando ï¿½ realizado alguma alteraï¿½ï¿½o ï¿½ necessï¿½rio que seja clicado no salvar para atualizar o estoque
             $sql_status = "UPDATE entradas SET ent_status=2 WHERE ent_codigo=$entrada";
             $query_status = mysql_query($sql_status);
             if (!$query_status)
@@ -305,9 +305,10 @@ if ($passo != "") {
 
             if ($operacao != 2) {
 
-                //Faz a inserção do produto na entrada (inserir item de entrada)
+                //Faz a inserï¿½ï¿½o do produto na entrada (inserir item de entrada)
                 $validade = desconverte_data($validade);
-                $total = number_format($valuni * $qtd, 2);
+                echo "total = number_format($valuni * $qtd, 2);";
+                echo $total = number_format($valuni * $qtd, 2,'.','');
                 $sql = "
                 INSERT INTO
                     entradas_produtos (
@@ -333,7 +334,7 @@ if ($passo != "") {
                     die("Erro de SQL 3: " . mysql_error());
 
                 //Troca o status da entrada para Incompleto.
-                //OBS: Quando é realizado alguma alteração é necessário que seja clicado no salvar para atualizar o estoque
+                //OBS: Quando ï¿½ realizado alguma alteraï¿½ï¿½o ï¿½ necessï¿½rio que seja clicado no salvar para atualizar o estoque
                 $sql_status = "UPDATE entradas SET ent_status=2 WHERE ent_codigo=$entrada";
                 $query_status = mysql_query($sql_status);
                 if (!$query_status)

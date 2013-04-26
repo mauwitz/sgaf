@@ -1,5 +1,5 @@
 <?php
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 if ($permissao_categorias_cadastrar <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -22,7 +22,7 @@ $hora=date ("h:i:s");
 	<td width="35px"><img width="50px" src="<?php echo $icones;?>produtos.png" alt="" ></td>
 	<td valign="bottom">
 		<label class="titulo" > CATEGORIAS </label><br />
-		<label class="subtitulo"> CADASTRO/EDIÇÃO </label>
+		<label class="subtitulo"> CADASTRO/EDIÃ‡Ãƒ>
 	</td>
 </tr>
 </table>
@@ -41,7 +41,7 @@ if($codigo=="") //caso seja um cadastro novo fazer isso
 		$sqlerro=mysql_error();
 	}
 }
-else //Caso seja uma alteração de um registro fazer isso
+else //Caso seja uma alteraï¿½ï¿½o de um registro fazer isso
 {
 	$sql = "UPDATE produtos_categorias SET 
 	cat_nome='$nome',
@@ -64,7 +64,7 @@ $paginadestino="categorias.php";
 	<?php
 
 		if($erro=='0') { echo "<b>Os dados foram salvos com sucesso!<b>"; }
-		else { echo "<b>Não foi possivel salvar os dados!</b> <br>"; echo "$sqlerro "; }
+		else { echo "<b>NÃ£o foi possivel salvar os dados!</b> <br>"; echo "$sqlerro "; }
 	?>
 	</td>
 <tr>

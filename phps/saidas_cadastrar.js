@@ -1,5 +1,5 @@
-$(document).ready(function() {    
-    
+
+$(window).load(function() {       
     
     
     //Popular Produto    
@@ -60,7 +60,7 @@ $(document).ready(function() {
 });
 
 function produto_selecionado() {
-    //Popula valor unitário
+    //Popula valor unitÃ¡rio
     $.post("saidas_valorunitario.php",{
         lote:$("select[name=lote]").val(),
         produto:$("select[name=produto]").val()
@@ -149,13 +149,13 @@ function pesoqtd() {
 }
 
 function saidas_qtd () {
-    //Verifica se há no estoque        
+    //Verifica se hÃ¡ no estoque        
     $.post("saidas_verifica_estoque2.php",{
         lote:$("select[name=lote]").val(),
         produto:$("select[name=produto]").val()        
     }, function(valor) {  
         //alert(valor);
-        //Verifica se a quantidade digitada é maior que a do estoque
+        //Verifica se a quantidade digitada Ã© maior que a do estoque
         var qtddigitada=$("input[name=qtd]").val();
         //alert("fff"+qtddigitada+"fff");
         if (valor != "") {            
@@ -173,7 +173,7 @@ function saidas_qtd () {
             //alert(parseFloat(qtddigitada)+">"+parseFloat(qtdestoque));
             if (qtddigitada > qtdestoque) {
                 document.forms["form1"].botao_incluir.disabled= true;
-                alert ("A quantidade digitada é maior que a quantidade disponÃ­vel no estoque! A quantidade atual deste produto no estoque está descrito ao lado do campo!");
+                alert ("A quantidade digitada Ã© maior que a quantidade disponÃ­vel no estoque! A quantidade atual deste produto no estoque estÃ¡ descrito ao lado do campo!");
                 
                 $("input[name=qtd]").val(""); 
                 $("input[name=valtot]").val("");
@@ -215,9 +215,9 @@ function valida_etiqueta(campo){
             campo.value = campo.value.substring(0,i);
         }
     }
-    //Conta quantos caracteres foram digitados no código da etiqueta
+    //Conta quantos caracteres foram digitados no cï¿½digo da etiqueta
     qtd_caracteres=document.forms["form1"].etiqueta.value.length;  
-    //Se a etiqueta não tem nada digitado então habilita-se o produto para escolhe-lo manualmente
+    //Se a etiqueta nï¿½o tem nada digitado entï¿½o habilita-se o produto para escolhe-lo manualmente
     if (qtd_caracteres==0) {
         $.post("saidas_popula_produto.php",{  },function (valor) {
             $("select[name=produto]").html(valor);           
@@ -234,7 +234,7 @@ function valida_etiqueta(campo){
         document.forms["form1"].lote.disabled= false;
         document.forms["form1"].botao_incluir.disabled= true;
     }    
-    //Se a etiqueta está sendo preenchida então desabilitar tudo
+    //Se a etiqueta estï¿½ sendo preenchida entï¿½o desabilitar tudo
     else if ((qtd_caracteres>=1)&&(qtd_caracteres<=13)){
         $("select[name=produto]").html("");                
         $("select[name=fornecedor]").html("");                
@@ -254,22 +254,22 @@ function valida_etiqueta(campo){
     
     //Ao terminar de digitar verifica o codigo digitado e depois faz todos os calculos
     else if (qtd_caracteres==14) { 
-        //Se o usuário apertou qualquer outro botão que não seja numero não executar nada
+        //Se o usuï¿½rio apertou qualquer outro botï¿½o que nï¿½o seja numero nï¿½o executar nada
         //-----
         $.post("saidas_valida_etiqueta.php", {
             etiqueta:$("input[name=etiqueta]").val()
         }, function (valor) {
             var x= valor;            
-            //Caso o numero da etiqueta não corresponta a um produto ou lote não existente no banco
+            //Caso o numero da etiqueta nï¿½o corresponta a um produto ou lote nï¿½o existente no banco
             if (x=="invalida") {
-                alert("Etiqueta Inválida");
+                alert("Etiqueta InvÃ¡lida");
             }             
-            //O produto e lote existem, mas no estoque esse produto não está incluido nesse lote.
+            //O produto e lote existem, mas no estoque esse produto nï¿½o estï¿½ incluido nesse lote.
             else if (x=="semestoque") {
-                alert("Este produto não consta no estoque do sistema. Por favor, anote o número desta etiqueta para analisar depois");
+                alert("Este produto nÃ£o consta no estoque do sistema. Por favor, anote o nÃºmero desta etiqueta para analisar depois");
                 document.forms["form1"].botao_incluir.disabled= true;
             }            
-            //O código é valido
+            //O cï¿½digo ï¿½ valido
             else {                    
                
                 //Preenche o campo Produto

@@ -323,7 +323,7 @@ function popula_quiosques() {
     });
 }
 
-function verifica_cpf_cadastro(valor,valor2) {
+function verifica_cpf_cadastro(valor,valor2,pessoa_cod,operacao) {
     valor = valor.replace("_", "");
     valor = valor.replace("_", "");
     valor = valor.replace("_", "");
@@ -343,8 +343,11 @@ function verifica_cpf_cadastro(valor,valor2) {
     if(valor.length==11) {
         //alert('entrou é 11')
         $.post("verifica_cpf_cadastro.php", {
-            cpf:$("input[name=cpf]").val()
+            cpf:$("input[name=cpf]").val(),
+            pessoa:pessoa_cod,
+            oper:operacao
         }, function(valor) {
+            //alert(valor);
             if (valor2==1) {
                 if (valor>0) { 
                     alert("Este cpf já está cadastrado no sistema, por favor utilize os metodos de recuperação de senha!");

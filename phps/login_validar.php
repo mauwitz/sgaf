@@ -35,7 +35,7 @@ $total = mysql_num_rows($resultado);
 if ($total) {
     $dados = mysql_fetch_array($resultado);
     if (!strcmp($senha, $dados["pes_senha"])) {
-        //Deu tudo certo, usuário e senha estão corretos
+        //Deu tudo certo, usuï¿½rio e senha estï¿½o corretos
         $_SESSION["usuario_codigo"] = $dados["pes_codigo"];
         $_SESSION["usuario_cpf"] = $dados["pes_cpf"];
         $_SESSION["usuario_nome"] = stripslashes($dados["pes_nome"]);
@@ -66,7 +66,7 @@ if ($total) {
         echo "Senha Errada!";
     }
 } else {
-    echo "CPF não encontrado!";
+    echo "CPF nÃ£o encontrado!";
 }
 
 ?>

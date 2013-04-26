@@ -1,5 +1,5 @@
 <?php
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 if ($permissao_produtos_cadastrar <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -20,7 +20,7 @@ $hora = date("h:i:s");
 //Template de TÃ­tulo e Sub-tÃ­tulo
 $tpl_titulo = new Template("templates/titulos.html");
 $tpl_titulo->TITULO = "PRODUTOS";
-$tpl_titulo->SUBTITULO = "CADASTRO/EDIÇÃO";
+$tpl_titulo->SUBTITULO = "CADASTRO/EDIÃ‡ÃƒO";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "produtos.png";
 $tpl_titulo->show();
@@ -59,8 +59,8 @@ if ($codigo == "") { //caso seja um cadastro novo fazer isso
         $tpl_notificacao->block("BLOCK_BOTAO");
         $tpl_notificacao->show();
     }
-} else { //Caso seja uma alteração de um registro fazer isso
-    //Verifica se já existe registros com o mesmo nome    
+} else { //Caso seja uma alteraï¿½ï¿½o de um registro fazer isso
+    //Verifica se jï¿½ existe registros com o mesmo nome    
     $sql = "SELECT * FROM produtos WHERE pro_nome='$nome' and pro_cooperativa=$usuario_cooperativa";
     $query = mysql_query($sql);
     if (!$query)

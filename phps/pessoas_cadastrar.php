@@ -11,10 +11,16 @@ require "login_verifica.php";
 
 $codigo = $_GET["codigo"];
 $operacao = $_GET["operacao"];
+if ($operacao == "cadastrar")
+    $oper_num = 1;
+if ($operacao == "editar")
+    $oper_num = 2;
+if ($operacao == "ver")
+    $oper_num = 3;
 
 //Se o usuario estiver alterando seu próprio cadastro passa
-$cpf_desabilitado=0;
-if ($usuario_codigo != $codigo) {    
+$cpf_desabilitado = 0;
+if ($usuario_codigo != $codigo) {
     if ($operacao == "cadastrar") {
         if ($permissao_pessoas_cadastrar <> 1) {
             header("Location: permissoes_semacesso.php");
@@ -55,7 +61,7 @@ if ($usuario_codigo != $codigo) {
         }
     }
 } else {
-    $cpf_desabilitado=1;
+    $cpf_desabilitado = 1;
 }
 
 
@@ -134,7 +140,8 @@ if (($operacao == "editar") || ($operacao == 'ver')) {
         }
     }
 } else { //é um cadastro novo
-    if ($pais=="") $pais=1;
+    if ($pais == "")
+        $pais = 1;
 }
 
 
@@ -210,7 +217,11 @@ $tpl1->CAMPO_NOME = "cpf";
 $tpl1->CAMPO_DICA = "";
 $tpl1->CAMPO_ID = "cpf";
 $tpl1->CAMPO_ONKEYPRESS = "return submitenter(this,event)";
-$tpl1->CAMPO_ONBLUR = "valida_cpf(this.value); verifica_cpf_cadastro(this.value,1);";
+if ($codigo == "")
+    $cod = 0;
+else
+    $cod = $codigo;
+$tpl1->CAMPO_ONBLUR = "valida_cpf(this.value); verifica_cpf_cadastro(this.value,1,$cod,$oper_num);";
 $tpl1->CAMPO_ONCLICK = "this.select();";
 $tpl1->block("BLOCK_CAMPO_ONBLUR");
 $tpl1->CAMPO_TAMANHO = "14";
@@ -218,8 +229,12 @@ $tpl1->CAMPO_VALOR = $cpf;
 $tpl1->CAMPO_QTD_CARACTERES = 14;
 $tpl1->block("BLOCK_CAMPO_AUTOSELECIONAR");
 $tpl1->block("BLOCK_CAMPO_NORMAL");
-if ($cpf_desabilitado==1) {
+if ($cpf_desabilitado == 1) {
     $tpl1->block("BLOCK_CAMPO_DESABILITADO");
+    //$tpl1->block("BLOCK_CAMPO_SOMENTELEITURA");
+    $tpl1->CAMPOOCULTO_NOME = "cpf";
+    $tpl1->CAMPOOCULTO_VALOR = "$cpf";
+    $tpl1->block("BLOCK_CAMPOSOCULTOS");
 }
 //$tpl1->block("BLOCK_CAMPO_OBRIGATORIO");
 IF ($operacao == 'ver')
@@ -277,7 +292,7 @@ $tpl1->block("BLOCK_SELECT_ONCHANGE");
 $tpl1->block("BLOCK_SELECT_OBRIGATORIO");
 $tpl1->block("BLOCK_SELECT_OPTION_PADRAO");
 //Se a operação for editar então mostrar os options, e o option em questão selecionado
-if (($operacao == "editar") || ($operacao == "ver") ||($pais!="")) {
+if (($operacao == "editar") || ($operacao == "ver") || ($pais != "")) {
     $sql = "  SELECT DISTINCT
         est_codigo,est_nome,est_sigla
     FROM
@@ -651,7 +666,7 @@ if ($usuario_codigo != $codigo) {
             if ($total2 > 0) {
                 $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
                 $tpl1->CHECKBOX_ICONE_ARQUIVO = "../imagens/icones/geral/help.png";
-                $tpl1->CHECKBOX_ICONE_MENSAGEM = "Você não pode desmarcar esta op��o porque esta pessoa atualmente � supervisora de algum quiosque. Contate os administradores para saber mais!";
+                $tpl1->CHECKBOX_ICONE_MENSAGEM = "Você não pode desmarcar esta opção porque esta pessoa atualmente é supervisora de algum quiosque. ";
                 $tpl1->block("BLOCK_CHECKBOX_ICONE");
                 //Chama o campo oculto caso o checkbox fique desabilitado
                 $tpl1->CAMPOOCULTO_NOME = "box[2]";
@@ -682,7 +697,7 @@ if ($usuario_codigo != $codigo) {
             if ($total2 > 0) {
                 $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
                 $tpl1->CHECKBOX_ICONE_ARQUIVO = "../imagens/icones/geral/help.png";
-                $tpl1->CHECKBOX_ICONE_MENSAGEM = "Você n�o pode desmarcar esta op��o porque esta pessoa atualmente � vendedora de algum quiosque. Contate os administradores para saber mais!";
+                $tpl1->CHECKBOX_ICONE_MENSAGEM = "Você não pode desmarcar esta opção porque esta pessoa atualmente é vendedora de algum quiosque";
                 $tpl1->block("BLOCK_CHECKBOX_ICONE");
                 //Chama o campo oculto caso o checkbox fique desabilitado
                 $tpl1->CAMPOOCULTO_NOME = "box[3]";
@@ -790,14 +805,14 @@ if ($operacao == "editar") {
         $linhas = mysql_num_rows($query);
 
 
-        //Verifica se o esta pessoa � vendedor de algum quiosque
+        //Verifica se o esta pessoa é vendedor de algum quiosque
         $sql2 = "SELECT qui_nome FROM quiosques JOIN quiosques_vendedores on (quiven_quiosque=qui_codigo)  WHERE quiven_vendedor=$codigo";
         $query2 = mysql_query($sql2);
         if (!$query2)
             die("Erro: 1" . mysql_error());
         $linhas2 = mysql_num_rows($query2);
 
-        //Verifica se o esta pessoa � supervisor de algum quiosque
+        //Verifica se o esta pessoa é supervisor de algum quiosque
         $sql3 = "SELECT DISTINCT qui_nome FROM quiosques join quiosques_supervisores on (qui_codigo=quisup_quiosque) WHERE quisup_supervisor=$codigo";
         $query3 = mysql_query($sql3);
         if (!$query3)
@@ -869,7 +884,7 @@ if ($operacao == "editar") {
         //Verifica se o usu�rio est� editando seu pr�prio cadastro, se sim mostrar icone informativo ao lado
         if ($usuario_codigo == $codigo) {
             $tpl1->COMPLEMENTO_ICONE_ARQUIVO = "../imagens/icones/geral/help.png";
-            $tpl1->COMPLEMENTO_ICONE_MENSAGEM = "Você não tem permiss�o para desativar seu pr�prio usu�rio! Contate um adminsitrador se deseja fazer isto!";
+            $tpl1->COMPLEMENTO_ICONE_MENSAGEM = "Você não tem permissão para desativar seu próprio usuário! Contate um adminsitrador se deseja fazer isto!";
             $tpl1->block("BLOCK_COMPLEMENTO_ICONE");
         }
         $tpl1->block("BLOCK_CONTEUDO");
@@ -994,7 +1009,7 @@ if ($operacao == "editar") {
                     }
                 }
 
-                //Verifica se o esta pessoa � vendedor de algum quiosque
+                //Verifica se o esta pessoa é vendedor de algum quiosque
                 if ($grupo_codigo == 4) {
                     $sql2 = "SELECT qui_nome FROM quiosques JOIN quiosques_vendedores on (quiven_quiosque=qui_codigo)  WHERE quiven_vendedor=$codigo";
                     $query2 = mysql_query($sql2);

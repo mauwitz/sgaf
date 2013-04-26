@@ -1,6 +1,6 @@
 <?php
 
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 if ($permissao_quiosque_vertaxas <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -38,7 +38,7 @@ $tpl->block("BLOCK_FILTRO_CAMPO_DESABILITADO");
 $tpl->block("BLOCK_FILTRO_CAMPO");
 $tpl->block("BLOCK_FILTRO_COLUNA");
 
-//Botão Incluir
+//Botï¿½o Incluir
 IF ($permissao_taxas_aplicar == 1) {
     $tpl->LINK = "quiosque_taxas_cadastrar.php?quiosque=$quiosque&operacao=cadastrar";
     $tpl->BOTAO_NOME = "INCLUIR TAXA";
@@ -50,7 +50,7 @@ $tpl->block("BLOCK_FILTRO_COLUNA");
 $tpl->block("BLOCK_FILTRO");
 
 //LISTAGEM INICIO
-//Cabeçalho
+//Cabeï¿½alho
 $tpl->CABECALHO_COLUNA_TAMANHO = "";
 $tpl->CABECALHO_COLUNA_COLSPAN = "2";
 $tpl->CABECALHO_COLUNA_NOME = "TAXA";
@@ -58,7 +58,7 @@ $tpl->block("BLOCK_LISTA_CABECALHO");
 
 $tpl->CABECALHO_COLUNA_TAMANHO = "";
 $tpl->CABECALHO_COLUNA_COLSPAN = "";
-$tpl->CABECALHO_COLUNA_NOME = "DESCRIÇÃO";
+$tpl->CABECALHO_COLUNA_NOME = "DESCRIÃ‡ÃƒO";
 $tpl->block("BLOCK_LISTA_CABECALHO");
 
 
@@ -70,7 +70,7 @@ $tpl->block("BLOCK_LISTA_CABECALHO");
 IF ($permissao_taxas_aplicar == 1) {
     $tpl->CABECALHO_COLUNA_COLSPAN = "2";
     $tpl->CABECALHO_COLUNA_TAMANHO = "";
-    $tpl->CABECALHO_COLUNA_NOME = "OPERAÇÕES";
+    $tpl->CABECALHO_COLUNA_NOME = "OPERAÃ‡Ã•ES";
     $tpl->block("BLOCK_LISTA_CABECALHO");
 }
 
@@ -88,15 +88,15 @@ WHERE
 ORDER BY
     tax_nome";
 
-//Paginação
+//Paginaï¿½ï¿½o
 $query = mysql_query($sql);
 if (!$query)
-    die("Erro SQL Principal Paginação:" . mysql_error());
+    die("Erro SQL Principal PaginaÃ§Ã£o:" . mysql_error());
 $linhas = mysql_num_rows($query);
 $por_pagina = $usuario_paginacao;
 $paginaatual = $_POST["paginaatual"];
 $paginas = ceil($linhas / $por_pagina);
-//Se é a primeira vez que acessa a pagina então começar na pagina 1
+//Se ï¿½ a primeira vez que acessa a pagina entï¿½o comeï¿½ar na pagina 1
 if (($paginaatual == "") || ($paginas < $paginaatual) || ($paginaatual <= 0)) {
     $paginaatual = 1;
 }
@@ -114,7 +114,7 @@ if (!$query)
     die("Erro: " . mysql_error());
 while ($dados = mysql_fetch_assoc($query)) {
 
-    //Coluna Código
+    //Coluna Cï¿½digo
     $tpl->LISTA_COLUNA_ALINHAMENTO = "right";
     $tpl->LISTA_COLUNA_TAMANHO = "40px";
     $tpl->LISTA_COLUNA_VALOR = $dados["tax_codigo"];
@@ -126,7 +126,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl->LISTA_COLUNA_VALOR = $dados["tax_nome"];
     $tpl->block("BLOCK_LISTA_COLUNA");
 
-    //Coluna Descrição
+    //Coluna Descriï¿½ï¿½o
     $tpl->LISTA_COLUNA_ALINHAMENTO = "";
     $tpl->LISTA_COLUNA_TAMANHO = "";
     $tpl->LISTA_COLUNA_VALOR = $dados["tax_descricao"];
@@ -138,7 +138,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl->LISTA_COLUNA_VALOR = number_format($dados["quitax_valor"], 2, ',', '.') . " %";
     $tpl->block("BLOCK_LISTA_COLUNA");
 
-    //OperaçÃµes
+    //Operaï¿½Ãµes
     $taxa = $dados["quitax_taxa"];
     $tpl->CODIGO = $taxa;
     IF ($permissao_taxas_aplicar == 1) {
@@ -155,7 +155,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl->block("BLOCK_LISTA");
 }
 
-//Se não tem tuplas então mostrar a frase padrão cujo informa que não há registros
+//Se nï¿½o tem tuplas entï¿½o mostrar a frase padrï¿½o cujo informa que nï¿½o hï¿½ registros
 if (mysql_num_rows($query) == 0) {
     $tpl->block("BLOCK_LISTA_NADA");
 }

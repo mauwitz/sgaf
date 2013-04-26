@@ -179,7 +179,7 @@ FROM
     JOIN cidades on (qui_cidade=cid_codigo)
     JOIN cooperativas on (qui_cooperativa=coo_codigo)
 WHERE
-    1 $sql_filtro 
+    1 and qui_cooperativa= $usuario_cooperativa $sql_filtro 
 ORDER BY
     qui_nome";
 

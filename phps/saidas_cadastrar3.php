@@ -31,7 +31,7 @@ $troco_devolvido = dinheiro_para_numero($troco_devolvido);
 
 
 
-//Calcula o valor do desconto ou acréscimo forçado
+//Calcula o valor do desconto ou acrï¿½scimo forï¿½ado
 if ($troco_devolvido<0) {
     $troco_devolvido=0;
 }
@@ -43,14 +43,14 @@ if ($forcado>0) {
     $forcadodesc=$forcado*-1;     
     $forcadoacre=0;
 }
-//Calcula o valor liquido total da Saída
+//Calcula o valor liquido total da Saï¿½da
 $totalliq=$total+$forcadoacre-$forcadodesc;
 
 
 //Template de TÃ­tulo e Sub-tÃ­tulo
 $tpl_titulo = new Template("templates/titulos.html");
 $tpl_titulo->TITULO = "SAIDAS";
-$tpl_titulo->SUBTITULO = "CADASTRO/EDIÇÃO";
+$tpl_titulo->SUBTITULO = "CADASTRO/EDIÃ‡ÃƒO";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "saidas.png";
 $tpl_titulo->show();
@@ -65,11 +65,11 @@ $tpl_titulo->show();
 //echo "Valor Recebido: $dinheiro <br>";
 //echo "Troco: $troco <br>";
 //echo "Troco Devolvido: $troco_devolvido <br>";
-//echo "Acrescimo Forçado: $forcadoacre <br>";
-//echo "Desconto Forçado: $forcadodesc <br>";
+//echo "Acrescimo Forï¿½ado: $forcadoacre <br>";
+//echo "Desconto Forï¿½ado: $forcadodesc <br>";
 //echo "Total Liquido: $totalliq <br>";
   
-//Estrutura da notificação
+//Estrutura da notificaï¿½ï¿½o
 $tpl_notificacao = new Template("templates/notificacao.html");
 $tpl_notificacao->ICONES = $icones;
 if ($tiposai=="3") 

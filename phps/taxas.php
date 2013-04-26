@@ -137,7 +137,7 @@ if (!empty($filtro_codigo))
 if (!empty($filtro_nometaxa))
     $sql_filtro = " and tax_nome like '%$filtro_nometaxa%'";
 
-echo $sql = "
+$sql = "
 SELECT 
     tax_codigo,
     tax_nome,
@@ -178,7 +178,7 @@ $query = mysql_query($sql);
 if (!$query)
     die("Erro SQL principal da Listagem: " . mysql_error());
 if (mysql_num_rows($query) == 0) {
-    $tpl2->LINHA_NADA_COLSPAN = "4";
+    $tpl2->LINHA_NADA_COLSPAN = "5";
     $tpl2->block("BLOCK_LINHA_NADA");
 }
 
@@ -230,7 +230,6 @@ while ($dados = mysql_fetch_assoc($query)) {
     //Operação Editar
     $tpl2->COLUNA_TAMANHO = "50px";
     $tpl2->COLUNA_ALINHAMENTO = "center";
-    echo "($permissao_taxas_editar)";
 if (($permissao_taxas_excluir==1)&&(($usuario_grupo==1)||(($usuario_grupo==2)&&($tax_quiosque==0))||(($usuario_grupo==3)&&($tax_quiosque!=0)))) {
         $tpl2->CONTEUDO_LINK_ARQUIVO = "taxas_cadastrar.php?operacao=editar&codigo=$codigo";
         $tpl2->block("BLOCK_CONTEUDO_LINK");

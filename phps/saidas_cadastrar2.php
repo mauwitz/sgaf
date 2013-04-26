@@ -20,7 +20,7 @@ $dinheiro = $_POST["dinheiro"];
 //Template de TÃ­tulo e Sub-tÃ­tulo
 $tpl_titulo = new Template("templates/titulos.html");
 $tpl_titulo->TITULO = "SAÃDAS";
-$tpl_titulo->SUBTITULO = "CADASTRO/EDIÇÃO";
+$tpl_titulo->SUBTITULO = "CADASTRO/EDIÃ‡ÃƒO";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "saidas.png";
 $tpl_titulo->show();
@@ -42,7 +42,7 @@ while ($dados = mysql_fetch_assoc($query)) {
 $tpl->VALBRU_VALOR = "R$ " . number_format($valbru, 2, ',', '.');
 
 
-//Contra o passo, inicialmente começa no 1
+//Contra o passo, inicialmente comeï¿½a no 1
 switch ($passo) {
     case '1':
         $tpl->LINK = "saidas_cadastrar2.php";

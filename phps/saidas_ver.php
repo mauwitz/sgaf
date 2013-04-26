@@ -1,5 +1,5 @@
 <?php
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 $tiposaida = $_GET["tiposaida"];
 if ($tiposaida == 1) {
@@ -54,9 +54,11 @@ SELECT
     saitip_nome,
     saimot_nome
 FROM
-    saidas,pessoas,saidas_tipo,saidas_motivo
-WHERE   
-    sai_tipo=saitip_codigo and    
+    saidas
+    join pessoas on (sai_consumidor=pes_codigo)
+    join saidas_tipo on (saitip_codigo=sai_tipo)
+    left join saidas_motivo on (saimot_codigo=sai_saidajustificada)
+WHERE       
     sai_codigo=$saida
 ";
 $query = mysql_query($sql);
@@ -130,11 +132,11 @@ if ($tiposaida == 3) {
         $tpl->block("BLOCK_LINHA");
 
 
-        //Descrição
+        //Descriï¿½ï¿½o
         //Titulo
         $tpl->COLUNA_ALINHAMENTO = "right";
         $tpl->COLUNA_TAMANHO = "200px";
-        $tpl->TITULO = "Descrição";
+        $tpl->TITULO = "DescriÃ§Ã£o";
         $tpl->block("BLOCK_TITULO");
         $tpl->block("BLOCK_CONTEUDO");
         $tpl->block("BLOCK_COLUNA");
@@ -169,7 +171,7 @@ $tpl2->block(BLOCK_TABELA_CHEIA);
 //Cabecalho
 $tpl2->CABECALHO_COLUNA_TAMANHO = "100px";
 $tpl2->CABECALHO_COLUNA_COLSPAN = "";
-$tpl2->CABECALHO_COLUNA_NOME = "Nº";
+$tpl2->CABECALHO_COLUNA_NOME = "NÂº";
 $tpl2->block(BLOCK_LISTA_CABECALHO);
 $tpl2->CABECALHO_COLUNA_TAMANHO = "";
 $tpl2->CABECALHO_COLUNA_COLSPAN = "";
@@ -196,7 +198,7 @@ $tpl2->CABECALHO_COLUNA_COLSPAN = "";
 $tpl2->CABECALHO_COLUNA_NOME = "VALOR TOTAL";
 $tpl2->block(BLOCK_LISTA_CABECALHO);
 
-//Mostra todos os produtos da saida em questão
+//Mostra todos os produtos da saida em questï¿½o
 $sql2 = "
 SELECT 
     saipro_codigo,pro_nome,pes_nome,saipro_lote,saipro_quantidade,protip_sigla,protip_codigo,saipro_valorunitario,saipro_valortotal
@@ -273,7 +275,7 @@ while ($dados2 = mysql_fetch_assoc($query2)) {
     $total = $total + $dados2['saipro_valortotal'];
     $tpl2->block("BLOCK_LISTA");
 }
-//Rodapé da listagem
+//Rodapï¿½ da listagem
 $tpl2->LISTA_CLASSE = "tabelarodape1";
 
 $tpl2->LISTA_CLASSE = "tabelarodape1";
@@ -452,11 +454,11 @@ $tpl3->block("BLOCK_CONTEUDO");
 $tpl3->block("BLOCK_COLUNA");
 $tpl3->block("BLOCK_LINHA");
 
-//Desconto Forçado
+//Desconto Forï¿½ado
 //Titulo
 $tpl3->COLUNA_ALINHAMENTO = "right";
 $tpl3->COLUNA_TAMANHO = "200px";
-$tpl3->TITULO = "Desconto Forçado";
+$tpl3->TITULO = "Desconto ForÃ§ado";
 $tpl3->block("BLOCK_TITULO");
 $tpl3->block("BLOCK_CONTEUDO");
 $tpl3->block("BLOCK_COLUNA");
@@ -474,11 +476,11 @@ $tpl3->block("BLOCK_CONTEUDO");
 $tpl3->block("BLOCK_COLUNA");
 $tpl3->block("BLOCK_LINHA");
 
-//Acrescimo Forçado
+//Acrescimo Forï¿½ado
 //Titulo
 $tpl3->COLUNA_ALINHAMENTO = "right";
 $tpl3->COLUNA_TAMANHO = "200px";
-$tpl3->TITULO = "Acréscimo Forçado";
+$tpl3->TITULO = "AcrÃ©scimo ForÃ§ado";
 $tpl3->block("BLOCK_TITULO");
 $tpl3->block("BLOCK_CONTEUDO");
 $tpl3->block("BLOCK_COLUNA");
@@ -524,7 +526,7 @@ if ($ope != 4) {
 
     $tpl4 = new Template("templates/botoes1.html");
 
-    //Botão Voltar
+    //Botï¿½o Voltar
     $tpl4->block("BLOCK_LINHAHORIZONTAL_EMCIMA");
     $tpl4->block("BLOCK_COLUNA_LINK_VOLTAR");
     $tpl4->COLUNA_LINK_ARQUIVO = "";
@@ -536,7 +538,7 @@ if ($ope != 4) {
     $tpl->block("BLOCK_CONTEUDO");
     $tpl4->block("BLOCK_COLUNA");
 
-    //Botão Imprimir
+    //Botï¿½o Imprimir
     $tpl4->COLUNA_LINK_ARQUIVO = "saidas_ver.php?codigo=$saida&tiposaida=$tiposaida&ope=4";
     $tpl4->COLUNA_LINK_TARGET = "_blank";
     $tpl4->block("BLOCK_COLUNA_LINK");

@@ -16,7 +16,7 @@ $operacao = $_GET["operacao"];
 
 $erro = 0;
 
-//Caso a operação seja SALVAR então apenas trocar o status da entrada para ATIVO
+//Caso a operaÃ§Ã£o seja SALVAR entÃ£o apenas trocar o status da entrada para ATIVO
 //e inserir produtos no estoque
 if ($salvar == 1) {
 
@@ -44,7 +44,7 @@ if ($salvar == 1) {
 
     
     //Adiciona os produtos no estoque        
-    //Pega todos os produtos e seus dados da entrada em questão
+    //Pega todos os produtos e seus dados da entrada em questÃ£o
     $sql13 = "
     SELECT
         ent_fornecedor,entpro_produto,entpro_quantidade,entpro_valorunitario,entpro_validade,entpro_status,entpro_numero
@@ -68,7 +68,7 @@ if ($salvar == 1) {
 
         if ($status == '0') {
 
-            //Verifica se o produto já existe no estoque, se sim insere, senão apenas incrementa
+            //Verifica se o produto jÃ¡ existe no estoque, se sim insere, sendo apenas incrementa
             $sql5 = "
             SELECT 
                 *
@@ -127,7 +127,7 @@ if ($salvar == 1) {
                     die("Erro de SQL 8:" . mysql_error());
             }
 
-            //Muda o status para 1, ou seja, já foi incrementado no estoque 
+            //Muda o status para 1, ou seja, jÃ¡ foi incrementado no estoque 
             $sql9 = "
             UPDATE
                 entradas_produtos 
@@ -147,12 +147,12 @@ if ($salvar == 1) {
 //Template de TÃ­tulo e Sub-tÃ­tulo
 $tpl_titulo = new Template("templates/titulos.html");
 $tpl_titulo->TITULO = "PESSOAS";
-$tpl_titulo->SUBTITULO = "CADASTRO/EDIÇÃO";
+$tpl_titulo->SUBTITULO = "CADASTRO/EDIÃ‡ÃƒO";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "pessoas.png";
 $tpl_titulo->show();
 
-//Estrutura da notificação
+//Estrutura da notificaÃ§Ã£o
 $tpl_notificacao = new Template("templates/notificacao.html");
 $tpl_notificacao->ICONES = $icones;
 $tpl_notificacao->DESTINO = "entradas.php";
