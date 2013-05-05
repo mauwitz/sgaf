@@ -361,8 +361,7 @@ if ($passo != "") {
 
                 //Faz a inser��o do produto na entrada (inserir item de entrada)
                 $validade = desconverte_data($validade);
-                echo "total = number_format($valuni * $qtd, 2);";
-                echo $total = number_format($valuni * $qtd, 2, '.', '');
+                $total = number_format($valuni * $qtd, 2, '.', '');
                 $sql = "
                 INSERT INTO
                     entradas_produtos (

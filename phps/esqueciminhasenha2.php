@@ -79,7 +79,7 @@
                     $tpl->show();
                 }
             } else if ($metodo == 2) {//por email
-                $sql = "select pes_email from pessoas where pes_cpf like '$cpf'";
+                $sql = "select pes_email_senha from pessoas where pes_cpf like '$cpf'";
                 if (!$query = mysql_query($sql))
                     die("ERRO SQL" . mysql_error());
                 $dados = mysql_fetch_array($query);

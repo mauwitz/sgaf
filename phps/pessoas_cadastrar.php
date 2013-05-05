@@ -1116,7 +1116,7 @@ if ($operacao == "editar") {
         if ($linhas5 == 0) {
             $tpl1->block("BLOCK_SELECT_DESABILITADO");
             $tpl1->COMPLEMENTO_ICONE_ARQUIVO = "../imagens/icones/geral/help.png";
-            $tpl1->COMPLEMENTO_ICONE_MENSAGEM = "Esta pessoa não pode ter acesso ao sistema porque ela não é presidente, supervisora, vendedora ou fornecedora de nenhum quiosque. Contate os administradores para saber mais!";
+            $tpl1->COMPLEMENTO_ICONE_MENSAGEM = "Esta pessoa não pode ter acesso ao sistema porque ela não é presidente, supervisora, vendedora ou fornecedora de algum quiosque de sua cooperativa. Para ser considerado um fornecedor, não basta apenas marcar o tipo 'Fornecedor' nesta tela, é necessário ter pelo menos uma entrada! Para ser Supervisor ou Vendedor de um quiosque, esta pessoa deve ser vinculadas a um quiosque na tela de 'Quiosques'! E para ser um presidente contatar um administrador! :)";
             $tpl1->block("BLOCK_COMPLEMENTO_ICONE");
             $tpl1->block("BLOCK_SELECT_OPTION_SELECIONADO");
         }

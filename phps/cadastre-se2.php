@@ -62,6 +62,8 @@
         $senha2 = $_POST["senha2"];
         $email_senha = $_POST["email_senha"];
         $check_perguntasecreta = $_POST["check_perguntasecreta"];
+        if (($pergunta!="")&&($resposta!=""))
+            $check_perguntasecreta=1;
         $pergunta = $_POST["pergunta"];
         $resposta = $_POST["resposta"];
         $check_termo = $_POST["check_termo"];

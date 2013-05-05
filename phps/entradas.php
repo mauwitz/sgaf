@@ -326,9 +326,9 @@ $sql = "
                                     $titulo = "Incompleta";                                    
                                 } else {
                                     $imagem = "bandeira3_laranja.png";
-                                    $titulo = "Esta entrada est� em andamento por outro usu�rio! Este usu�rio tem 01:30 (uma hora e meia) para finaliz�-la caso contr�rio ela passar� a ser 'Incompleta' e você poder� finaliz�-la!";
+                                    $titulo = "Esta entrada está em andamento por outro usuário! Este usuário tem 01:30 (uma hora e meia) para finalizá-la caso contrário ela passará a ser 'Incompleta' e você poderá finalizá-la!";
                                     $editar_ocultar = 1;
-                                    $editar_ocultar_motivo = "Esta entrada est� em andamento por outro usu�rio! Este usu�rio tem 01:30 (uma hora e meia) para finaliz�-la caso contr�rio ela passar� a ser 'Incompleta' e você poder� finaliz�-la!";
+                                    $editar_ocultar_motivo = "Esta entrada está em andamento por outro usuário! Este usuário tem 01:30 (uma hora e meia) para finalizá-la caso contrário ela passará a ser 'Incompleta' e você poderá finalizá-la!";
                                 }
                             }
                         } else {
