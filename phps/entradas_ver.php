@@ -1,6 +1,6 @@
 <?php
 
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 if ($permissao_entradas_ver <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -51,6 +51,7 @@ while ($dados = mysql_fetch_array($query)) {
     }
     $tpl->block("BLOCK_OPTIONS_FORNECEDOR");
 }
+$tpl->block("BLOCK_SELECT_FORNECEDOR");
 
 //Supervisor
 $sql = "SELECT pes_codigo,pes_nome FROM pessoas inner join mestre_pessoas_tipo on (pes_codigo=mespestip_pessoa) WHERE pes_codigo=$supervisor";

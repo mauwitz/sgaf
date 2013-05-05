@@ -52,8 +52,8 @@ if (!$query)
 if (mysql_num_rows($query) > 0) {
     $tpl6->block("BLOCK_ERRO");
     $tpl6->block("BLOCK_NAOAPAGADO");
-    $tpl6->block("BLOCK_MOTIVO_EMUSO");
-    $tpl6->MOTIVO = "quiosque";
+    //$tpl6->block("BLOCK_MOTIVO_EMUSO");
+    $tpl6->MOTIVO = "Não é possível excluir esta taxa por que ela está vinculada a um ou mais quiosques!";
     $tpl6->block("BLOCK_MOTIVO");
     $tpl6->block("BLOCK_BOTAO_VOLTAR");
     $tpl6->show();

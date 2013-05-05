@@ -293,6 +293,73 @@ function valida_cpf(cpf){
         }
     }
 }
+function valida_cnpj(cnpj){
+    cnpj = cnpj.replace(/[^\d]+/g,'');
+ 
+    if(cnpj == '') return false;
+     
+    if (cnpj.length != 14)
+        return false;
+ 
+    // Elimina CNPJs invalidos conhecidos
+    if (cnpj == "00000000000000" || 
+        cnpj == "11111111111111" || 
+        cnpj == "22222222222222" || 
+        cnpj == "33333333333333" || 
+        cnpj == "44444444444444" || 
+        cnpj == "55555555555555" || 
+        cnpj == "66666666666666" || 
+        cnpj == "77777777777777" || 
+        cnpj == "88888888888888" || 
+        cnpj == "99999999999999") {
+        
+        alert("CNPJ Inválido");
+        $("input[name=cnpj]").val("");
+        $("input[name=cnpj]").focus();
+        return false;
+    }
+         
+    // Valida DVs
+    tamanho = cnpj.length - 2
+    numeros = cnpj.substring(0,tamanho);
+    digitos = cnpj.substring(tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+    for (i = tamanho; i >= 1; i--) {
+        soma += numeros.charAt(tamanho - i) * pos--;
+        if (pos < 2)
+            pos = 9;
+    }
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != digitos.charAt(0)) {
+        alert("CNPJ Inválido");
+        $("input[name=cnpj]").val("");
+        $("input[name=cnpj]").focus();
+        return false;
+    }
+         
+    tamanho = tamanho + 1;
+    numeros = cnpj.substring(0,tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+    for (i = tamanho; i >= 1; i--) {
+        soma += numeros.charAt(tamanho - i) * pos--;
+        if (pos < 2)
+            pos = 9;
+    }
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != digitos.charAt(1)) {
+        alert("CNPJ Inválido");
+        $("input[name=cnpj]").val("");
+        $("input[name=cnpj]").focus();
+        return false;
+        
+    }
+           
+//alert("CNPJ Valido!");
+    
+} 
+
 
 function popula_estados() {
     $("select[name=estado]").html('<option>Carregando</option>');   
@@ -381,6 +448,44 @@ function verifica_cpf_cadastro(valor,valor2,pessoa_cod,operacao) {
         });
     }
 }
+function verifica_cnpj_cadastro(valor,pessoa_cod,operacao) {
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace("_", "");
+    valor = valor.replace(".", "");
+    valor = valor.replace(".", "");
+    valor = valor.replace("-", "");
+    valor = valor.replace("/", "");
+    //alert(valor);
+    if(valor.length==14) {
+        //alert('entrou é 14')
+        $.post("verifica_cnpj_cadastro.php", {
+            cnpj:$("input[name=cnpj]").val(),
+            pessoa:pessoa_cod,
+            oper:operacao
+        }, function(valor) {
+            //alert(valor);
+            if (valor>0) { 
+                alert("Este CNPJ já está cadastrado no sistema!");
+                $("input[name=cnpj]").val("");                    
+                $("input[name=cnpj]").focus();
+            } else {
+            //O CNPJ não está sendo usado por ninguém
+            }            
+        });
+    }
+}
 
 function verifica_metodo(valor) {
     //alert(valor);
@@ -440,4 +545,12 @@ function verifica_maioridade (valor) {
             window.location.href = window.location;
         }
     }
+}
+function popula_fornecedores(valor) {
+    $.post("entradas_popula_fornecedores.php",{
+        tipopessoa:valor            
+    },function(valor2){
+        //alert(valor2);
+        $("select[name=fornecedor]").html(valor2);
+    });        
 }

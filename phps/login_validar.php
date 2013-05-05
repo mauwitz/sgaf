@@ -23,9 +23,14 @@ SELECT
     pes_senha,
     pes_grupopermissoes,
     pes_cooperativa,
-    pes_quiosqueusuario
+    pes_quiosqueusuario,
+    pes_cidade,
+    cid_estado,
+    est_pais
 FROM 
     pessoas
+    left join cidades on (pes_cidade=cid_codigo)
+    left join estados on (cid_estado=est_codigo)
 WHERE 
     pes_cpf='$cpf'
 ";
@@ -42,6 +47,9 @@ if ($total) {
         $_SESSION["usuario_grupo"] = $dados["pes_grupopermissoes"];
         $_SESSION["usuario_cooperativa"] = $dados["pes_cooperativa"];
         $_SESSION["usuario_quiosque"] = $dados["pes_quiosqueusuario"];
+        $_SESSION["usuario_cidade"] = $dados["pes_cidade"];
+        $_SESSION["usuario_estado"] = $dados["cid_estado"];
+        $_SESSION["usuario_pais"] = $dados["est_pais"];
         //Define o nome do quiosque
         $quiosque = $dados["pes_quiosqueusuario"];
         $sql2 = "SELECT qui_codigo,qui_nome FROM quiosques WHERE qui_codigo=$quiosque";

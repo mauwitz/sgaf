@@ -39,7 +39,7 @@ $tpl->block("BLOCK_FILTRO_CAMPO");
 $tpl->block("BLOCK_FILTRO_COLUNA");
 
 //Bot�o Incluir
-IF ($permissao_taxas_aplicar == 1) {
+IF (($permissao_taxas_aplicar == 1) && ($usuario_quiosque == $quiosque)) {
     $tpl->LINK = "quiosque_taxas_cadastrar.php?quiosque=$quiosque&operacao=cadastrar";
     $tpl->BOTAO_NOME = "INCLUIR TAXA";
     $tpl->block("BLOCK_RODAPE_BOTAO_MODELO");
@@ -54,6 +54,11 @@ $tpl->block("BLOCK_FILTRO");
 $tpl->CABECALHO_COLUNA_TAMANHO = "";
 $tpl->CABECALHO_COLUNA_COLSPAN = "2";
 $tpl->CABECALHO_COLUNA_NOME = "TAXA";
+$tpl->block("BLOCK_LISTA_CABECALHO");
+
+$tpl->CABECALHO_COLUNA_TAMANHO = "";
+$tpl->CABECALHO_COLUNA_COLSPAN = "";
+$tpl->CABECALHO_COLUNA_NOME = "TIPO";
 $tpl->block("BLOCK_LISTA_CABECALHO");
 
 $tpl->CABECALHO_COLUNA_TAMANHO = "";
@@ -79,7 +84,7 @@ IF ($permissao_taxas_aplicar == 1) {
 //LISTAGEM
 $sql = "
  SELECT DISTINCT
-    tax_codigo,tax_nome,tax_descricao,quitax_valor,quitax_taxa
+    tax_codigo,tax_nome,tax_descricao,quitax_valor,quitax_taxa,quitax_quiosque,tax_quiosque
 FROM
     quiosques_taxas
     JOIN taxas on (quitax_taxa=tax_codigo)
@@ -126,9 +131,20 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl->LISTA_COLUNA_VALOR = $dados["tax_nome"];
     $tpl->block("BLOCK_LISTA_COLUNA");
 
-    //Coluna Descri��o
+    //Coluna Tipo
     $tpl->LISTA_COLUNA_ALINHAMENTO = "";
     $tpl->LISTA_COLUNA_TAMANHO = "";
+    $qui = $dados["tax_quiosque"];
+    if ($qui == "0")
+        $tipo = "Global (Todos quiosques)";
+    else
+        $tipo = "Exclusiva (Apenas deste quiosque)";
+    $tpl->LISTA_COLUNA_VALOR = $tipo;
+    $tpl->block("BLOCK_LISTA_COLUNA");
+
+    //Coluna Descri��o
+    $tpl->LISTA_COLUNA_ALINHAMENTO = "";
+    $tpl->LISTA_COLUNA_TAMANHO = "200px";
     $tpl->LISTA_COLUNA_VALOR = $dados["tax_descricao"];
     $tpl->block("BLOCK_LISTA_COLUNA");
 
@@ -141,7 +157,8 @@ while ($dados = mysql_fetch_assoc($query)) {
     //Opera�ões
     $taxa = $dados["quitax_taxa"];
     $tpl->CODIGO = $taxa;
-    IF ($permissao_taxas_aplicar == 1) {
+    IF ((($permissao_taxas_aplicar == 1) && ($usuario_quiosque == $quiosque)) && ((($usuario_grupo == 2) && ($qui == 0)) || (($usuario_grupo == 3) && ($qui != 0))||($usuario_grupo==1))) {
+        //echo "$usuario_grupo ($qui)";
         //editar    
         $tpl->LINK = "quiosque_taxas_cadastrar.php";
         $tpl->LINK_COMPLEMENTO = "taxa=$taxa&quiosque=$quiosque&operacao=editar";
@@ -151,6 +168,16 @@ while ($dados = mysql_fetch_assoc($query)) {
         $tpl->LINK = "quiosque_taxas_deletar.php";
         $tpl->LINK_COMPLEMENTO = "taxa=$taxa&quiosque=$quiosque&operacao=excluir";
         $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_EXCLUIR");
+    } else {
+        //editar    
+        $tpl->LINK = "";
+        $tpl->LINK_COMPLEMENTO = "";
+        $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_EDITAR_DESABILITADO");
+
+        //excluir
+        $tpl->LINK = "";
+        $tpl->LINK_COMPLEMENTO = "";
+        $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_EXCLUIR_DESABILITADO");
     }
     $tpl->block("BLOCK_LISTA");
 }

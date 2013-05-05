@@ -1,3 +1,4 @@
+
 <?php
 
 //Verifica se o usuário tem permissão para acessar este conteúdo
@@ -116,6 +117,9 @@ $tpl2->CABECALHO_COLUNA_NOME = "TAXA";
 $tpl2->block("BLOCK_CABECALHO_COLUNA");
 $tpl2->CABECALHO_COLUNA_COLSPAN = "";
 $tpl2->CABECALHO_COLUNA_TAMANHO = "";
+$tpl2->CABECALHO_COLUNA_NOME = "QUIOSQUE";
+$tpl2->CABECALHO_COLUNA_COLSPAN = "";
+$tpl2->CABECALHO_COLUNA_TAMANHO = "";
 $tpl2->CABECALHO_COLUNA_NOME = "DESCRIÇÃO";
 $tpl2->block("BLOCK_CABECALHO_COLUNA");
 $tpl2->CABECALHO_COLUNA_COLSPAN = "";
@@ -207,6 +211,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
 
+ 
     //Descrição
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "";
@@ -230,7 +235,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     //Operação Editar
     $tpl2->COLUNA_TAMANHO = "50px";
     $tpl2->COLUNA_ALINHAMENTO = "center";
-if (($permissao_taxas_excluir==1)&&(($usuario_grupo==1)||(($usuario_grupo==2)&&($tax_quiosque==0))||(($usuario_grupo==3)&&($tax_quiosque!=0)))) {
+if (($permissao_taxas_excluir==1)&&(($usuario_grupo==1)||(($usuario_grupo==2)&&($tax_quiosque==0))||(($usuario_grupo==3)&&($tax_quiosque==$usuario_quiosque)))) {
         $tpl2->CONTEUDO_LINK_ARQUIVO = "taxas_cadastrar.php?operacao=editar&codigo=$codigo";
         $tpl2->block("BLOCK_CONTEUDO_LINK");
         $tpl2->block("BLOCK_OPERACAO_EDITAR_HABILITADO");
@@ -253,7 +258,7 @@ if (($permissao_taxas_excluir==1)&&(($usuario_grupo==1)||(($usuario_grupo==2)&&(
     $tpl2->COLUNA_ALINHAMENTO = "center";
     $tpl2->ICONES_CAMINHO = $icones;
     
-    if (($permissao_taxas_editar==1)&&(($usuario_grupo==1)||(($usuario_grupo==2)&&($tax_quiosque==0))||(($usuario_grupo==3)&&($tax_quiosque!=0)))) {
+    if (($permissao_taxas_editar==1)&&(($usuario_grupo==1)||(($usuario_grupo==2)&&($tax_quiosque==0))||(($usuario_grupo==3)&&($tax_quiosque==$usuario_quiosque)))) {
         $tpl2->CONTEUDO_LINK_ARQUIVO = "taxas_deletar.php?operacao=excluir&codigo=$codigo";
         $tpl2->block("BLOCK_CONTEUDO_LINK");
         $tpl2->block("BLOCK_OPERACAO_EXCLUIR_HABILITADO");

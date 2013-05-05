@@ -9,8 +9,19 @@
 <form action="{LINK_DESTINO}" target="{LINK_TARGET}" method="post" name="form1">
 <table summary="" border="0" class="tabela1" cellpadding="4">
     <!-- BEGIN BLOCK_ITEM -->
-    <tr>  
-        <td align="right" width="200px">
+    <tr 
+        <!-- BEGIN BLOCK_LINHA_CLASSE -->
+        class="{LINHA_CLASSE}"
+        <!-- END BLOCK_LINHA_CLASSE -->
+        <!-- BEGIN BLOCK_LINHA_ID -->
+        id="{LINHA_ID}"
+        <!-- END BLOCK_LINHA_ID -->
+    >  
+        <td align="right" width="200px"
+            <!-- BEGIN BLOCK_COLUNA_CLASSE -->
+            class="{COLUNA_CLASSE}"
+            <!-- END BLOCK_COLUNA_CLASSE -->        
+        >
             
             <!-- BEGIN BLOCK_TITULO --> 
             <b>
@@ -66,6 +77,10 @@
                 <!-- BEGIN BLOCK_CAMPO_NORMAL -->
                 class="campopadrao"
                 <!-- END BLOCK_CAMPO_NORMAL -->                
+                
+                <!-- BEGIN BLOCK_CAMPO_NORMAL_OCULTO -->
+                class="campopadrao some"
+                <!-- END BLOCK_CAMPO_NORMAL_OCULTO -->                
 
                 <!-- BEGIN BLOCK_CAMPO_PASSWORD -->
                 class="campopadrao password"
@@ -116,6 +131,9 @@
                 <!-- BEGIN BLOCK_SELECT_OPTION_PADRAO --> 
                 <option value="">Selecione</option>
                 <!-- END BLOCK_SELECT_OPTION_PADRAO --> 
+                <!-- BEGIN BLOCK_SELECT_OPTION_PADRAO2 --> 
+                <option value="">Todos</option>
+                <!-- END BLOCK_SELECT_OPTION_PADRAO2 --> 
                 <!-- BEGIN BLOCK_SELECT_OPTION --> 
                 <option 
                     value="{OPTION_VALOR}" 
@@ -130,6 +148,7 @@
             <!-- END BLOCK_SELECT --> 
             
             <!-- BEGIN BLOCK_CHECKBOX --> 
+            <span class="{CHECKBOX_SPAN_CLASSE}" id="{CHECKBOX_SPAN_ID}">
             <input 
                 type="checkbox"
                 value="{CHECKBOX_VALOR}" 
@@ -146,6 +165,7 @@
             <img src="{CHECKBOX_ICONE_ARQUIVO}" width="12px" title="{CHECKBOX_ICONE_MENSAGEM}" alt="{CHECKBOX_ICONE_MENSAGEM}">            
             <!-- END BLOCK_CHECKBOX_ICONE -->
             <br />
+            </span>
             <!-- END BLOCK_CHECKBOX --> 
             
             <!-- BEGIN BLOCK_TEXTAREA --> 
@@ -177,7 +197,7 @@
             
             <!-- BEGIN BLOCK_TEXTO -->
             <span class="">{TEXTO}</span>
-            <!-- END BLOCK_TEXTO -->  
+            <!-- END BLOCK_TEXTO -->              
             <!-- END BLOCK_CONTEUDO -->  
         </td>        
     </tr>

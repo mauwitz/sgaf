@@ -20,6 +20,7 @@ $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "acertos2.jpg";
 $tpl_titulo->show();
 
+
 $tpl = new Template("templates/listagem_2.html");
 $tpl->FORM_ONLOAD = "";
 

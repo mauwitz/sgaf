@@ -4,7 +4,48 @@
         verifica_usuario ();      
 
     });
+    
+    function tipo_pessoa(valor) {
+        if (valor==1) { //Pessoa Física
+            $("tr[id=tr_categoria]").hide(); 
+            $("tr[id=tr_categoria]").attr("required", false);
+            $("tr[id=tr_cnpj]").hide();            
+            $("tr[id=tr_cnpj]").attr("required", false);
+            $("tr[id=tr_pessoacontato]").hide(); 
+            $("input[id=telefone1ramal]").hide(); 
+            $("input[id=telefone2ramal]").hide(); 
+            $("tr[id=tr_cpf]").attr("required", true);
+            $("tr[id=tr_cpf]").show(); 
+            $("span[id=span_administrador]").show(); 
+            $("span[id=span_presidente]").show(); 
+            $("span[id=span_supervisor]").show(); 
+            $("span[id=span_vendedor]").show();             
+        } else if (valor==2) { //Pessoa Jurídica
+            //alert('2');
+            $("tr[id=tr_categoria]").show(); 
+            $("tr[id=tr_categoria]").attr("required", true);
+            $("tr[id=tr_cnpj]").show();            
+            $("tr[id=tr_cnpj]").attr("required", true);
+            $("tr[id=tr_pessoacontato]").show(); 
+            $("input[id=telefone1ramal]").show(); 
+            $("input[id=telefone2ramal]").show(); 
+            $("tr[id=tr_cpf]").attr("required", false);
+            $("tr[id=tr_cpf]").hide(); 
+            $("span[id=span_administrador]").hide(); 
+            $("span[id=span_presidente]").hide(); 
+            $("span[id=span_supervisor]").hide(); 
+            $("span[id=span_vendedor]").hide(); 
+        } else {
+            alert("Erro de envio de parametros para a função");
+        }       
+    }
 </script>
+<style>
+    .aparece {display: block;}
+    .some {display: none;}
+</style> 
+
+
 <?php
 //Verifica se o usuário tem permissão para acessar este conte�do
 require "login_verifica.php";
@@ -128,6 +169,12 @@ if (($operacao == "editar") || ($operacao == 'ver')) {
         $senha = $array['pes_senha'];
         $grupopermissoes = $array['pes_grupopermissoes'];
         $quiosqueusuario = $array['pes_quiosqueusuario'];
+        $cnpj = $array['pes_cnpj'];
+        $ramal1 = $array['pes_fone1ramal'];
+        $ramal2 = $array['pes_fone2ramal'];
+        $tipopessoa = $array['pes_tipopessoa'];
+        $pessoacontato = $array['pes_pessoacontato'];
+        $categoria = $array['pes_categoria'];
 
         $sql = "SELECT * FROM cidades join estados on (cid_estado=est_codigo) WHERE cid_codigo='$cidade'";
         $query = mysql_query($sql);
@@ -184,6 +231,77 @@ $tpl1->block("BLOCK_CAMPO");
 $tpl1->block("BLOCK_CONTEUDO");
 $tpl1->block("BLOCK_ITEM");
 
+//Tipo de pessoa
+$tpl1->TITULO = "Tipo Pessoa";
+$tpl1->block("BLOCK_TITULO");
+if (($operacao == 'ver') || ($operacao == 'editar')) {
+    $tpl1->SELECT_NOME = "tipopessoa2";
+    $tpl1->SELECT_ID = "tipopessoa2";
+    $tpl1->block("BLOCK_SELECT_DESABILITADO");
+    $tpl1->CAMPOOCULTO_NOME = "tipopessoa";
+    $tpl1->CAMPOOCULTO_VALOR = "$tipopessoa";
+    $tpl1->block("BLOCK_CAMPOSOCULTOS");
+} else {
+    $tpl1->SELECT_NOME = "tipopessoa";
+    $tpl1->SELECT_ID = "tipopessoa";
+}
+$tpl1->SELECT_TAMANHO = "";
+$tpl1->SELECT_ONCHANGE = "tipo_pessoa(this.value);";
+$tpl1->block("BLOCK_SELECT_ONCHANGE");
+$tpl1->block("BLOCK_SELECT_OBRIGATORIO");
+
+$sql = "SELECT pestippes_codigo,pestippes_nome FROM pessoas_tipopessoa ORDER BY pestippes_nome";
+$query = mysql_query($sql);
+if (!$query)
+    die("Erro: 0" . mysql_error());
+while ($dados = mysql_fetch_array($query)) {
+    $tpl1->OPTION_VALOR = $dados[0];
+    $tpl1->OPTION_NOME = $dados[1];
+    if ($dados[0] == $tipopessoa)
+        $tpl1->block("BLOCK_SELECT_OPTION_SELECIONADO");
+    $tpl1->block("BLOCK_SELECT_OPTION");
+}
+$tpl1->block("BLOCK_SELECT");
+$tpl1->block("BLOCK_CONTEUDO");
+$tpl1->block("BLOCK_ITEM");
+
+//Categoria
+$tpl1->TITULO = "Categoria";
+$tpl1->block("BLOCK_TITULO");
+$tpl1->SELECT_NOME = "categoria";
+$tpl1->SELECT_ID = "categoria";
+$tpl1->SELECT_TAMANHO = "";
+//$tpl1->SELECT_ONCHANGE = "";
+//$tpl1->block("BLOCK_SELECT_ONCHANGE");
+$sql = "SELECT pescat_codigo,pescat_nome FROM pessoas_categoria ORDER BY pescat_nome";
+$query = mysql_query($sql);
+if (!$query)
+    die("Erro: 0" . mysql_error());
+$tpl1->block("BLOCK_SELECT_OPTION_PADRAO");
+while ($dados = mysql_fetch_array($query)) {
+    $tpl1->OPTION_VALOR = $dados[0];
+    $tpl1->OPTION_NOME = $dados[1];
+    if ($dados[0] == $categoria)
+        $tpl1->block("BLOCK_SELECT_OPTION_SELECIONADO");
+    $tpl1->block("BLOCK_SELECT_OPTION");
+}
+if ($operacao == 'ver')
+    $tpl1->block("BLOCK_SELECT_DESABILITADO");
+if (($tipopessoa == 1) || ($codigo == "")) {
+    $tpl1->block("BLOCK_SELECT_NORMAL");
+    $tpl1->LINHA_CLASSE = "some";
+} else {
+    $tpl1->LINHA_CLASSE = "";
+    $tpl1->block("BLOCK_SELECT_OBRIGATORIO");    
+}
+$tpl1->block("BLOCK_LINHA_CLASSE");
+$tpl1->LINHA_ID = "tr_categoria";
+$tpl1->block("BLOCK_LINHA_ID");
+$tpl1->block("BLOCK_SELECT");
+$tpl1->block("BLOCK_CONTEUDO");
+$tpl1->block("BLOCK_ITEM");
+
+
 //Nome 
 $tpl1->TITULO = "Nome";
 $tpl1->block("BLOCK_TITULO");
@@ -192,7 +310,7 @@ $tpl1->CAMPO_TIPO = "text";
 $tpl1->CAMPO_NOME = "nome";
 $tpl1->CAMPO_DICA = "";
 $tpl1->CAMPO_ID = "capitalizar";
-$tpl1->CAMPO_ONKEYPRESS = "capitalize()";
+$tpl1->CAMPO_ONKEYPRESS = "";
 $tpl1->CAMPO_ONCLICK = "";
 $tpl1->CAMPO_TAMANHO = "35";
 $tpl1->CAMPO_VALOR = $nome;
@@ -241,6 +359,55 @@ IF ($operacao == 'ver')
     $tpl1->block("BLOCK_CAMPO_DESABILITADO");
 $tpl1->block("BLOCK_CAMPO");
 $tpl1->block("BLOCK_CONTEUDO");
+if ($tipopessoa == 2)
+    $tpl1->LINHA_CLASSE = "some";
+else
+    $tpl1->LINHA_CLASSE = "";
+$tpl1->block("BLOCK_LINHA_CLASSE");
+$tpl1->LINHA_ID = "tr_cpf";
+$tpl1->block("BLOCK_LINHA_ID");
+$tpl1->block("BLOCK_ITEM");
+
+//CNPJ
+$tpl1->TITULO = "CNPJ";
+$tpl1->block("BLOCK_TITULO");
+$tpl1->CAMPO_QTD_CARACTERES = "";
+$tpl1->CAMPO_TIPO = "text";
+$tpl1->CAMPO_NOME = "cnpj";
+$tpl1->CAMPO_DICA = "";
+$tpl1->CAMPO_ID = "cnpj";
+$tpl1->CAMPO_ONKEYPRESS = "return submitenter(this,event)";
+if ($codigo == "")
+    $cod = 0;
+else
+    $cod = $codigo;
+$tpl1->CAMPO_ONBLUR = "valida_cnpj(this.value); verifica_cnpj_cadastro(this.value,$cod,$oper_num);";
+$tpl1->CAMPO_ONCLICK = "this.select();";
+$tpl1->block("BLOCK_CAMPO_ONBLUR");
+$tpl1->CAMPO_TAMANHO = "14";
+$tpl1->CAMPO_VALOR = $cnpj;
+$tpl1->CAMPO_QTD_CARACTERES = 18;
+$tpl1->block("BLOCK_CAMPO_AUTOSELECIONAR");
+$tpl1->block("BLOCK_CAMPO_NORMAL");
+if ($cnpj_desabilitado == 1) {
+    $tpl1->block("BLOCK_CAMPO_DESABILITADO");
+    //$tpl1->block("BLOCK_CAMPO_SOMENTELEITURA");
+    $tpl1->CAMPOOCULTO_NOME = "cnpj";
+    $tpl1->CAMPOOCULTO_VALOR = "$cnpj";
+    $tpl1->block("BLOCK_CAMPOSOCULTOS");
+}
+//$tpl1->block("BLOCK_CAMPO_OBRIGATORIO");
+IF ($operacao == 'ver')
+    $tpl1->block("BLOCK_CAMPO_DESABILITADO");
+$tpl1->block("BLOCK_CAMPO");
+$tpl1->block("BLOCK_CONTEUDO");
+if (($tipopessoa == 1) || ($codigo == ""))
+    $tpl1->LINHA_CLASSE = "some";
+else
+    $tpl1->LINHA_CLASSE = "";
+$tpl1->block("BLOCK_LINHA_CLASSE");
+$tpl1->LINHA_ID = "tr_cnpj";
+$tpl1->block("BLOCK_LINHA_ID");
 $tpl1->block("BLOCK_ITEM");
 
 //Pais
@@ -309,8 +476,14 @@ if (($operacao == "editar") || ($operacao == "ver") || ($pais != "")) {
     while ($dados = mysql_fetch_assoc($query)) {
         $tpl1->OPTION_VALOR = $dados["est_codigo"];
         $tpl1->OPTION_NOME = $dados["est_sigla"];
-        if ($estado == $dados["est_codigo"]) {
-            $tpl1->block("BLOCK_SELECT_OPTION_SELECIONADO");
+        if ($estado == "") {
+            if ($usuario_estado == $dados["est_codigo"]) {
+                $tpl1->block("BLOCK_SELECT_OPTION_SELECIONADO");
+                $estado = $usuario_estado;
+            }
+        } else {
+            if ($estado == $dados["est_codigo"])
+                $tpl1->block("BLOCK_SELECT_OPTION_SELECIONADO");
         }
         $tpl1->block("BLOCK_SELECT_OPTION");
     }
@@ -330,7 +503,7 @@ $tpl1->SELECT_TAMANHO = "";
 $tpl1->block("BLOCK_SELECT_OBRIGATORIO");
 $tpl1->block("BLOCK_SELECT_OPTION_PADRAO");
 //Se a opera��o for editar ent�o mostrar os options, e o option em quest�o selecionado
-if (($operacao == "editar") || ($operacao == "ver")) {
+if (($operacao == "editar") || ($operacao == "ver") || ($estado != "")) {
     $sql = "  SELECT DISTINCT
         cid_codigo,cid_nome
     FROM
@@ -399,7 +572,7 @@ $tpl1->block("BLOCK_CAMPO");
 $tpl1->block("BLOCK_CONTEUDO");
 $tpl1->block("BLOCK_ITEM");
 
-//Endere�o
+//Endereç�o
 $tpl1->TITULO = "Endereço";
 $tpl1->block("BLOCK_TITULO");
 $tpl1->CAMPO_TIPO = "text";
@@ -509,6 +682,23 @@ IF ($operacao == 'ver')
     $tpl1->block("BLOCK_CAMPO_DESABILITADO");
 $tpl1->block("BLOCK_CAMPO");
 $tpl1->block("BLOCK_CONTEUDO");
+$tpl1->CAMPO_TIPO = "text";
+$tpl1->CAMPO_QTD_CARACTERES = "";
+$tpl1->CAMPO_DICA = "Ramal";
+$tpl1->CAMPO_ONCLICK = "";
+$tpl1->CAMPO_NOME = "fone1ramal";
+$tpl1->CAMPO_ID = "telefone1ramal";
+$tpl1->CAMPO_TAMANHO = "9";
+$tpl1->CAMPO_VALOR = $ramal1;
+$tpl1->CAMPO_QTD_CARACTERES = 9;
+if ($tipopessoa == 1)
+    $tpl1->block("BLOCK_CAMPO_NORMAL_OCULTO");
+else
+    $tpl1->block("BLOCK_CAMPO_NORMAL");
+IF ($operacao == 'ver')
+    $tpl1->block("BLOCK_CAMPO_DESABILITADO");
+$tpl1->block("BLOCK_CAMPO");
+$tpl1->block("BLOCK_CONTEUDO");
 $tpl1->block("BLOCK_ITEM");
 
 //Telefone 02
@@ -528,7 +718,53 @@ IF ($operacao == 'ver')
     $tpl1->block("BLOCK_CAMPO_DESABILITADO");
 $tpl1->block("BLOCK_CAMPO");
 $tpl1->block("BLOCK_CONTEUDO");
+$tpl1->CAMPO_TIPO = "text";
+$tpl1->CAMPO_QTD_CARACTERES = "";
+$tpl1->CAMPO_DICA = "Ramal";
+$tpl1->CAMPO_ONCLICK = "";
+$tpl1->CAMPO_NOME = "fone2ramal";
+$tpl1->CAMPO_ID = "telefone2ramal";
+$tpl1->CAMPO_TAMANHO = "9";
+$tpl1->CAMPO_VALOR = $ramal2;
+$tpl1->CAMPO_QTD_CARACTERES = 9;
+if ($tipopessoa == 1)
+    $tpl1->block("BLOCK_CAMPO_NORMAL_OCULTO");
+else
+    $tpl1->block("BLOCK_CAMPO_NORMAL");
+IF ($operacao == 'ver')
+    $tpl1->block("BLOCK_CAMPO_DESABILITADO");
+$tpl1->block("BLOCK_CAMPO");
+$tpl1->block("BLOCK_CONTEUDO");
 $tpl1->block("BLOCK_ITEM");
+
+//Pessoa para contato
+$tpl1->TITULO = "Pessoa para contato";
+$tpl1->block("BLOCK_TITULO");
+$tpl1->CAMPO_TIPO = "text";
+$tpl1->CAMPO_QTD_CARACTERES = "";
+$tpl1->CAMPO_NOME = "pessoacontato";
+$tpl1->CAMPO_DICA = "";
+$tpl1->CAMPO_ONCLICK = "";
+$tpl1->CAMPO_ID = "";
+$tpl1->CAMPO_TAMANHO = "30";
+$tpl1->CAMPO_VALOR = $pessoacontato;
+$tpl1->CAMPO_QTD_CARACTERES = 70;
+$tpl1->block("BLOCK_CAMPO_AUTOSELECIONAR");
+$tpl1->block("BLOCK_CAMPO_NORMAL");
+if ($operacao == 'ver')
+    $tpl1->block("BLOCK_CAMPO_DESABILITADO");
+$tpl1->block("BLOCK_CAMPO");
+$tpl1->block("BLOCK_CONTEUDO");
+if (($tipopessoa == 1) || ($codigo == ""))
+    $tpl1->LINHA_CLASSE = "some";
+else
+    $tpl1->LINHA_CLASSE = "";
+$tpl1->block("BLOCK_LINHA_CLASSE");
+$tpl1->LINHA_ID = "tr_pessoacontato";
+$tpl1->block("BLOCK_LINHA_ID");
+$tpl1->block("BLOCK_ITEM");
+
+
 
 //E-mail
 $tpl1->TITULO = "E-mail";
@@ -613,6 +849,8 @@ if ($usuario_codigo != $codigo) {
             $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
         if ($operacao == 'ver')
             $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+        $tpl1->CHECKBOX_SPAN_CLASSE = "";
+        $tpl1->CHECKBOX_SPAN_ID = "span_administrador";
         $tpl1->block("BLOCK_CHECKBOX");
     }
 
@@ -645,6 +883,12 @@ if ($usuario_codigo != $codigo) {
         }
         if ($operacao == 'ver')
             $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+        if ($tipopessoa == 2) {
+            $tpl1->CHECKBOX_SPAN_CLASSE = "some";
+        } else {
+            $tpl1->CHECKBOX_SPAN_CLASSE = "";
+        }
+        $tpl1->CHECKBOX_SPAN_ID = "span_presidente";
         $tpl1->block("BLOCK_CHECKBOX");
     }
 
@@ -676,6 +920,12 @@ if ($usuario_codigo != $codigo) {
         }
         if ($operacao == 'ver')
             $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+        if ($tipopessoa == 2) {
+            $tpl1->CHECKBOX_SPAN_CLASSE = "some";
+        } else {
+            $tpl1->CHECKBOX_SPAN_CLASSE = "";
+        }
+        $tpl1->CHECKBOX_SPAN_ID = "span_supervisor";
         $tpl1->block("BLOCK_CHECKBOX");
     }
 
@@ -707,6 +957,12 @@ if ($usuario_codigo != $codigo) {
         }
         if ($operacao == 'ver')
             $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+        if ($tipopessoa == 2) {
+            $tpl1->CHECKBOX_SPAN_CLASSE = "some";
+        } else {
+            $tpl1->CHECKBOX_SPAN_CLASSE = "";
+        }
+        $tpl1->CHECKBOX_SPAN_ID = "span_vendedor";
         $tpl1->block("BLOCK_CHECKBOX");
     }
 
@@ -720,6 +976,8 @@ if ($usuario_codigo != $codigo) {
             $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
         if ($operacao == 'ver')
             $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+        $tpl1->CHECKBOX_SPAN_CLASSE = "";
+        $tpl1->CHECKBOX_SPAN_ID = "span_fornecedor";
         $tpl1->block("BLOCK_CHECKBOX");
     }
 
@@ -732,6 +990,8 @@ if ($usuario_codigo != $codigo) {
             $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
         if ($operacao == 'ver')
             $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+        $tpl1->CHECKBOX_SPAN_CLASSE = "";
+        $tpl1->CHECKBOX_SPAN_ID = "span_consumidor";
         $tpl1->block("BLOCK_CHECKBOX");
     }
 

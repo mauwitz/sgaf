@@ -1,6 +1,6 @@
 <?php
 
-//Cabeçalho
+//CabeÃ§alho
 $tpl = new Template("../templates/cabecalho1.html");
 $codigo = $_POST["codigo"];
 $tpl->NUMERO = $codigo;

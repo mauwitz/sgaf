@@ -21,6 +21,9 @@ $usuario_cooperativanomecompleto= $_SESSION["usuario_cooperativanomecompleto"];
 $usuario_cooperativaabreviacao= $_SESSION["usuario_cooperativaabreviacao"];
 $usuario_quiosque= $_SESSION["usuario_quiosque"];
 $usuario_quiosquenome= $_SESSION["usuario_quiosquenome"];
+$usuario_cidade= $_SESSION["usuario_cidade"];
+$usuario_estado= $_SESSION["usuario_estado"];
+$usuario_pais= $_SESSION["usuario_pais"];
 
 
 

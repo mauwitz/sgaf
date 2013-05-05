@@ -1,7 +1,7 @@
 <?php
-$titulopagina="Acertos Cadastro/Edição";
+$titulopagina="Acertos Cadastro/Ediï¿½ï¿½o";
 
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuÃ¡rio tem permissÃ£o para acessar este conteÃºdo
 require "login_verifica.php";
 if ($permissao_acertos_cadastrar <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -19,7 +19,7 @@ $hora = $_POST["hora"];
 $valorbruto = $_POST["total_bruto"];
 $valortaxas = $_POST["valtaxas"];
 $valorpendenteanterior = $_POST["valpen"];
-$valortotal = number_format($_POST["valtot"],2,'.',''); //Não precisa usar replace nos , e . pois ele ja vem no formato de banco
+$valortotal = number_format($_POST["valtot"],2,'.',''); //Nï¿½o precisa usar replace nos , e . pois ele ja vem no formato de banco
 $valorpago = $_POST["valpago"];
 $valorpago = dinheiro_para_numero($valorpago);
 $valorpendenteatual = $valortotal - $valorpago;
@@ -32,8 +32,8 @@ $valorpendenteatual = $valortotal - $valorpago;
 
 //echo "valortotal $valortotal valorbruto $valorbruto valortaxas $valortaxas valorpago $valorpago valorpendenteatual $valorpendenteatual taxacoo $taxacoo taxaqui $taxaqui ";
 
-//Verifica se há produtos vendidos a serem acertados
-//(Necessário caso o usuário apertou F5, se não tivesse iria duplicar o registro)
+//Verifica se hï¿½ produtos vendidos a serem acertados
+//(Necessï¿½rio caso o usuï¿½rio apertou F5, se nï¿½o tivesse iria duplicar o registro)
 $sql = "
             SELECT pro_nome, round(sum(saipro_quantidade),2) as qtd, protip_sigla, avg(saipro_valorunitario) as valuni, round(sum(saipro_valortotal),2) as total
         FROM 
@@ -59,7 +59,7 @@ if ($linhas == 0) {
     $tpl11 = new Template("templates/notificacao.html");
     $tpl11->ICONES = $icones;
     $tpl11->block("BLOCK_ATENCAO");
-    $tpl11->MOTIVO = "Não há nenhum produto vendido deste fornecedor até o momento, portanto não é possÃ­vel realizar o acerto!";
+    $tpl11->MOTIVO = "NÃ£o hÃ¡ nenhum produto vendido deste fornecedor atÃ© o momento, portanto nÃ£o Ã© possÃ­vel realizar o acerto!";
     $tpl11->block("BLOCK_MOTIVO");
     $tpl11->DESTINO="acertos.php";
     $tpl11->block("BLOCK_BOTAO");                
@@ -105,7 +105,7 @@ echo "<br><br>";
 
 
 //Inserir as taxas do acerto
-//Verifica quais taxas que o quiosque tem para o acerto em questão
+//Verifica quais taxas que o quiosque tem para o acerto em questï¿½o
 $sql = "
     SELECT * FROM quiosques_taxas join taxas on (tax_codigo=quitax_taxa)    
 WHERE
@@ -168,7 +168,7 @@ $tpl6->MOTIVO = "O acerto foi registrado com sucesso!";
 
 $tpl6->LINK = "acertos_cadastrar3.php?codigo=$ultimo&operacao=imprimir";
 $tpl6->block("BLOCK_MOTIVO");
-$tpl6->PERGUNTA = "Deseja imprimir o relatórios do acerto?";
+$tpl6->PERGUNTA = "Deseja imprimir o relatÃ³rios do acerto?";
 $tpl6->block("BLOCK_PERGUNTA");
 $tpl6->NAO_LINK = "acertos.php";
 $tpl6->LINK_TARGET = "_blank";

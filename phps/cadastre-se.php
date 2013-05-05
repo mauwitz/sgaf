@@ -588,7 +588,7 @@
                         $tpl->TEXTO_NOME = "";
                         $tpl->TEXTO_ID = "";
                         $tpl->TEXTO_CLASSE = "dicacampo";
-                        $tpl->TEXTO_VALOR = "É o seu telefone. Não o do ponto de venda!";
+                        $tpl->TEXTO_VALOR = "É o teu telefone. Não o do ponto de venda!";
                         $tpl->block("BLOCK_TEXTO");
                         $tpl->block("BLOCK_CONTEUDO");
                         $tpl->block("BLOCK_COLUNA");
@@ -1412,7 +1412,7 @@
                         $tpl->TEXTO_NOME = "";
                         $tpl->TEXTO_ID = "";
                         $tpl->TEXTO_CLASSE = "dicacampo";
-                        $tpl->TEXTO_VALOR = "Caso um dia você esqueça sua senha, enviaremos a mesma para este e-mail";
+                        $tpl->TEXTO_VALOR = "Caso um dia você esqueça sua senha, enviaremos orientações de recuperação para este e-mail";
                         $tpl->block("BLOCK_TEXTO");
                         $tpl->block("BLOCK_CONTEUDO");
                         $tpl->block("BLOCK_COLUNA");

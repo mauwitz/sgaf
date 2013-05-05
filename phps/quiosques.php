@@ -298,7 +298,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     }
     //editar
 
-    if ((($permissao_quiosque_editar == 1) && ($codigo == $usuario_quiosque)) || ($usuario_grupo == 1)) {
+    if (($permissao_quiosque_editar == 1) && ($codigo == $usuario_quiosque)) {
         $tpl->LINK = "quiosques_cadastrar.php";
         $tpl->LINK_COMPLEMENTO = "operacao=editar";
         $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_EDITAR");
@@ -308,7 +308,7 @@ while ($dados = mysql_fetch_assoc($query)) {
         $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_EDITAR_DESABILITADO");
     }
     //deletar
-    if ((($permissao_quiosque_excluir == 1) && ($codigo == $usuario_quiosque)) || ($usuario_grupo == 1)) {
+    if (($permissao_quiosque_excluir == 1) && ($codigo == $usuario_quiosque))  {
         $tpl->LINK = "quiosques_deletar.php";
         $tpl->LINK_COMPLEMENTO = "operacao=excluir";
         $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_EXCLUIR");

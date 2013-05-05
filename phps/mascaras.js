@@ -11,5 +11,6 @@ $(document).ready(function(){
     $("#data_2").mask("99/99/9999");
     $("#data_5").mask("99/99/9999");
     $("#calendario").mask("99/99/9999");
+    $("#cnpj").mask("99.999.999/9999-99");
         
 });

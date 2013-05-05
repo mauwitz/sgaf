@@ -16,9 +16,11 @@ if ($usuario_codigo != $codigo) {
 }
 include "includes.php";
 
+//print_r($_REQUEST);
+
 $id = $_POST['id'];
 $cpf = $_POST['cpf'];
-$cpf= limpa_cpf($cpf); 
+$cpf = limpa_cpf($cpf);
 $nome = ucwords(strtolower($_POST['nome']));
 $cidade = $_POST['cidade'];
 $vila = ucwords(strtolower($_POST['vila']));
@@ -43,6 +45,17 @@ $grupopermissoes = $_POST['grupopermissoes'];
 $quiosqueusuario = $_POST['quiosqueusuario'];
 $data = date("Y/m/d");
 $hora = date("h:i:s");
+$cnpj = $_POST['cnpj'];
+$cnpj = str_replace('_', '', $cnpj);
+$cnpj = str_replace('.', '', $cnpj);
+$cnpj = str_replace('-', '', $cnpj);
+$cnpj = str_replace('/', '', $cnpj);
+$ramal1 = $_POST['fone1ramal'];
+$ramal2 = $_POST['fone2ramal'];
+$tipopessoa = $_POST['tipopessoa'];
+$pessoacontato = $_POST['pessoacontato'];
+$categoria = $_POST['categoria'];
+
 
 //Template de Título e Sub-título
 $tpl_titulo = new Template("templates/titulos.html");
@@ -55,10 +68,10 @@ $tpl_titulo->show();
 //Estrutura da notificação
 $tpl_notificacao = new Template("templates/notificacao.html");
 $tpl_notificacao->ICONES = $icones;
-if ($codigo!=$usuario_codigo) 
-$tpl_notificacao->DESTINO = "pessoas.php";
-else    
-$tpl_notificacao->DESTINO = "login_sair.php";
+if ($codigo != $usuario_codigo)
+    $tpl_notificacao->DESTINO = "pessoas.php";
+else
+    $tpl_notificacao->DESTINO = "login_sair.php";
 
 
 if ($operacao == "editar") {
@@ -158,7 +171,7 @@ if ($codigo != $usuario_codigo) {
             $tpl_notificacao->block("BLOCK_NAOCADASTRADO");
         else
             $tpl_notificacao->block("BLOCK_NAOEDITADO");
-        $tpl_notificacao->FALTADADOS_MOTIVO = "� obrigat�rio selecionar pelo menos um tipo de pessoa!";
+        $tpl_notificacao->FALTADADOS_MOTIVO = "É obrigatório selecionar pelo menos um tipo de pessoa!";
         $tpl_notificacao->block("BLOCK_MOTIVO_FALTADADOS");
         $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
         $tpl_notificacao->show();
@@ -210,8 +223,6 @@ if ($operacao == "cadastrar") {
     }
 }
 //ECHO "FAZER UMA VERIFICA��O QUE VERIFICA SE O ID DIGITADO J� EST� SENDO USADO POR OUTRA PESSOA, SE SIM ENT�O TRATAR DA MESMA FORMA QUE EST� SENDO TRATADO O NOME DE PESSOA DUPLICADO!";
-
-
 //Verifica se existe uma pessoa com o mesmo nome cadastrada
 //Se for um cadastro ent�o n�o pode ter nenhum registro com o mesmo nome
 if ($operacao == "cadastrar") {
@@ -280,7 +291,14 @@ if ($operacao == "cadastrar") {
             pes_obs,
             pes_possuiacesso,        
             pes_datacadastro,
-            pes_horacadastro            
+            pes_horacadastro,
+            pes_tipopessoa,
+            pes_categoria,
+            pes_cnpj,
+            pes_fone1ramal,
+            pes_fone2ramal,
+            pes_pessoacontato
+
         )
     VALUES (
         '$id',
@@ -302,7 +320,13 @@ if ($operacao == "cadastrar") {
         '$obs',
         '0',
         '$data',
-        '$hora'
+        '$hora',
+        '$tipopessoa',
+        '$categoria',
+        '$cnpj',
+        '$ramal1',
+        '$ramal2',
+        '$pessoacontato'            
     )";
     if (!mysql_query($sql))
         die("Erro6: " . mysql_error());
@@ -355,7 +379,13 @@ if ($operacao == "cadastrar") {
         pes_cooperativa='$cooperativa',
         pes_possuiacesso='$possuiacesso',
         pes_grupopermissoes='$grupopermissoes',
-        pes_quiosqueusuario='$quiosqueusuario'
+        pes_quiosqueusuario='$quiosqueusuario',
+        pes_tipopessoa='$tipopessoa',
+        pes_categoria='$categoria',
+        pes_cnpj='$cnpj',
+        pes_fone1ramal='$ramal1',
+        pes_fone2ramal='$ramal2',
+        pes_pessoacontato='$pessoacontato'
     WHERE 
         pes_codigo = '$codigo'
     ";

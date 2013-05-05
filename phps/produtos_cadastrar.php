@@ -29,6 +29,7 @@ while($array = mysql_fetch_array($query))
 ?>
 <script type="text/javascript" src="js/capitular.js"></script>
 
+
 <table summary="" class="" border="0">
 <tr>
 	<td width="35px"><img width="50px" src="<?php echo $icones;?>produtos.png" alt="" ></td>
@@ -40,12 +41,30 @@ while($array = mysql_fetch_array($query))
 </table>
 <hr align="left" class="linhacurta" >
 <br />
-
+<?php
+//Se não houverem categorias cadastras o sistema sugere primeiro fazer isto
+$sql = "SELECT cat_codigo FROM produtos_categorias WHERE cat_cooperativa=$usuario_cooperativa";
+$query = mysql_query($sql);
+if (!$query)
+    die("Erro: " . mysql_error());
+$linhas = mysql_num_rows($query);
+if ($linhas == 0) {
+    echo "<br>";
+    $tpl = new Template("templates/notificacao.html");
+    $tpl->ICONES = $icones;
+    $tpl->MOTIVO_COMPLEMENTO = "Você deve cadastrar uma categoria antes de cadastrar um produto! <br>Clique no botão abaixo para ir para tela de cadastro de categorias!";
+    $tpl->block("BLOCK_ATENCAO");
+    $tpl->DESTINO = "categorias_cadastrar.php?operacao=cadastrar";
+    $tpl->block("BLOCK_BOTAO");
+    $tpl->show();
+    exit;
+}
+?>
 <form action="produtos_cadastrar2.php?codigo=<?php echo"$codigo";?>" method="post" name="form1">
 <table summary="" border="0" class="tabela1" cellpadding="4">
 <tr>
 	<td align="right" width="200px"><b>Nome: <label class="obrigatorio"></label></b></td>
-	<td align="left" width=""><input  onkeypress="capitalize()"  id="capitalizar" type="text" name="nome" autofocus size="30" class="campo1" required value="<?php echo "$nome"; ?>" <?php if ($ver==1) echo" disabled ";?> ></td>
+	<td align="left" width=""><input  onkeypress=""  id="capitalizar" type="text" name="nome" autofocus size="45" class="campo1" required value="<?php echo "$nome"; ?>" <?php if ($ver==1) echo" disabled ";?> ></td>
 </tr>
 <tr>
 	<td align="right" width="200px"><b>Tipo de Contagem: <label class="obrigatorio"></label></b></td>

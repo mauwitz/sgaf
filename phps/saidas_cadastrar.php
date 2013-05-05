@@ -36,6 +36,7 @@ $tipopagina = "saidas";
 include "includes.php";
 
 
+
 //CONTROLE DA OPERAÇÃO
 $dataatual = date("Y/m/d");
 $horaatual = date("H:i:s");
@@ -152,6 +153,25 @@ if ($tiposaida == 1) {
 $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "saidas.png";
 $tpl_titulo->show();
+
+//Verifica se há produtos no estoque
+$sql = "SELECT etq_lote FROM estoque JOIN entradas on (etq_lote=ent_codigo) WHERE ent_quiosque=$usuario_quiosque";
+$query = mysql_query($sql);
+if (!$query)
+    die("Erro: " . mysql_error());
+$linhas = mysql_num_rows($query);
+if ($linhas == 0) {
+    echo "<br><br>";
+    $tpl = new Template("templates/notificacao.html");
+    $tpl->ICONES = $icones;
+    $tpl->MOTIVO_COMPLEMENTO = "Para gerar uma venda ou devolução <b>é necessário que se tenha produtos em seu estoque</b>. <br>Clique no botão abaixo para ir para a tela de cadastro de entradas, que é onde você insere produtos em seu estoque!";
+    $tpl->block("BLOCK_ATENCAO");
+    $tpl->DESTINO = "entradas_cadastrar.php?operacao=cadastrar";
+    $tpl->block("BLOCK_BOTAO");
+    $tpl->show();
+    exit;
+}
+
 
 //Inicio do formul�rio de saidas
 $tpl1 = new Template("saidas_cadastrar.html");

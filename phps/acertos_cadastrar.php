@@ -1,7 +1,8 @@
 <?php
-$titulopagina="Acertos Cadastro/Edição";
 
-//Verifica se o usuário tem permissão para acessar este conteúdo
+$titulopagina = "Acertos Cadastro/EdiÃ§Ã£o";
+
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 $operacao = $_GET["operacao"];
 $passo = $_POST["passo"];
@@ -22,7 +23,7 @@ if ($permissao_acertos_cadastrar <> 1) {
     }
 }
 
-
+$passa = $_REQUEST["passa"];
 $tipopagina = "acertos";
 include "includes.php";
 
@@ -38,6 +39,7 @@ if ($passo == 1) {
         $operacao = $_POST["operacao"];
         $codigo = $_POST["codigo"];
         $fornecedor = $_POST["fornecedor"];
+        $tipopessoa = $_POST["tipopessoa"];
     }
 }
 
@@ -50,10 +52,92 @@ $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "acertos2.jpg";
 $tpl_titulo->show();
 
+//Verifica se hÃ¡ produtos no estoque
+$sql = "SELECT sai_codigo FROM saidas WHERE sai_quiosque=$usuario_quiosque";
+$query = mysql_query($sql);
+if (!$query)
+    die("Erro: " . mysql_error());
+$linhas = mysql_num_rows($query);
+if ($linhas == 0) {
+    echo "<br><br>";
+    $tpl = new Template("templates/notificacao.html");
+    $tpl->ICONES = $icones;
+    $tpl->MOTIVO_COMPLEMENTO = "Para que vocÃª faÃ§a acertos com os fornecedores, Ã© necessÃ¡rio que existam vendas. <b>VocÃª nÃ£o efetuou nenhuma venda atÃ© agora!</b> <br>Clique no botÃ£o abaixo para ir para a tela de cadastro de saÃ­das, que Ã© onde vocÃª realiza vendas!";
+    $tpl->block("BLOCK_ATENCAO");
+    $tpl->DESTINO = "saidas_cadastrar.php?operacao=cadastrar";
+    $tpl->block("BLOCK_BOTAO");
+    $tpl->show();
+    exit;
+} else {
+    if ($passa != 1) {
 
-//--------------------TEMPLATE FORNECEDOR E BOTÃO --------------------
+
+        //Verifica se hÃ¡ produtos no estoque
+        $sql = "SELECT * FROM quiosques_taxas WHERE quitax_quiosque=$usuario_quiosque";
+        $query = mysql_query($sql);
+        if (!$query)
+            die("Erro: " . mysql_error());
+        $linhas = mysql_num_rows($query);
+        if ($linhas == 0) {
+            echo "<br><br>";
+            $tpl = new Template("templates/notificacao.html");
+            $tpl->ICONES = $icones;
+            //$tpl->MOTIVO_COMPLEMENTO = "";
+            $tpl->block("BLOCK_ATENCAO");
+            //$tpl->DESTINO = "saidas_cadastrar.php?operacao=cadastrar";
+            //$tpl->block("BLOCK_BOTAO");
+            $tpl->LINK = "acertos_cadastrar.php?passa=1";
+            $tpl->MOTIVO = "Seu quiosque nÃ£o possui taxas vinculadas! Se continuar, este acerto nÃ£o efetuarÃ¡ nenhum desconto sobre o valor de venda!";
+            $tpl->block("BLOCK_MOTIVO");
+            $tpl->PERGUNTA = "Escolha 'Sim' para continuar, ou 'NÃ£o' para vincular uma taxa ao quiosque!";
+            $tpl->block("BLOCK_PERGUNTA");
+            $tpl->NAO_LINK = "quiosque_taxas_cadastrar.php?quiosque=$usuario_quiosque&operacao=cadastrar";
+            $tpl->block("BLOCK_BOTAO_NAO_LINK");
+            $tpl->block("BLOCK_BOTAO_SIMNAO");
+            $tpl->show();
+            exit;
+        }
+    }
+}
+
+
+//--------------------TEMPLATE FORNECEDOR E BOTï¿½O --------------------
 $tpl1 = new Template("templates/cadastro_edicao_detalhes_2.html");
 $tpl1->LINK_DESTINO = "acertos_cadastrar.php";
+
+//Tipo Pessoa
+$tpl1->TITULO = "Tipo Pessoa";
+$tpl1->block("BLOCK_TITULO");
+$tpl1->SELECT_NOME = "tipopessoa";
+$tpl1->CAMPO_DICA = "";
+$tpl1->SELECT_ID = "tipopessoa";
+$tpl1->SELECT_TAMANHO = "";
+$tpl1->SELECT_ONCHANGE = "popula_fornecedores(this.value);";
+$tpl1->block("BLOCK_SELECT_ONCHANGE");
+//$tpl1->block("BLOCK_SELECT_OBRIGATORIO");
+$tpl1->block("BLOCK_SELECT_NORMAL");
+$tpl1->block("BLOCK_SELECT_OPTION_PADRAO2");
+$sql2 = "SELECT pestippes_codigo,pestippes_nome FROM pessoas_tipopessoa";
+$query2 = mysql_query($sql2);
+if (!$query2)
+    die("Erro2:" . mysql_error());
+
+
+while ($dados2 = mysql_fetch_assoc($query2)) {
+    $tpl1->OPTION_VALOR = $dados2["pestippes_codigo"];
+    $tpl1->OPTION_NOME = $dados2["pestippes_nome"];
+    if ($tipopessoa == $dados2["pestippes_codigo"])
+        $tpl1->block("BLOCK_SELECT_OPTION_SELECIONADO");
+
+    $tpl1->block("BLOCK_SELECT_OPTION");
+}
+if (($passo > 1) || ($operacao == 'ver'))
+    $tpl1->block("BLOCK_SELECT_DESABILITADO");
+$tpl1->block("BLOCK_SELECT");
+$tpl1->block("BLOCK_CONTEUDO");
+$tpl1->block("BLOCK_ITEM");
+
+
 
 //Fornecedor
 $tpl1->TITULO = "Fornecedor";
@@ -104,6 +188,10 @@ $tpl1->CAMPOOCULTO_NOME = "passo";
 $tpl1->CAMPOOCULTO_VALOR = "2";
 $tpl1->block("BLOCK_CAMPOSOCULTOS");
 
+$tpl1->CAMPOOCULTO_NOME = "passa";
+$tpl1->CAMPOOCULTO_VALOR = "$passa";
+$tpl1->block("BLOCK_CAMPOSOCULTOS");
+
 $tpl1->CAMPOOCULTO_NOME = "acerto";
 $tpl1->CAMPOOCULTO_VALOR = "$codigo";
 $tpl1->block("BLOCK_CAMPOSOCULTOS");
@@ -112,7 +200,7 @@ $tpl1->CAMPOOCULTO_NOME = "operacao";
 $tpl1->CAMPOOCULTO_VALOR = "$operacao";
 $tpl1->block("BLOCK_CAMPOSOCULTOS");
 
-//Botão Continuar
+//Botï¿½o Continuar
 if ($passo == 1) {
     $tpl1->BOTAO_TIPO = "submit";
     $tpl1->BOTAO_VALOR = "CONTINUAR";
@@ -120,7 +208,7 @@ if ($passo == 1) {
     $tpl1->block("BLOCK_BOTAO1_SEMLINK");
     $tpl1->block("BLOCK_BOTAO1");
 }
-//echo "Operação: $operacao <br>Passo: $passo <br>Codigo: $codigo <br>Fornecedor=$fornecedor";
+//echo "Operaï¿½ï¿½o: $operacao <br>Passo: $passo <br>Codigo: $codigo <br>Fornecedor=$fornecedor";
 $tpl1->show();
 
 
@@ -129,7 +217,7 @@ $tpl1->show();
 if ($passo == 2) {
 
 
-    //Verifica se há produtos vendidos a serem acertados
+    //Verifica se hï¿½ produtos vendidos a serem acertados
     $sql = "
             SELECT pro_nome, round(sum(saipro_quantidade),2) as qtd, protip_sigla, avg(saipro_valorunitario) as valuni, round(sum(saipro_valortotal),2) as total
         FROM 
@@ -156,7 +244,7 @@ if ($passo == 2) {
         $tpl11 = new Template("templates/notificacao.html");
         $tpl11->ICONES = $icones;
         $tpl11->block("BLOCK_ATENCAO");
-        $tpl11->MOTIVO = "Não há nenhum produto vendido deste fornecedor até o momento, portanto não é possÃ­vel realizar o acerto!";
+        $tpl11->MOTIVO = "NÃ£o hÃ¡ nenhum produto vendido deste fornecedor atÃ© o momento, portanto nÃ£o Ã© possÃ­vel realizar o acerto!";
         $tpl11->block("BLOCK_MOTIVO");
         $tpl11->block("BLOCK_BOTAO_VOLTAR");
         $tpl11->show();
@@ -183,14 +271,14 @@ if ($passo == 2) {
         $tpl2->block(BLOCK_LISTA_CABECALHO);
         $tpl2->CABECALHO_COLUNA_TAMANHO = "150px";
         $tpl2->CABECALHO_COLUNA_COLSPAN = "";
-        $tpl2->CABECALHO_COLUNA_NOME = "VALOR UNIT. MÉDIO";
+        $tpl2->CABECALHO_COLUNA_NOME = "VALOR UNIT. MÃ‰DIO";
         $tpl2->block(BLOCK_LISTA_CABECALHO);
         $tpl2->CABECALHO_COLUNA_TAMANHO = "150px";
         $tpl2->CABECALHO_COLUNA_COLSPAN = "";
         $tpl2->CABECALHO_COLUNA_NOME = "VALOR BRUTO";
         $tpl2->block(BLOCK_LISTA_CABECALHO);
 
-        //Mostra todos os produtos que foram vendidos mas ainda não foram acertados
+        //Mostra todos os produtos que foram vendidos mas ainda nï¿½o foram acertados
         $sql = "
             SELECT pro_nome, round(sum(saipro_quantidade),2) as qtd, protip_sigla, avg(saipro_valorunitario) as valuni, round(sum(saipro_valortotal),2) as total,protip_codigo
         FROM 
@@ -224,7 +312,7 @@ if ($passo == 2) {
             $tpl2->block("BLOCK_LISTA_COLUNA");
             $tpl2->LISTA_COLUNA_ALINHAMENTO = "right";
             $tpl2->LISTA_COLUNA_CLASSE = "";
-            $tipocontagem=$dados["protip_codigo"];
+            $tipocontagem = $dados["protip_codigo"];
             if ($tipocontagem == 2)
                 $tpl2->LISTA_COLUNA_VALOR = number_format($dados["qtd"], 3, ',', '.');
             else
@@ -248,7 +336,7 @@ if ($passo == 2) {
             $total_bruto = $total_bruto + $dados["total"];
             $tpl2->block("BLOCK_LISTA");
         }
-        //Rodapé da lisagem
+        //Rodapï¿½ da lisagem
         $tpl2->LISTA_CLASSE = "tabelarodape1";
         $tpl2->block("BLOCK_LISTA_CLASSE");
         $tpl2->LISTA_COLUNA_VALOR = " ";
@@ -330,7 +418,7 @@ if ($passo == 2) {
             $valtaxtot = $valtaxtot + $valtax;
             $tpl5->block("BLOCK_LISTA");
         }
-        //Rodapé da lisagem
+        //Rodapï¿½ da lisagem
         $tpl5->LISTA_CLASSE = "tabelarodape1";
         $tpl5->block("BLOCK_LISTA_CLASSE");
         $tpl5->LISTA_COLUNA_VALOR = " ";
@@ -512,16 +600,16 @@ if ($passo == 2) {
         $tpl4->block("BLOCK_CAMPOSOCULTOS");
 
         if ($usuario_grupo == 5) {
-            //Botão Voltar
+            //Botï¿½o Voltar
             $tpl4->BOTAO_LINK = "acertos.php";
             $tpl4->BOTAO_NOME = "VOLTAR";
             $tpl4->block("BLOCK_BOTAO_VARIADO");
         } else {
-            //Botão Salvar
+            //Botï¿½o Salvar
             $tpl4->BOTAO_NOME = "CONFIRMAR ACERTO";
             $tpl4->block("BLOCK_BOTAO_GERAL");
 
-            //Botão Cancelar
+            //Botï¿½o Cancelar
             $tpl4->BOTAO_LINK = "acertos.php";
             $tpl4->block("BLOCK_BOTAO_CANCELAR");
         }

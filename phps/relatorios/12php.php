@@ -144,7 +144,7 @@ $tpl_campos->block("BLOCK_CAMPO");
 $tpl_campos->TEXTO_NOME = "";
 $tpl_campos->TEXTO_ID = "";
 $tpl_campos->TEXTO_CLASSE = "";
-$tpl_campos->TEXTO_VALOR = " até ";
+$tpl_campos->TEXTO_VALOR = " atÃ© ";
 $tpl_campos->block("BLOCK_TEXTO");
 $tpl_campos->block("BLOCK_CONTEUDO");
 $tpl_campos->COLUNA_ALINHAMENTO = "left";
@@ -159,7 +159,7 @@ $tpl_campos->block("BLOCK_COLUNA");
 $tpl_campos->block("BLOCK_LINHA");
 
 
-//Ordenação
+//OrdenaÃ§Ã£o
 if ($usuario_grupo != 5) {
     $tpl_campos->COLUNA_ALINHAMENTO = "right";
     $tpl_campos->COLUNA_TAMANHO = "200px";
@@ -188,7 +188,7 @@ $tpl_campos->show();
 $tpl_lista = new Template("../templates/lista2.html");
 $tpl_lista->block("BLOCK_TABELA_CHEIA");
 
-//Cabeçalho
+//CabeÃ§alho
 $tpl_lista->TEXTO = "PRODUTO";
 $tpl_lista->COLUNA_ALINHAMENTO = "center";
 $tpl_lista->COLUNA_TAMANHO = "";
@@ -297,7 +297,7 @@ if (mysql_num_rows($query) == 0) {
     $tpl_lista->block("BLOCK_LINHA_NADA");
 } else {
 
-    //Rodapé
+    //RodapÃ©
     $tpl_lista->COLUNA_COLSPAN = "2";
     $tpl_lista->TEXTO = "";
     $tpl_lista->COLUNA_ALINHAMENTO = "";
@@ -306,7 +306,7 @@ if (mysql_num_rows($query) == 0) {
     $tpl_lista->block("BLOCK_CONTEUDO");
     $tpl_lista->block("BLOCK_COLUNA");
     
-    //Rodapé Bruto Total
+    //RodapÃ© Bruto Total
     $tpl_lista->COLUNA_COLSPAN = "";
     $tpl_lista->TEXTO = "R$ " . number_format($bruto_total, 2, ',', '.');
     $tpl_lista->COLUNA_ALINHAMENTO = "right";
@@ -315,7 +315,7 @@ if (mysql_num_rows($query) == 0) {
     $tpl_lista->block("BLOCK_CONTEUDO");
     $tpl_lista->block("BLOCK_COLUNA");
     
-    //Rodapé % Total
+    //RodapÃ© % Total
     $tpl_lista->COLUNA_COLSPAN = "";
     $tpl_lista->TEXTO = number_format($percentual_total,3, ',', '.') . "%";
     $tpl_lista->COLUNA_ALINHAMENTO = "right";

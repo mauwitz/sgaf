@@ -16,6 +16,7 @@ TRUNCATE saidas;
 TRUNCATE saidas_produtos;
 TRUNCATE taxas;
 DELETE FROM pessoas WHERE pes_codigo not in (1);
+DELETE FROM mestre_pessoas_tipo WHERE mespestip_pessoa not in (1);
 
 /*  */
 

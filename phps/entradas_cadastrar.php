@@ -9,30 +9,6 @@ if ($permissao_entradas_cadastrar <> 1) {
 
 include "includes.php";
 
-//Verifica se h� fornecedores na cooperativa
-$sql = "
-    SELECT pes_nome,pes_codigo
-FROM 
-    pessoas
-    join mestre_pessoas_tipo on (mespestip_pessoa=pes_codigo)
-WHERE
-    pes_cooperativa=$usuario_cooperativa and
-    mespestip_tipo=5
-";
-$query = mysql_query($sql);
-if (!$query)
-    die("Erro SQL (N�o Tem Fornecedor):" . mysql_error());
-$linhas = mysql_num_rows($query);
-if ($linhas == 0) {
-    $tpl11 = new Template("templates/notificacao.html");
-    $tpl11->ICONES = $icones;            
-    $tpl11->block("BLOCK_ATENCAO");
-    $tpl11->MOTIVO = "N�o h� fornecedores cadastrados! Portanto n�o � possível realizar entradas!";
-    $tpl11->block("BLOCK_MOTIVO");
-    $tpl11->block("BLOCK_BOTAO_VOLTAR");                
-    $tpl11->show();
-    exit;
-}
 
 $tpl = new Template("entradas_cadastrar.html");
 $tpl->ICONES_CAMINHO = "$icones";
@@ -43,6 +19,10 @@ $entrada = $_POST['entrada'];
 $fornecedor = $_POST['fornecedor'];
 if ($fornecedor == "") { //caso o campo fornecedor fique desabilitado!
     $fornecedor = $_POST['fornecedor2'];
+}
+$tipopessoa = $_POST['tipopessoa'];
+if ($tipopessoa == "") { //caso o campo fornecedor fique desabilitado!
+    $tipopessoa = $_POST['tipopessoa2'];
 }
 $produto = $_POST['produto'];
 $item_numero = $_POST['item_numero'];
@@ -59,7 +39,7 @@ if (($valuni2 != "") && ($valuni == "")) {
     $valuni = $valuni2;
 } else {
     $valuni = explode(" ", $valuni);
-    $valuni = $valuni[1];   
+    $valuni = $valuni[1];
 }
 $valuni = str_replace('.', '', $valuni);
 $valuni = str_replace(',', '.', $valuni);
@@ -88,6 +68,7 @@ if ($cancelar == 1) {
     $item_numero = $_GET['item_numero'];
     $produto = $_GET['produto'];
     $fornecedor = $_GET['fornecedor'];
+    $tipopessoa = $_GET['tipopessoa'];
     $passo = $_GET["passo"];
 }
 
@@ -100,8 +81,10 @@ if (($operacao == 3) || ($operacao == 2)) {
         die("Erro SQL" . mysql_error());
     $dados = mysql_fetch_assoc($query);
     $fornecedor = $dados["ent_fornecedor"];
+    $tipopessoa = $dados["pes_tipopessoa"];
 }
 $tpl->FORNECEDOR = $fornecedor;
+$tpl->TIPOPESSOA = $tipopessoa;
 
 //Caso seja uma opera��o de Editar ent�o ir para o passo2
 if ($operacao == 2) {
@@ -110,6 +93,43 @@ if ($operacao == 2) {
 } else {
     $tpl->SUBTITULO = "REGISTRAR ENTRADA";
 }
+
+//Verifica se há fornecedores na cooperativa
+$sql = "SELECT mespestip_pessoa FROM mestre_pessoas_tipo join pessoas on (mespestip_pessoa=pes_codigo) WHERE mespestip_tipo=5 and mespestip_pessoa not in ($usuario_codigo) and pes_cooperativa=$usuario_cooperativa";
+$query = mysql_query($sql);
+if (!$query)
+    die("Erro: " . mysql_error());
+$linhas = mysql_num_rows($query);
+if ($linhas == 0) {
+    echo "<br><br>";
+    $tpl = new Template("templates/notificacao.html");
+    $tpl->ICONES = $icones;
+    $tpl->MOTIVO_COMPLEMENTO = "Além de você mesmo, não há nenhuma pessoa do tipo 'Fornecedor' cadastrada. A entrada é sempre atribuida à um fornecedor, seja uma pessoa física ou jurídica. <br>Por favor, clique no botão abaixo para ir para a tela de cadastro de pessoa, e <b>certifique-se de cadastrar um fornecedor</b>!";
+    $tpl->block("BLOCK_ATENCAO");
+    $tpl->DESTINO = "pessoas_cadastrar.php?operacao=cadastrar";
+    $tpl->block("BLOCK_BOTAO");
+    $tpl->show();
+    exit;
+} else {
+    //Verifica se há produtos cadastrados
+    $sql = "SELECT pro_codigo FROM produtos  WHERE pro_cooperativa=$usuario_cooperativa";
+    $query = mysql_query($sql);
+    if (!$query)
+        die("Erro: " . mysql_error());
+    $linhas = mysql_num_rows($query);
+    if ($linhas == 0) {
+        echo "<br><br>";
+        $tpl = new Template("templates/notificacao.html");
+        $tpl->ICONES = $icones;
+        $tpl->MOTIVO_COMPLEMENTO = "Para gerar uma entrada é necessário que se tenha produtos cadastrados. Seu ponto de venda ainda <b>não possui produtos cadastrados</b>.<br>Por favor, clique no botão abaixo para ir para a tela de cadastro de produtos!";
+        $tpl->block("BLOCK_ATENCAO");
+        $tpl->DESTINO = "produtos_cadastrar.php?operacao=cadastrar";
+        $tpl->block("BLOCK_BOTAO");
+        $tpl->show();
+        exit;
+    }
+}
+
 
 $data = date("Y/m/d");
 $hora = date("H:i:s");
@@ -121,9 +141,39 @@ if ($produtomanter == 'on') {
 } else {
     $tpl->PRODUTOMANTER_HABILITADO = " ";
 }
-//echo "produtomanter: $produtomanter";
+
+
 //PASSO 01 - Selecionando o fornecedor
-//Options do Select do Fornecedor
+
+
+//Tipo de pessoa
+$sql = "SELECT pestippes_codigo,pestippes_nome FROM pessoas_tipopessoa";
+$query = mysql_query($sql);
+if ($query) {
+    if ($passo == "") {
+        $tpl->SELECT_TIPOPESSOA_DESABILITADO = "";
+    } else {
+        $tpl->SELECT_TIPOPESSOA_DESABILITADO = " disabled ";
+    }
+    //Caso a operação seja VER então desabilitar o select e trocar a classe
+    if ($operacao == 3) {
+        $tpl->SELECT_TIPOPESSOA_DESABILITADO = " disabled ";
+    }
+    while ($dados = mysql_fetch_array($query)) {
+        $tpl->OPTION_TIPOPESSOA_VALOR = $dados[0];
+        $tpl->OPTION_TIPOPESSOA_TEXTO = "$dados[1]";
+        if ($dados[0] == $tipopessoa) {
+            $tpl->OPTION_TIPOPESSOA_SELECIONADO = " SELECTED ";
+        } else {
+            $tpl->OPTION_TIPOPESSOA_SELECIONADO = "";
+        }
+        $tpl->block("BLOCK_OPTIONS_TIPOPESSOA");
+    }
+} else {
+    echo mysql_error();
+}
+$tpl->block("BLOCK_SELECT_TIPOPESSOA");
+//Fornecedor
 $sql = "
 SELECT 
     pes_codigo,pes_nome
@@ -161,9 +211,13 @@ if ($query) {
 } else {
     echo mysql_error();
 }
+$tpl->block("BLOCK_SELECT_FORNECEDOR");
+
+
 if ($passo == "") {
     $tpl->block("BLOCK_BOTAO_PASSO1");
 }
+
 
 
 //PASSO 02 - Gravando entrada no Banco
@@ -308,7 +362,7 @@ if ($passo != "") {
                 //Faz a inser��o do produto na entrada (inserir item de entrada)
                 $validade = desconverte_data($validade);
                 echo "total = number_format($valuni * $qtd, 2);";
-                echo $total = number_format($valuni * $qtd, 2,'.','');
+                echo $total = number_format($valuni * $qtd, 2, '.', '');
                 $sql = "
                 INSERT INTO
                     entradas_produtos (
@@ -344,7 +398,7 @@ if ($passo != "") {
     }
     $tpl->block("BLOCK_ENTER");
     $tpl->block("BLOCK_HR");
-    
+
 
     $tpl->ENTRADA = $entrada;
     $query5 = mysql_query($sql5);
@@ -354,17 +408,17 @@ if ($passo != "") {
             $tpl->block("BLOCK_LISTA_NADA");
             $tpl->SALVAR_DESABILIDADO = " disabled ";
         } else {
-            $tpl->OPER_COLSPAN=2;
+            $tpl->OPER_COLSPAN = 2;
             $tpl->block("BLOCK_CABECALHO_OPERACAO");
             while ($dados = mysql_fetch_array($query5)) {
                 $tpl->ENTRADAS_NUMERO = $dados['entpro_numero'];
                 $tpl->ENTRADAS_PRODUTO_NOME = $dados[0];
                 $tpl->ENTRADAS_LOCAL = $dados[6];
                 $tpl->SIGLA = $dados["protip_sigla"];
-                if ($dados["protip_sigla"]=="kg.")
-                    $tpl->ENTRADAS_QTD = number_format($dados[2], 3,',','.');
+                if ($dados["protip_sigla"] == "kg.")
+                    $tpl->ENTRADAS_QTD = number_format($dados[2], 3, ',', '.');
                 else
-                    $tpl->ENTRADAS_QTD = number_format($dados[2], 0,',','.');
+                    $tpl->ENTRADAS_QTD = number_format($dados[2], 0, ',', '.');
                 $tpl->ENTRADAS_VALORUNI = "R$ " . number_format($dados[4], 2, ',', '.');
                 if ($dados['5'] != "0000-00-00")
                     $tpl->ENTRADAS_VALIDADE = converte_data($dados['5']);
@@ -394,8 +448,8 @@ if ($passo != "") {
         }
         $tpl->block("BLOCK_PASSO2");
         $tpl->OPERACAO = $operacao;
-        $tpl->INTERROMPER="CANCELAR";
-        $tpl->ENTRADA=$entrada;
+        $tpl->INTERROMPER = "CANCELAR";
+        $tpl->ENTRADA = $entrada;
         $tpl->block("BLOCK_BOTOES");
         $tpl->block("BLOCK_PASSO3");
     } else {

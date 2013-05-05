@@ -106,6 +106,7 @@
         
     }
 
+
 </script>
 
 <link href="js/_style/jquery.click-calendario-1.0.css" rel="stylesheet" type="text/css"/>
@@ -134,6 +135,21 @@
             <td><input type="text" size="8" required name="entrada_codigo" class="campo1" disabled value="{ENTRADA}"> </td>
         </tr>
         <!--  END BLOCK_SELECT_ENTRADA -->
+        <!--  BEGIN BLOCK_SELECT_TIPOPESSOA -->
+        <tr>
+            <td align="right" width="200px"><b>Tipo de Pessoa: <label class="obrigatorio"></label></b></td>
+            <td>
+                <select autofocus="" name="tipopessoa" class="campo1" {SELECT_TIPOPESSOA_OBRIGATORIO} {SELECT_TIPOPESSOA_DESABILITADO} onchange="popula_fornecedores(this.value);">
+                        <option value="">Todos</option>	
+                    <!--  BEGIN BLOCK_OPTIONS_TIPOPESSOA -->
+                    <option value="{OPTION_TIPOPESSOA_VALOR}" {OPTION_TIPOPESSOA_SELECIONADO} >{OPTION_TIPOPESSOA_TEXTO}</option>
+                    <!--  END BLOCK_OPTIONS_TIPOPESSOA -->
+                </select>
+                <input type="hidden" name="tipopessoa2" value="{TIPOPESSOA}">
+            </td>            
+        </tr>
+        <!--  END BLOCK_SELECT_TIPOPESSOA -->
+        <!--  BEGIN BLOCK_SELECT_FORNECEDOR -->
         <tr>
             <td align="right" width="200px"><b>Fornecedor: <label class="obrigatorio"></label></b></td>
             <td>
@@ -146,6 +162,7 @@
                 <input type="hidden" name="fornecedor2" value="{FORNECEDOR}">
             </td>            
         </tr>
+        <!--  END BLOCK_SELECT_FORNECEDOR -->
         <!--  BEGIN BLOCK_SUPERVISOR -->
         <tr>
             <td align="right" width="200px"><b>Supervisor: <label class="obrigatorio"></label></b></td>

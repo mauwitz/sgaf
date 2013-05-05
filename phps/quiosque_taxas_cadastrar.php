@@ -19,6 +19,24 @@ $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "taxas.png";
 $tpl_titulo->show();
 
+//Verifica se há taxas cadastradas
+$sql = "SELECT tax_codigo FROM taxas WHERE tax_cooperativa=$usuario_cooperativa";
+$query = mysql_query($sql);
+if (!$query)
+    die("Erro: " . mysql_error());
+$linhas = mysql_num_rows($query);
+if ($linhas == 0) {
+    echo "<br><br>";
+    $tpl = new Template("templates/notificacao.html");
+    $tpl->ICONES = $icones;
+    $tpl->MOTIVO_COMPLEMENTO = "Para vincular uma taxa a um ponto de venda é necessário ter cadastrado alguma taxa! <b>Você não possui nenhuma taxa cadastrada!</b><br>Clique no botão abaixo para ir para a tela que cadastra taxas!";
+    $tpl->block("BLOCK_ATENCAO");
+    $tpl->DESTINO = "taxas_cadastrar.php?operacao=cadastrar";
+    $tpl->block("BLOCK_BOTAO");
+    $tpl->show();
+    exit;
+} 
+
 //Pega todos os dados da tabela (Necessário caso seja uma edição)
 $taxa = $_GET['taxa'];
 $quiosque = $_GET['quiosque'];
@@ -76,14 +94,11 @@ $tpl1->SELECT_TAMANHO = "";
 $tpl1->block("BLOCK_SELECT_OBRIGATORIO");
 $tpl1->block("BLOCK_SELECT_OPTION_PADRAO");
 $sql = "
-SELECT DISTINCT
-    tax_codigo,tax_nome
-FROM
-    taxas
-WHERE
-    tax_cooperativa=$coo
-ORDER BY
-    tax_nome";
+SELECT DISTINCT tax_codigo,tax_nome
+FROM taxas
+WHERE tax_cooperativa=$coo
+AND tax_quiosque IN (0,$usuario_quiosque)    
+ORDER BY tax_nome";
 $query = mysql_query($sql);
 if (!$query)
     die("Erro: 5" . mysql_error());
@@ -96,26 +111,6 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl1->block("BLOCK_SELECT_OPTION");
 }
 $tpl1->block("BLOCK_SELECT");
-$tpl1->block("BLOCK_CONTEUDO");
-$tpl1->block("BLOCK_ITEM");
-
-//Taxa Administrativa
-$tpl1->TITULO = "Taxa Administrativa.";
-$tpl1->block("BLOCK_TITULO");
-$tpl1->CAMPO_TIPO = "text";
-$tpl1->CAMPO_QTD_CARACTERES = "6";
-$tpl1->CAMPO_NOME = "taxaadm";
-$tpl1->CAMPO_DICA = "";
-$tpl1->CAMPO_ID = "qtd";
-$tpl1->CAMPO_TAMANHO = "8";
-$tpl1->CAMPO_VALOR = $taxaadm;
-$tpl1->CAMPO_QTD_CARACTERES = 70;
-$tpl1->CAMPO_ONKEYUP = "mascara_quantidade()";
-$tpl1->block("BLOCK_CAMPO_NORMAL");
-$tpl1->block("BLOCK_CAMPO_DESABILITADO");
-$tpl1->block("BLOCK_CAMPO");
-$tpl1->TEXTO="%";
-$tpl1->block("BLOCK_TEXTO");
 $tpl1->block("BLOCK_CONTEUDO");
 $tpl1->block("BLOCK_ITEM");
 
