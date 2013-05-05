@@ -40,7 +40,7 @@ function dinheirosemcrifrao_para_numero($dinheiro) {
     return $dinheiro;
 }
 
-//Calcula a diferença entre duas datas
+//Calcula a diferenï¿½a entre duas datas
 //A data deve estar no formato Y-m-d
 function diferenca_data($d1, $d2, $type = '', $sep = '-') {
     $d1 = explode($sep, $d1);
@@ -108,6 +108,12 @@ function diferenca_entre_datahora($tempo1, $tempo2) {
 function limpa_cpf($valor) {
     $valor = str_replace('.', '', $valor);
     $valor = str_replace('-', '', $valor);
+    return $valor;
+}
+function limpa_cnpj($valor) {
+    $valor = str_replace('.', '', $valor);
+    $valor = str_replace('-', '', $valor);
+    $valor = str_replace('/', '', $valor);
     return $valor;
 }
 

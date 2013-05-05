@@ -1,4 +1,5 @@
 <?php
+
 session_cache_expire(180);
 session_start();
 
@@ -8,16 +9,35 @@ include "funcoes.php";
 $_SESSION["sessiontime"] = time();
 
 $cpf = isset($_POST["cpf"]) ? addslashes(trim($_POST["cpf"])) : FALSE;
-$cpf= limpa_cpf($cpf);
+$cpf = limpa_cpf($cpf);
+$cnpj = isset($_POST["cnpj"]) ? addslashes(trim($_POST["cnpj"])) : FALSE;
+$cnpj = limpa_cnpj($cnpj);
 $senha = isset($_POST["senha"]) ? md5(trim($_POST["senha"])) : FALSE;
+$tipopessoa = $_POST["tipopessoa"];
 
-if (!$cpf || !$senha) {
-    echo "Você deve preencher os campos!";
+
+//print_r($_REQUEST);
+if ($tipopessoa == 2) {
+    $filtro = "pes_cnpj='$cnpj'";
+    if ($cnpj == "") {
+        echo "Preencha os campos!";
+        exit;
+    }
+} else if ($tipopessoa == 1) {
+    $filtro = "pes_cpf='$cpf'";
+    if ($cpf == "") {
+        echo "Preencha os campos!";
+        exit;
+    }
+} else {
+    echo "Preencha os campos!";
     exit;
 }
+
 $sql = "
 SELECT 
     pes_cpf,
+    pes_cnpj,
     pes_codigo,
     pes_nome, 
     pes_senha,
@@ -32,7 +52,7 @@ FROM
     left join cidades on (pes_cidade=cid_codigo)
     left join estados on (cid_estado=est_codigo)
 WHERE 
-    pes_cpf='$cpf'
+    $filtro
 ";
 $resultado = mysql_query($sql) or die("Erro de SQL 1:" . mysql_error());
 $total = mysql_num_rows($resultado);
@@ -43,6 +63,7 @@ if ($total) {
         //Deu tudo certo, usu�rio e senha est�o corretos
         $_SESSION["usuario_codigo"] = $dados["pes_codigo"];
         $_SESSION["usuario_cpf"] = $dados["pes_cpf"];
+        $_SESSION["usuario_cnpj"] = $dados["pes_cnpj"];
         $_SESSION["usuario_nome"] = stripslashes($dados["pes_nome"]);
         $_SESSION["usuario_grupo"] = $dados["pes_grupopermissoes"];
         $_SESSION["usuario_cooperativa"] = $dados["pes_cooperativa"];
@@ -76,5 +97,4 @@ if ($total) {
 } else {
     echo "CPF não encontrado!";
 }
-
 ?>
