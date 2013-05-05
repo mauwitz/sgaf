@@ -2,6 +2,7 @@
 include "controle/conexao.php";
 include "controle/conexao_tipo.php";
 include "funcoes.php";
+require "login_verifica.php";
 
 $produto = $_POST["produto"];
 $sql = "
@@ -14,14 +15,15 @@ FROM
     JOIN entradas_produtos ON (entpro_entrada=ent_codigo)    
 WHERE
     etq_produto=$produto and
-    entpro_produto=$produto
+    entpro_produto=$produto and
+    ent_quiosque=$usuario_quiosque
 ORDER BY
     ent_fornecedor";
 $query = mysql_query($sql);
 if (!$query)
     die("Erro: " . mysql_error());
 if (mysql_num_rows($query) == 0) {
-    echo "<option value=''>N„o h· registros</option>";
+    echo "<option value=''>N√£o h√° registros</option>";
 } else {
     echo "<option value=''>Selecione</option>";
     while ($dados = mysql_fetch_assoc($query)) {

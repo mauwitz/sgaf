@@ -8,7 +8,7 @@
     function tipo_pessoa(valor) {
         if (valor==1) { //Pessoa Física
             $("tr[id=tr_categoria]").hide(); 
-            $("tr[id=tr_categoria]").attr("required", false);
+            $("select[name=categoria]").attr("required", false);            
             $("tr[id=tr_cnpj]").hide();            
             $("tr[id=tr_cnpj]").attr("required", false);
             $("tr[id=tr_pessoacontato]").hide(); 
@@ -23,9 +23,10 @@
         } else if (valor==2) { //Pessoa Jurídica
             //alert('2');
             $("tr[id=tr_categoria]").show(); 
-            $("tr[id=tr_categoria]").attr("required", true);
+            $("select[name=categoria]").attr("required", true);            
             $("tr[id=tr_cnpj]").show();            
-            $("tr[id=tr_cnpj]").attr("required", true);
+            //$("input[name=cnpj]").attr("required", true);
+            //$("input[name=cnpj]").required = true;
             $("tr[id=tr_pessoacontato]").show(); 
             $("input[id=telefone1ramal]").show(); 
             $("input[id=telefone2ramal]").show(); 
@@ -200,7 +201,7 @@ $tpl1->LINK_DESTINO = "pessoas_cadastrar2.php";
 $tpl1->JS_CAMINHO = "pessoas_cadastrar.js";
 $tpl1->block("BLOCK_JS");
 
-$tpl1->ONLOAD = "verifica_usuario()";
+$tpl1->ONLOAD = "verifica_usuario($tipopessoa)";
 
 //ID
 $tpl1->TITULO = "ID";
@@ -1108,7 +1109,7 @@ if ($operacao == "editar") {
         $tpl1->SELECT_NOME = "possuiacesso";
         $tpl1->SELECT_ID = "possuiacesso";
         $tpl1->SELECT_TAMANHO = "";
-        $tpl1->SELECT_ONCHANGE = "verifica_usuario();";
+        $tpl1->SELECT_ONCHANGE = "verifica_usuario($tipopessoa);";
         $tpl1->block("BLOCK_SELECT_ONCHANGE");
         $tpl1->OPTION_VALOR = 0;
         $tpl1->OPTION_NOME = "Não";
@@ -1332,6 +1333,14 @@ if ($operacao == "editar") {
             join quiosques_vendedores on (quiven_quiosque=qui_codigo)
             WHERE qui_cooperativa=$cooperativa
             AND quiven_vendedor=$codigo
+        ";
+            } else IF ($usuario_grupo == 5) {
+                $sql = "
+                SELECT qui_codigo,qui_nome 
+                FROM entradas 
+                join quiosques on (ent_quiosque=qui_codigo)
+                WHERE qui_cooperativa=$cooperativa
+                AND ent_fornecedor=$codigo
         ";
             }
 

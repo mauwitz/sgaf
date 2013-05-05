@@ -1,6 +1,6 @@
 <?php
 
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 if ($permissao_estoque_ver <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -114,10 +114,10 @@ ORDER BY
     pro_nome
 ";
 
-//Paginação
+//Paginaï¿½ï¿½o
 $query = mysql_query($sql);
 if (!$query)
-    die("Erro SQL Principal Paginação:" . mysql_error());
+    die("Erro SQL Principal Paginaï¿½ï¿½o:" . mysql_error());
 $linhas = mysql_num_rows($query);
 while ($dados = mysql_fetch_assoc($query)) {
     $valor_total_geral = $valor_total_geral + $dados["valortot"];
@@ -126,7 +126,7 @@ $tpl->VALOR_TOTAL_GERAL = "R$ " . number_format($valor_total_geral, 2, ',', '.')
 $por_pagina = $usuario_paginacao;
 $paginaatual = $_POST["paginaatual"];
 $paginas = ceil($linhas / $por_pagina);
-//Se é a primeira vez que acessa a pagina então começar na pagina 1
+//Se ï¿½ a primeira vez que acessa a pagina entï¿½o comeï¿½ar na pagina 1
 if (($paginaatual == "") || ($paginas < $paginaatual) || ($paginaatual <= 0)) {
     $paginaatual = 1;
 }
@@ -151,7 +151,7 @@ if (!$query)
     die("Erro3: " . mysql_error());
 $linhas = mysql_num_rows($query);
 if ($linhas != "") {
-    //Se o usuário for um fornecedor então não mostrar algumas colunas
+    //Se o usuï¿½rio for um fornecedor entï¿½o nï¿½o mostrar algumas colunas
     if ($usuario_grupo != 5) {
         $tpl->block("BLOCK_LISTA_CABECALHO_FORNECEDORES");
         $tpl->block("BLOCK_LISTA_CABECALHO_TOTAL");
@@ -166,7 +166,7 @@ if ($linhas != "") {
         else
             $tpl->QUANTIDADE = number_format($dados['qtd'], 0, '', '.');
         $tpl->SIGLA = $dados['protip_sigla'];
-        //Se o usuário for um fornecedor então não mostrar algumas colunas
+        //Se o usuï¿½rio for um fornecedor entï¿½o nï¿½o mostrar algumas colunas
         
         if ($usuario_grupo != 5) {
             $valortot = $dados['valortot'];
@@ -178,7 +178,13 @@ if ($linhas != "") {
         $tpl->PRODUTO_CODIGO = $dados['pro_codigo'];
         $produto = $dados['pro_codigo'];
         $fornecedor = $dados['etq_fornecedor'];
-        $sqltot = "SELECT DISTINCT etq_fornecedor FROM estoque WHERE etq_produto=$produto ";
+        $sqltot = "
+            SELECT DISTINCT etq_fornecedor 
+            FROM estoque 
+            JOIN entradas on (etq_lote=ent_codigo)
+            WHERE etq_produto=$produto 
+            AND ent_quiosque=$usuario_quiosque
+        ";
         $tot = mysql_num_rows(mysql_query($sqltot));
         
         $tpl->QTD_FORNECEDORES = $tot;

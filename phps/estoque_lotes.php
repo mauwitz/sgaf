@@ -1,6 +1,6 @@
 <?php
 
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 if ($permissao_estoque_ver <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -37,16 +37,18 @@ FROM
     join entradas on (ent_codigo=etq_lote)
 WHERE
     etq_produto='$produto' and
-    etq_fornecedor='$fornecedor'
+    etq_fornecedor='$fornecedor' and
+    ent_quiosque=$usuario_quiosque
+        
 ORDER BY
     etq_lote
 
 ";
 
-//Paginação
+//Paginaï¿½ï¿½o
 $query = mysql_query($sql);
 if (!$query)
-    die("Erro SQL Principal Paginação:" . mysql_error());
+    die("Erro SQL Principal Paginaï¿½ï¿½o:" . mysql_error());
 $linhas = mysql_num_rows($query);
 $valor_total_geral=0;
 while ($dados= mysql_fetch_assoc($query)) {
@@ -62,7 +64,7 @@ else
 $por_pagina = $usuario_paginacao;
 $paginaatual = $_POST["paginaatual"];
 $paginas = ceil($linhas / $por_pagina);
-//Se é a primeira vez que acessa a pagina então começar na pagina 1
+//Se ï¿½ a primeira vez que acessa a pagina entï¿½o comeï¿½ar na pagina 1
 if (($paginaatual == "") || ($paginas < $paginaatual) || ($paginaatual <= 0)) {
     $paginaatual = 1;
 }
@@ -98,7 +100,7 @@ while ($dados = mysql_fetch_array($query)) {
     else
         $tpl->VALIDADE = converte_data($dados['etq_validade']);
 
-    //Pega os totais que vão para o rodapé
+    //Pega os totais que vï¿½o para o rodapï¿½
     $qtdtot = $qtdtot + $dados['etq_quantidade'];
     $valtot = $valtot + ($dados['etq_quantidade'] * $dados['etq_valorunitario']);
     $tpl->QTD_TOTAL = number_format($qtdtot, 2, ',', '.');
@@ -116,7 +118,7 @@ while ($dados = mysql_fetch_array($query)) {
         if ($saldo == 0) {
             $tpl->VALIDADE_SALDO = "hoje";
         } else if ($saldo == 1) {
-            $tpl->VALIDADE_SALDO = "amanhã";
+            $tpl->VALIDADE_SALDO = "amanhï¿½";
         } else if ($saldo < 0 ) {
             $tpl->VENCEU = "tabelalinhavermelha";
             $tpl->VALIDADE_SALDO = $saldo;
@@ -125,7 +127,7 @@ while ($dados = mysql_fetch_array($query)) {
         }
     }
 
-    //Pega a data de cadastro do lote que é a data de cadastro da entrada
+    //Pega a data de cadastro do lote que ï¿½ a data de cadastro da entrada
     $lote = $dados["etq_lote"];
     $sql_data = "SELECT ent_datacadastro,ent_horacadastro FROM entradas WHERE ent_codigo=$lote";
     $query_data = mysql_query($sql_data);

@@ -235,7 +235,7 @@
                         $tpl->CAMPO_AOCLICAR = "";
                         $tpl->CAMPO_ONKEYUP = "";
                         $tpl->CAMPO_ONKEYDOWN = "";
-                        $tpl->CAMPO_ONBLUR = "valida_cpf(this.value); verifica_cpf_cadastro(this.value,1);";
+                        $tpl->CAMPO_ONBLUR = "valida_cpf(this.value); verifica_cpf_cadastro(this.value,1,'','1');";
                         $tpl->CAMPO_VALOR = "";
                         $tpl->CAMPO_TAMANHO = "11";
                         $tpl->block("BLOCK_CAMPO_OBRIGATORIO");

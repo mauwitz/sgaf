@@ -2,6 +2,7 @@
 include "controle/conexao.php";
 include "controle/conexao_tipo.php";
 $grupo_permissao = $_POST["grupo_permissao"];
+//print_r($_REQUEST);
 $pessoa = $_POST["pessoa"];
 $cooperativa = $_POST["cooperativa"];
 
@@ -26,6 +27,14 @@ if ($grupo_permissao == "") {
             join quiosques_vendedores on (quiven_quiosque=qui_codigo)
             WHERE qui_cooperativa=$cooperativa
             AND quiven_vendedor=$pessoa
+        ";        
+     } else IF ($grupo_permissao==5){
+        $sql = "
+            SELECT qui_codigo,qui_nome 
+            FROM entradas 
+            join quiosques on (ent_quiosque=qui_codigo)
+            WHERE qui_cooperativa=$cooperativa
+            AND ent_fornecedor=$pessoa
         ";        
     } else {
         echo "<option value=''>Não há registros</option>";
