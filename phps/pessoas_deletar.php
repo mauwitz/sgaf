@@ -33,7 +33,7 @@ if (!$query)
     die("Erro SQL: " . mysql_error());
 $linhas = mysql_num_rows($query);
 if ($linhas > 0) {
-    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa � presidente da sua cooperativa";
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa está atribuida como presidente/gerente de sua cooperativa. Se deseja realmente excluí-la deve-se retirá-la do cardo de presidente na tela de 'Cadastro/Edição de Cooperativas'";
     $tpl_notificacao->block("BLOCK_ERRO");
     $tpl_notificacao->block("BLOCK_NAOAPAGADO");
     $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
@@ -48,7 +48,7 @@ if (!$query3)
     die("Erro: 2" . mysql_error());
 $linhas3 = mysql_num_rows($query3);
 if ($linhas3 > 0) {
-    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa � supervisor de algum quiosque";
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa está atribuida como supervisora de algum quiosque. Se realmente deseja excluí-la, deve-se retirar ela do cargo de supervisora na tela de 'Supervisores do Quiosque'";
     $tpl_notificacao->block("BLOCK_ERRO");
     $tpl_notificacao->block("BLOCK_NAOAPAGADO");
     $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
@@ -64,7 +64,7 @@ if (!$query2)
     die("Erro: 1" . mysql_error());
 $linhas2 = mysql_num_rows($query2);
 if ($linhas2 > 0) {
-    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa é vendedor de algum quiosque";
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa está atribuida como vendedora de algum quiosque. Se realmente deseja excluí-la, deve-se retirar ela do cargo de vendedora na tela de 'Vendedores do Quiosque'";
     $tpl_notificacao->block("BLOCK_ERRO");
     $tpl_notificacao->block("BLOCK_NAOAPAGADO");
     $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
@@ -73,14 +73,14 @@ if ($linhas2 > 0) {
 }
 
 
-//Verifica se o esta pessoa � fornecedor de algum quiosque
+//Verifica se o esta pessoa é fornecedor de algum quiosque
 $sql4 = "SELECT DISTINCT qui_nome FROM quiosques join entradas on (ent_quiosque=qui_codigo) WHERE ent_fornecedor=$codigo";
 $query4 = mysql_query($sql4);
 if (!$query4)
     die("Erro: 3" . mysql_error());
 $linhas4 = mysql_num_rows($query4);
 if ($linhas4 > 0) {
-    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa é fornecedor de algum quiosque";
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa é fornecedora de algum quiosque porque possui entradas. Se realmente deseja excluí-la, é necessário delete todas as entradas (desta pessoa) primeiro!";
     $tpl_notificacao->block("BLOCK_ERRO");
     $tpl_notificacao->block("BLOCK_NAOAPAGADO");
     $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");

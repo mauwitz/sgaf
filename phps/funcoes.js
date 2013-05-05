@@ -391,6 +391,8 @@ function popula_quiosques() {
 }
 
 function verifica_cpf_cadastro(valor,valor2,pessoa_cod,operacao) {
+//valor2 = 1 quando é verificação normal
+//valor2 = 2 quando é para a tela de esquecí minha senha
     valor = valor.replace("_", "");
     valor = valor.replace("_", "");
     valor = valor.replace("_", "");
@@ -412,23 +414,38 @@ function verifica_cpf_cadastro(valor,valor2,pessoa_cod,operacao) {
         $.post("verifica_cpf_cadastro.php", {
             cpf:$("input[name=cpf]").val(),
             pessoa:pessoa_cod,
-            oper:operacao
-        }, function(valor) {
-            //alert(valor);
+            oper:operacao,
+            valor2:operacao
+        }, function(valor3) {
+            //alert(valor3);
             if (valor2==1) {
-                if (valor>0) { 
+                //Esta parte refere-se a tela de cadastro e edição de PESSOAS ou CADASTRE-SE
+                if (valor3>0) { 
                     alert("Este cpf já está cadastrado no sistema, por favor utilize os metodos de recuperação de senha!");
                     $("input[name=cpf]").val("");                    
                 } else {
                 //Existe uma pessoa cadastrada com esse CPF
                 }
             } else if (valor2==2) { 
-                if (valor>0) {
+                //Esta parte refere-se a tela 'Esquecí minha senha''
+                if (valor3>0) {
                     //CPF é valido, está sendo usado por alguém
                     $.post("verifica_cpf2.php", {
                         cpf:$("input[name=cpf]").val()
-                    }, function(valor3) {
-                        $("select[name=metodo]").html(valor3);
+                    }, function(valor4) {
+                        //alert(valor4);
+                        if (valor4=='nenhum') {
+                            alert("O CPF digitado não possui nenhum método de recuperação de senha. Por favor entre em contato com os administradores para recuperar sua senha!");                            
+                            $("select[name=metodo]").html("<option>Selecione</option");
+                            $("input[name=cpf]").val("");
+                            $("input[name=cpf]").focus();
+                        } else if (valor4=='naopossuiacesso'){
+                            alert("O CPF digitado está cadastrado, mas não possui acesso ao sistema!");                            
+                            $("input[name=cpf]").val("");
+                            $("input[name=cpf]").focus();                            
+                        } else {
+                            $("select[name=metodo]").html(valor4);                            
+                        }
                     });
                 } else {
                     alert("Não tem ninguem usando esse CPF no sistema");
