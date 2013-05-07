@@ -741,7 +741,7 @@
                         $tpl->TEXTO_NOME = "";
                         $tpl->TEXTO_ID = "";
                         $tpl->TEXTO_CLASSE = "dicacampo";
-                        $tpl->TEXTO_VALOR = "É importante colocar um telefone, pois é atravs dele que muitos interessandos irão fazer contato";
+                        $tpl->TEXTO_VALOR = "É importante colocar um telefone, pois é através dele que muitos interessados irão fazer contato";
                         $tpl->block("BLOCK_TEXTO");
                         $tpl->block("BLOCK_CONTEUDO");
                         $tpl->block("BLOCK_COLUNA");

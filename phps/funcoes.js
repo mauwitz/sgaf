@@ -415,7 +415,7 @@ function verifica_cpf_cadastro(valor,valor2,pessoa_cod,operacao) {
             cpf:$("input[name=cpf]").val(),
             pessoa:pessoa_cod,
             oper:operacao,
-            valor2:operacao
+            valor2:valor2
         }, function(valor3) {
             //alert(valor3);
             if (valor2==1) {

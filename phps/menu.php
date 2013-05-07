@@ -99,9 +99,9 @@ if ($permissao_saidas_ver == 1) {
 }
 
 //Acertos
-$tpl_menu->IMAGEM_TITULO = "Acertos";
-$tpl_menu->TITULO = "Acertos";
-if ($permissao_acertos_ver == 1) {
+$tpl_menu->IMAGEM_TITULO = "Fechamentos";
+$tpl_menu->TITULO = "Fechamentos";
+if (($permissao_acertos_ver == 1)||($permissao_fechamentos_ver == 1)) {
     if ($usuario_quiosque != 0) {
         $tpl_menu->IMAGEM_ARQUIVO = "acertos2.jpg";
         $tpl_menu->LINK = "acertos.php";

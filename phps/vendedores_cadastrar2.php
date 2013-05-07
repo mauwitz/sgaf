@@ -1,7 +1,7 @@
 
 <?php
 
-//Verifica se o usu·rio tem permiss„o para acessar este conte˙do
+//Verifica se o usuÔøΩrio tem permissÔøΩo para acessar este conteÔøΩdo
 require "login_verifica.php";
 if ($permissao_quiosque_definirvendedores <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -25,15 +25,15 @@ $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "../pessoas2/vendedor.png";
 $tpl_titulo->show();
 
-//Estrutura da notificaÁ„o
+//Estrutura da notificaÔøΩÔøΩo
 $tpl_notificacao = new Template("templates/notificacao.html");
 $tpl_notificacao->ICONES = $icones;
 $tpl_notificacao->DESTINO = "vendedores.php?quiosque=$quiosque";
 
 
-//Se a operaÁ„o for cadastro ent„o
-if ($operacao=='cadastrar') {
-    //Verifica se o vendedor j· est· na lista de vendedores do quiosque
+//Se a operaÔøΩÔøΩo for cadastro entÔøΩo
+if ($operacao == 'cadastrar') {
+    //Verifica se o vendedor jÔøΩ estÔøΩ na lista de vendedores do quiosque
     $sql = "SELECT * FROM quiosques_vendedores WHERE quiven_vendedor=$vendedor and quiven_quiosque=$quiosque";
     $query = mysql_query($sql);
     if (!$query)
@@ -41,7 +41,7 @@ if ($operacao=='cadastrar') {
     //$dados=  mysql_fetch_assoc($query);
     $linhas = mysql_num_rows($query);
     if ($linhas > 0) {
-        $tpl_notificacao->MOTIVO_COMPLEMENTO = "Este vendedor j· est· na lista!";
+        $tpl_notificacao->MOTIVO_COMPLEMENTO = "Este vendedor j√° est√° na lista!";
         $tpl_notificacao->block("BLOCK_ERRO");
         $tpl_notificacao->block("BLOCK_NAOEDITADO");
         $tpl_notificacao->block("BLOCK_MOTIVO_FALTADADOS");
@@ -65,13 +65,34 @@ if ($operacao=='cadastrar') {
         $query = mysql_query($sql);
         if (!$query)
             die("Erro de SQL:" . mysql_error());
-        $tpl_notificacao->MOTIVO_COMPLEMENTO = "";
-        $tpl_notificacao->block("BLOCK_CONFIRMAR");
-        $tpl_notificacao->block("BLOCK_CADASTRADO");
-        $tpl_notificacao->block("BLOCK_BOTAO");
-        $tpl_notificacao->show();    
+        //Verifica se esse vendedor j√° possui um usu√°rio no sistema
+        $sql2 = "SELECT pes_possuiacesso FROM pessoas WHERE pes_codigo=$vendedor";
+        $query2 = mysql_query($sql2);
+        if (!$query2)
+            die("Erro de SQL:" . mysql_error());
+        $dados = mysql_fetch_array($query);
+        $possiacesso = $dados[0];
+        if ($possiacesso == 0) {
+            echo "<br>";
+            $tpl_notificacao->block("BLOCK_ATENCAO");
+            $tpl_notificacao->LINK = "pessoas_cadastrar.php?codigo=$vendedor&operacao=editar";
+            $tpl_notificacao->MOTIVO = "Este vendedor ainda n√£o possui acesso ao sistema!";
+            $tpl_notificacao->block("BLOCK_MOTIVO");
+            $tpl_notificacao->PERGUNTA = "Deseja definir uma senha de acesso para ele agora mesmo?";
+            $tpl_notificacao->block("BLOCK_PERGUNTA");
+            $tpl_notificacao->NAO_LINK = "vendedores.php?quiosque=$quiosque";
+            $tpl_notificacao->block("BLOCK_BOTAO_NAO_LINK");
+            $tpl_notificacao->block("BLOCK_BOTAO_SIMNAO");
+            $tpl_notificacao->show();
+        } else {
+            $tpl_notificacao->MOTIVO_COMPLEMENTO = "";
+            $tpl_notificacao->block("BLOCK_CONFIRMAR");
+            $tpl_notificacao->block("BLOCK_CADASTRADO");
+            $tpl_notificacao->block("BLOCK_BOTAO");
+            $tpl_notificacao->show();
+        }
     }
-} else { //Se for uma ediÁ„o
+} else { //Se for uma ediÔøΩÔøΩo
     $sql = "
     UPDATE
         quiosques_vendedores
@@ -87,7 +108,7 @@ if ($operacao=='cadastrar') {
     $tpl_notificacao->block("BLOCK_CONFIRMAR");
     $tpl_notificacao->block("BLOCK_EDITADO");
     $tpl_notificacao->block("BLOCK_BOTAO");
-    $tpl_notificacao->show();    
+    $tpl_notificacao->show();
 }
 
 

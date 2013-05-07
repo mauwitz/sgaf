@@ -39,4 +39,30 @@ exportar grupo_permissoes
 
 
 
-# Versão 1.2
+# Versão 1.2 Modulo misto
+
+atributo ent_tiponegociacao em entradas
+
+Exportar entidades:
+- entidade tipo_negociacao
+- mestre_produtos_tipo
+- quiosques_tiponegociacao
+- fornecedores_tiponegociacao
+- fechamentos
+- fechamentos_taxas
+
+ALTER TABLE  `taxas` ADD  `tax_tiponegociacao` TINYINT NOT NULL ,
+ADD INDEX (  `tax_tiponegociacao` )
+
+ALTER TABLE  `entradas_produtos` ADD  `entpro_valunicusto` FLOAT NULL
+ALTER TABLE  `entradas_produtos` ADD  `entpro_valtotcusto` FLOAT NULL;
+ALTER TABLE  `entradas` ADD  `ent_valortotalcusto` FLOAT NULL
+
+ALTER TABLE  `saidas_produtos` ADD  `saipro_fechado` BIGINT NULL ,
+ADD INDEX (  `saipro_fechado` )
+
+
+
+
+
+# Versão 1.3

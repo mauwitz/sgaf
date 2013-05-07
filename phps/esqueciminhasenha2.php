@@ -101,7 +101,7 @@
                     $destinatario = "$email";
                     $titulo="Recuperar senha da conta SGAF Online";
                     $emailmd5=md5($email_banco);
-                    $link="http://localhost/sgaf~subversion/SGAF/phps/novasenha.php?cpf=$cpf&par=$emailmd5";
+                    $link=$_SERVER["SERVER_NAME"]."/SGAF/phps/"."novasenha.php?cpf=$cpf&par=$emailmd5";
                     $textoemail = "
                         Ecosoli Suporte\n\n
                         Recuperação de senha\n

@@ -423,7 +423,7 @@ if ($linhas == 0) {
                     $tpl->OPERACAO_NOME = "Incompleta";
                 } else {
                     $tpl->ICONE_ARQUIVO = $icones . "bandeira3_laranja.png";
-                    $tpl->OPERACAO_NOME = "Esta venda est� em andamento por outro vendedor!";
+                    $tpl->OPERACAO_NOME = "Esta venda está em andamento por outro vendedor!";
                     $editar_ocultar = 1;
                     $editar_ocultar_motivo = "";
                 }
