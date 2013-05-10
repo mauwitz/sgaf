@@ -21,7 +21,43 @@
         <div class="corpo">
             <?php
             $senha = $_POST["senha1"];
-            $cpf = $_POST["cpf"];
+            $cpf = $_POST["c"];
+            $resposta = $_POST["r"];
+            $emailmd5 = $_POST["e"];
+            $passa = 0;
+
+            //print_r($_REQUEST);
+            if ($emailmd5 == "") { //É por pergunta e resposta secreta
+                //Verifica se a resposta bate com o cpf, no banco!
+                $sql = "select pes_respostasecreta from pessoas where pes_cpf like '$cpf'";
+                if (!$query = mysql_query($sql))
+                    die("ERRO SQL" . mysql_error());
+                $dados = mysql_fetch_array($query);
+                $resposta_banco = $dados[0];
+                if ($resposta_banco==$resposta)
+                    $passa=1;
+                else {
+                    $passa=0;
+                }
+            } else { //É recuperação por link de email
+                //Verifica se a resposta bate com o cpf, no banco!
+                $sql = "select pes_email_senha from pessoas where pes_cpf like '$cpf'";
+                if (!$query = mysql_query($sql))
+                    die("ERRO SQL" . mysql_error());
+                $dados = mysql_fetch_array($query);
+                $emailmd5_banco = $dados[0];
+                $emailmd5_banco = md5($emailmd5_banco);
+                if ($emailmd5 == $emailmd5_banco)
+                    $passa = 1;
+                else
+                    $passa = 0;
+            }
+
+            if ($passa == 0) {
+                echo "Por favor, não tente burlar o sistema! O software é gratuito! Fizemos a nossa parte, ajude-nos! :D";
+                exit;
+            }
+
 
             //Atualiza senha            
             $senha1md5 = md5($senha);
@@ -29,7 +65,7 @@
             $query1 = mysql_query($sql1);
             if (!$query1)
                 die("Erro1: " . mysql_error());
-            
+
             $tpl = new Template("templates/tituloemlinha_2.html");
             $tpl->block("BLOCK_TITULO");
             $tpl->LISTA_TITULO = "NOVA SENHA";

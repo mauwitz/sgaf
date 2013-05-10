@@ -145,8 +145,16 @@
                 $tpl->block("BLOCK_LINHA");
 
                 //Cpf
-                $tpl->CAMPOOCULTO_NOME = "cpf";
+                $tpl->CAMPOOCULTO_NOME = "c";
                 $tpl->CAMPOOCULTO_VALOR = "$cpf";
+                $tpl->block("BLOCK_CAMPOOCULTO");
+                //Resposta
+                $tpl->CAMPOOCULTO_NOME = "r";
+                $tpl->CAMPOOCULTO_VALOR = "$resposta";
+                $tpl->block("BLOCK_CAMPOOCULTO");
+                //E-mail md5
+                $tpl->CAMPOOCULTO_NOME = "e";
+                $tpl->CAMPOOCULTO_VALOR = "$emailmd5";
                 $tpl->block("BLOCK_CAMPOOCULTO");
 
                 $tpl->show();
