@@ -426,6 +426,51 @@ $tpl1->block("BLOCK_SELECT");
 $tpl1->block("BLOCK_CONTEUDO");
 $tpl1->block("BLOCK_ITEM");
 
+//Tipo de negociação
+$tpl1->TITULO = "Tipo de negociação";
+if (($operacao == "editar") || ($operacao == "ver")) {
+    $sql = "SELECT * FROM quiosques_tiponegociacao WHERE quitipneg_quiosque=$codigo";
+    $query = mysql_query($sql);
+    if (!$query)
+        die("Erro: 8" . mysql_error());
+    while ($dados = mysql_fetch_assoc($query)) {
+        $tipo = $dados["quitipneg_tipo"];
+        if ($tipo == 1)
+            $tipo_consignacao = 1;
+        if ($tipo == 2)
+            $tipo_revenda = 1;
+    }
+}
+//Tipo Consignação
+$tpl1->CHECKBOX_NOME = "box[1]";
+$tpl1->CHECKBOX_VALOR = "1";
+$tpl1->LABEL_NOME = "Consignação";
+if ($tipo_consignacao == 1) {
+    $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
+}
+if ($operacao == 'ver')
+    $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+$tpl1->CHECKBOX_SPAN_ID = "";
+$tpl1->block("BLOCK_CHECKBOX");
+
+//Tipo Revenda
+$tpl1->CHECKBOX_NOME = "box[2]";
+$tpl1->CHECKBOX_VALOR = "2";
+$tpl1->LABEL_NOME = "Revenda";
+if ($tipo_revenda == 1) {
+    $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
+}
+if ($operacao == 'ver')
+    $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+$tpl1->CHECKBOX_SPAN_ID = "";
+$tpl1->block("BLOCK_CHECKBOX");
+$tpl1->block("BLOCK_TITULO");
+$tpl1->block("BLOCK_CONTEUDO");
+$tpl1->block("BLOCK_ITEM");
+
+
+
+
 //BOTOES
 if (($operacao == "editar") || ($operacao == "cadastrar")) {
     //Bot�o Salvar

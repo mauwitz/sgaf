@@ -128,6 +128,12 @@ $query2 = mysql_query($sql2);
 if (!$query2) {
     die("Erro SQL: " . mysql_error());
 }
+//Deleta primeiro as referencias dessa pessoa
+$sql22 = "DELETE FROM fornecedores_tiponegociacao WHERE fortipneg_pessoa='$codigo'";
+$query22 = mysql_query($sql22);
+if (!$query22) {
+    die("Erro SQL 22: " . mysql_error());
+}
 $sql3 = "DELETE FROM pessoas WHERE pes_codigo='$codigo'";
 $query3 = mysql_query($sql3);
 if (!$query3) {

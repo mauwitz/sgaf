@@ -873,7 +873,7 @@ if ($usuario_codigo != $codigo) {
             $total2 = mysql_num_rows($query2);
             if ($total2 > 0) {
                 $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
-                $tpl1->CHECKBOX_ICONE_ARQUIVO = "../imagens/icones/geral/help.png";
+                $tpl1->CHECKBOX_ICONE_ARQUIVO = "../imagens/icones/geral/info.png";
                 $tpl1->CHECKBOX_ICONE_MENSAGEM = "Você não pode desmarcar esta opção porque esta pessoa atualmente é presidente de alguma cooperativa. Contate os administradores para saber mais!";
                 $tpl1->block("BLOCK_CHECKBOX_ICONE");
                 //Chama o campo oculto caso o checkbox fique desabilitado
@@ -910,7 +910,7 @@ if ($usuario_codigo != $codigo) {
             $total2 = mysql_num_rows($query2);
             if ($total2 > 0) {
                 $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
-                $tpl1->CHECKBOX_ICONE_ARQUIVO = "../imagens/icones/geral/help.png";
+                $tpl1->CHECKBOX_ICONE_ARQUIVO = "../imagens/icones/geral/info.png";
                 $tpl1->CHECKBOX_ICONE_MENSAGEM = "Você não pode desmarcar esta opção porque esta pessoa atualmente é supervisora de algum quiosque. ";
                 $tpl1->block("BLOCK_CHECKBOX_ICONE");
                 //Chama o campo oculto caso o checkbox fique desabilitado
@@ -947,7 +947,7 @@ if ($usuario_codigo != $codigo) {
             $total2 = mysql_num_rows($query2);
             if ($total2 > 0) {
                 $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
-                $tpl1->CHECKBOX_ICONE_ARQUIVO = "../imagens/icones/geral/help.png";
+                $tpl1->CHECKBOX_ICONE_ARQUIVO = "../imagens/icones/geral/info.png";
                 $tpl1->CHECKBOX_ICONE_MENSAGEM = "Você não pode desmarcar esta opção porque esta pessoa atualmente é vendedora de algum quiosque";
                 $tpl1->block("BLOCK_CHECKBOX_ICONE");
                 //Chama o campo oculto caso o checkbox fique desabilitado
@@ -1041,6 +1041,52 @@ $tpl1->block("BLOCK_SELECT");
 $tpl1->block("BLOCK_CONTEUDO");
 $tpl1->block("BLOCK_ITEM");
 
+
+
+//Tipo de negociação
+$tpl1->TITULO = "Tipo de negociação";
+$tpl1->block("BLOCK_TITULO");
+if (($operacao == "editar") || ($operacao == "ver")) {
+    $sql = "SELECT * FROM fornecedores_tiponegociacao WHERE fortipneg_pessoa=$codigo";
+    $query = mysql_query($sql);
+    if (!$query)
+        die("Erro: 8" . mysql_error());
+    while ($dados = mysql_fetch_assoc($query)) {
+        $tipo = $dados["fortipneg_tiponegociacao"];
+        if ($tipo == 1)
+            $tipo_consignacao = 1;
+        if ($tipo == 2)
+            $tipo_revenda = 1;
+    }
+}
+//Tipo Consignação
+$tpl1->CHECKBOX_NOME = "box2[1]";
+$tpl1->CHECKBOX_VALOR = "1";
+$tpl1->LABEL_NOME = "Consignação";
+if ($tipo_consignacao == 1) {
+    $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
+}
+if ($operacao == 'ver')
+    $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+$tpl1->CHECKBOX_SPAN_ID = "";
+$tpl1->block("BLOCK_CHECKBOX");
+
+//Tipo Revenda
+$tpl1->CHECKBOX_NOME = "box2[2]";
+$tpl1->CHECKBOX_VALOR = "2";
+$tpl1->LABEL_NOME = "Revenda";
+if ($tipo_revenda == 1) {
+    $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
+}
+if ($operacao == 'ver')
+    $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+$tpl1->CHECKBOX_SPAN_ID = "";
+$tpl1->block("BLOCK_CHECKBOX");
+
+
+$tpl1->block("BLOCK_CONTEUDO");
+$tpl1->block("BLOCK_ITEM");
+
 //Observação
 $tpl1->TITULO = "Observação";
 $tpl1->block("BLOCK_TITULO");
@@ -1115,7 +1161,7 @@ if ($operacao == "editar") {
         $tpl1->OPTION_NOME = "Não";
         if ($linhas5 == 0) {
             $tpl1->block("BLOCK_SELECT_DESABILITADO");
-            $tpl1->COMPLEMENTO_ICONE_ARQUIVO = "../imagens/icones/geral/help.png";
+            $tpl1->COMPLEMENTO_ICONE_ARQUIVO = "../imagens/icones/geral/info.png";
             $tpl1->COMPLEMENTO_ICONE_MENSAGEM = "Esta pessoa não pode ter acesso ao sistema porque ela não é presidente, supervisora, vendedora ou fornecedora de algum quiosque de sua cooperativa. Para ser considerado um fornecedor, não basta apenas marcar o tipo 'Fornecedor' nesta tela, é necessário ter pelo menos uma entrada! Para ser Supervisor ou Vendedor de um quiosque, esta pessoa deve ser vinculadas a um quiosque na tela de 'Quiosques'! E para ser um presidente contatar um administrador! :)";
             $tpl1->block("BLOCK_COMPLEMENTO_ICONE");
             $tpl1->block("BLOCK_SELECT_OPTION_SELECIONADO");
@@ -1144,7 +1190,7 @@ if ($operacao == "editar") {
         $tpl1->block("BLOCK_CONTEUDO");
         //Verifica se o usu�rio est� editando seu pr�prio cadastro, se sim mostrar icone informativo ao lado
         if ($usuario_codigo == $codigo) {
-            $tpl1->COMPLEMENTO_ICONE_ARQUIVO = "../imagens/icones/geral/help.png";
+            $tpl1->COMPLEMENTO_ICONE_ARQUIVO = "../imagens/icones/geral/info.png";
             $tpl1->COMPLEMENTO_ICONE_MENSAGEM = "Você não tem permissão para desativar seu próprio usuário! Contate um adminsitrador se deseja fazer isto!";
             $tpl1->block("BLOCK_COMPLEMENTO_ICONE");
         }

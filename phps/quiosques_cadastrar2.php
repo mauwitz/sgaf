@@ -13,7 +13,7 @@ if ($codigo == "") {
     }
 }
 include "includes.php";
-
+//print_r($_REQUEST);
 
 $erro = 0;
 $nome = $_POST['nome'];
@@ -34,6 +34,7 @@ $horacadastro = date("h:i:s");
 $dataedicao = date("Y-m-d");
 $horaedicao = date("h:i:s");
 $paginadestino = "quiosques.php";
+$tiponegociacao = $_POST["box"];
 if ($permissao_quiosque_definircooperativa == 1) {
     $cooperativa = $_POST['cooperativa'];
 } else {
@@ -50,9 +51,44 @@ $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "quiosques.png";
 $tpl_titulo->show();
 
+//Verifica se foi selecionado pelo menos um tipo de negociacao
+if (empty($tiponegociacao)) {
+$tpl_notificacao = new Template("templates/notificacao.html");
+    $tpl_notificacao->ICONES = $icones;
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "É necessário selecionar pelo menos um tipo de negociação!";
+    //$tpl_notificacao->DESTINO = "produtos.php";
+    $tpl_notificacao->block("BLOCK_ERRO");
+    $tpl_notificacao->block("BLOCK_NAOEDITADO");
+    //$tpl_notificacao->block("BLOCK_MOTIVO_JAEXISTE");
+    $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
+    $tpl_notificacao->show();
+    exit;
+}
+
+
+
 if ($codigo == "") {
     $sql = " INSERT INTO quiosques (qui_nome,qui_cidade,qui_cep,qui_bairro,qui_vila,qui_endereco,qui_numero,qui_complemento,qui_referencia,qui_fone1,qui_fone2,qui_email,qui_obs,qui_datacadastro,qui_horacadastro,qui_cooperativa,qui_usuario)
 	VALUES ('$nome','$cidade','$cep','$bairro','$vila','$endereco','$numero','$complemento','$referencia','$fone1','$fone2','$email','$obs','$datacadastro','$horacadastro','$cooperativa','$usuario_codigo');";
+    $query = mysql_query($sql);
+    if (!$query)
+        die("Erro SQL");    
+    $ultimo = mysql_insert_id();
+    $quiosque = $ultimo;
+    foreach ($tiponegociacao as $tiponegociacao) {
+        $sql2 = "
+    INSERT INTO 
+        quiosques_tiponegociacao (
+            quitipneg_quiosque,
+            quitipneg_tipo
+        ) 
+    VALUES (
+        '$quiosque',
+        '$tiponegociacao'
+    )";
+        if (!mysql_query($sql2))
+            die("Erro7: " . mysql_error());
+    }
 } else {
 
     $sql2 = "SELECT qui_cooperativa FROM quiosques WHERE qui_codigo=$codigo";
@@ -83,12 +119,27 @@ if ($codigo == "") {
     qui_horaedicao='$horaedicao',
     qui_usuario='$usuario_codigo',
     qui_obs='$obs'
-	WHERE qui_codigo = '$codigo'";
-}
-if ($erro == 0) {
-    $query = mysql_query($sql);
-    if (!$query)
-        die("Erro SQL");
+    WHERE qui_codigo = '$codigo'
+    ";
+    if (!mysql_query($sql))
+            die("Erro17: " . mysql_error());
+    
+    //Deleta os tipos de negociação para depois incluir de novo no novo formato
+    $sqldel = " DELETE FROM quiosques_tiponegociacao WHERE quitipneg_quiosque='$codigo'";
+    if (!mysql_query($sqldel))
+        die("Erro9: " . mysql_error());
+    foreach ($tiponegociacao as $tiponegociacao) {
+        $sql2 = "
+            INSERT INTO quiosques_tiponegociacao (
+                quitipneg_quiosque,
+                quitipneg_tipo
+            ) VALUES (
+                '$codigo',
+                '$tiponegociacao'
+            )";
+        if (!mysql_query($sql2))
+            die("Erro78: " . mysql_error());
+    }
 }
 ?>
 <table summary="" border="1" class="tabela1" cellpadding="4" align="center">

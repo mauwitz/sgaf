@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 //Verifica se o usu�rio tem permiss�o para acessar este conte�do
 require "login_verifica.php";
 if ($permissao_produtos_ver <> 1) {
@@ -8,7 +8,8 @@ if ($permissao_produtos_ver <> 1) {
 }
 
 
-$tipopagina = "produtos"; ?>
+$tipopagina = "produtos";
+?>
 <?php include "includes.php"; ?>
 <script type="text/javascript" src="paginacao.js"></script>
 
@@ -45,9 +46,11 @@ $filtrocategoria = $_POST['filtrocategoria'];
                     $query_categoria = mysql_query($sql_categoria);
                     while ($dados_categoria = mysql_fetch_array($query_categoria)) {
                         ?>
-                        <option value="<?php echo "$dados_categoria[0]"; ?>" <?php if ($filtrocategoria == $dados_categoria[0]) {
-                            echo" selected ";
-                        } ?>><?php echo "$dados_categoria[1]"; ?></option><?php } ?>
+                        <option value="<?php echo "$dados_categoria[0]"; ?>" <?php
+                    if ($filtrocategoria == $dados_categoria[0]) {
+                        echo" selected ";
+                    }
+                    ?>><?php echo "$dados_categoria[1]"; ?></option><?php } ?>
                 </select>
             </td>
         </tr>
@@ -64,26 +67,26 @@ $filtrocategoria = $_POST['filtrocategoria'];
                 </a>
             </td>
             <td width="100%" align="right">
-                <?php if ($permissao_produtos_cadastrar==1) {  ?>
-                <a href="produtos_cadastrar.php?operacao=1" class="link"><input type="button" value="CADASTRAR PRODUTO" class="botaopadrao botaopadraocadastrar" autofocus="1"></a>
-                <?php } else { ?>
-<!--                <input type="button" value="CADASTRAR" class="botaopadrao botaopadraocadastrar" disabled>-->
-                <?php } ?>
+                <?php if ($permissao_produtos_cadastrar == 1) { ?>
+                    <a href="produtos_cadastrar.php?operacao=1" class="link"><input type="button" value="CADASTRAR PRODUTO" class="botaopadrao botaopadraocadastrar" autofocus="1"></a>
+<?php } else { ?>
+    <!--                <input type="button" value="CADASTRAR" class="botaopadrao botaopadraocadastrar" disabled>-->
+<?php } ?>
             </td>                
         </tr>
     </table>    
     <br>
 
-<?php
-if ($filtrocodigo!="")
-    $sql_filtro=$sql_filtro." and pro_codigo=$filtrocodigo";
-if ($filtronome!="")
-    $sql_filtro=$sql_filtro." and pro_nome like '%$filtronome%'";
-if ($filtrocategoria!="")
-    $sql_filtro=$sql_filtro." and pro_categoria = $filtrocategoria";
+    <?php
+    if ($filtrocodigo != "")
+        $sql_filtro = $sql_filtro . " and pro_codigo=$filtrocodigo";
+    if ($filtronome != "")
+        $sql_filtro = $sql_filtro . " and pro_nome like '%$filtronome%'";
+    if ($filtrocategoria != "")
+        $sql_filtro = $sql_filtro . " and pro_categoria = $filtrocategoria";
 
 
-$sql = "
+    $sql = "
 SELECT
 	*
 FROM
@@ -96,129 +99,157 @@ ORDER BY
 ";
 
 //Pagina��o
-$query = mysql_query($sql);
-if (!$query)
-    die("Erro SQL Principal Paginação:" . mysql_error());
-$linhas = mysql_num_rows($query);
-$por_pagina = $usuario_paginacao;
-$paginaatual = $_POST["paginaatual"];
-$paginas = ceil($linhas / $por_pagina);
+    $query = mysql_query($sql);
+    if (!$query)
+        die("Erro SQL Principal Paginação:" . mysql_error());
+    $linhas = mysql_num_rows($query);
+    $por_pagina = $usuario_paginacao;
+    $paginaatual = $_POST["paginaatual"];
+    $paginas = ceil($linhas / $por_pagina);
 //Se � a primeira vez que acessa a pagina ent�o come�ar na pagina 1
-if (($paginaatual == "") || ($paginas < $paginaatual) || ($paginaatual <= 0)) {
-    $paginaatual = 1;
-}
-$comeco = ($paginaatual - 1) * $por_pagina;
-$sql = $sql . " LIMIT $comeco,$por_pagina ";
+    if (($paginaatual == "") || ($paginas < $paginaatual) || ($paginaatual <= 0)) {
+        $paginaatual = 1;
+    }
+    $comeco = ($paginaatual - 1) * $por_pagina;
+    $sql = $sql . " LIMIT $comeco,$por_pagina ";
 
 
 
 
-$query = mysql_query($sql);
-$linhas = mysql_num_rows($query);
-?>
-    
-<table border="1" class="tabela1" cellpadding="4" width="100%">
-    <tr valign="middle" class="tabelacabecalho1">
-        <td width="35px">CODIGO</td>
-        <td width="" colspan="2">DATA</td>
-        <td width="">NOME</td>
-        <td colspan="2" align="center">TIPO</td>
-        <td width="" align="center">CATEGORIA</td>	
+    $query = mysql_query($sql);
+    $linhas = mysql_num_rows($query);
+    ?>
+
+    <table border="1" class="tabela1" cellpadding="4" width="100%">
+        <tr valign="middle" class="tabelacabecalho1">
+            <td width="35px">CODIGO</td>
+            <td width="" colspan="2">DATA</td>
+            <td width="">NOME</td>
+            <td colspan="2" align="center">TIPO</td>
+            <td width="" align="center">CATEGORIA</td>	
+            <td width="" align="center">TIPO NEG.</td>	
+            <?php
+            $oper = 0;
+            $oper_tamanho = 0;
+            if ($permissao_produtos_editar == 1) {
+                $oper = $oper + 1;
+                $oper_tamanho = $oper_tamanho + 50;
+            }
+            if ($permissao_produtos_excluir == 1) {
+                $oper = $oper + 1;
+                $oper_tamanho = $oper_tamanho + 50;
+            }
+            if ($permissao_produtos_ver == 1) {
+                $oper = $oper + 1;
+                $oper_tamanho = $oper_tamanho + 50;
+            }
+            ?>                
+            <td width="<?php echo $oper_tamanho . "px"; ?>" colspan="<?php echo $oper; ?>">OPERAÇÕES </td>
+        </tr>
+
         <?php
-        $oper=0;
-        $oper_tamanho=0;
-        if ($permissao_produtos_editar == 1) {
-            $oper=$oper+1;            
-            $oper_tamanho=$oper_tamanho+50;
-        }  
-        if ($permissao_produtos_excluir == 1) {
-            $oper=$oper+1;            
-            $oper_tamanho=$oper_tamanho+50;
-        }
-        if ($permissao_produtos_ver == 1)  {
-            $oper=$oper+1;           
-            $oper_tamanho=$oper_tamanho+50;
-        }
-?>                
-        <td width="<?php echo $oper_tamanho."px"; ?>" colspan="<?php echo $oper; ?>">OPERAÇÕES </td>
-    </tr>
+        while ($array = mysql_fetch_array($query)) {
+            $codigo = number_format($array['pro_codigo'], 0, ',', '.');
+            $nome = $array['pro_nome'];
+            $tipo = $array['pro_tipocontagem'];
+            $categoria = $array['pro_categoria'];
+            $data = converte_data($array['pro_datacriacao']);
+            $hora = converte_hora($array['pro_horacriacao']);
+            ?>
 
-    <?php
-    while ($array = mysql_fetch_array($query)) {
-        $codigo =  number_format($array['pro_codigo'], 0, ',', '.');
-        $nome = $array['pro_nome'];
-        $tipo = $array['pro_tipocontagem'];
-        $categoria = $array['pro_categoria'];
-        $data = converte_data($array['pro_datacriacao']);
-        $hora = converte_hora($array['pro_horacriacao']);
-        ?>
-    
-        <tr class="lin">
-            <td align="right"><?php echo "$codigo"; ?></td>
-            <td align="right"><?php echo "$data"; ?></td>
-            <td align="left"><?php echo "$hora"; ?></td>
-            
-            
-            <td><?php echo "$nome"; ?></td>
-            <td align="right" width="150px"><?php
-            $sql2 = "SELECT * FROM produtos_tipo WHERE protip_codigo=$tipo";
-            $query2 = mysql_query($sql2);
-            while ($array2 = mysql_fetch_array($query2)) {
-                $nometipo = $array2['protip_nome'];
-                $siglatipo = $array2['protip_sigla'];
-                echo "$nometipo";
+            <tr class="lin">
+                <td align="right"><?php echo "$codigo"; ?></td>
+                <td align="right"><?php echo "$data"; ?></td>
+                <td align="left"><?php echo "$hora"; ?></td>
+
+
+                <td><?php echo "$nome"; ?></td>
+                <td align="right" width="150px"><?php
+                $sql2 = "SELECT * FROM produtos_tipo WHERE protip_codigo=$tipo";
+                $query2 = mysql_query($sql2);
+                while ($array2 = mysql_fetch_array($query2)) {
+                    $nometipo = $array2['protip_nome'];
+                    $siglatipo = $array2['protip_sigla'];
+                    echo "$nometipo";
+                }
+                ?>
+                </td>
+                <td width="35px"><?php echo " $siglatipo"; ?>
+                </td>            
+                <td><?php
+                $sql3 = "SELECT * FROM produtos_categorias WHERE cat_codigo=$categoria";
+                $query3 = mysql_query($sql3);
+                while ($array3 = mysql_fetch_array($query3)) {
+                    $nomecat = $array3 ['cat_nome'];
+                    echo "$nomecat";
+                }
+                ?>
+                </td>
+                <td align="center" class="" width="100px" style="">                               
+                    <a href="#" class="link">
+                        <?php
+                        $sql2 = "SELECT * FROM mestre_produtos_tipo WHERE mesprotip_produto=$codigo";
+                        $query2 = mysql_query($sql2);
+                        if (!$query2)
+                            die("ERRO SQL:" . mysql_error());
+                        $consignacao_icone = "consignacao_desabilitado.png";
+                        $revenda_icone = "revenda_desabilitado.png";
+                        while ($dados2 = mysql_fetch_assoc($query2)) {
+                            $tipo = $dados2["mesprotip_tipo"];
+                            //echo "($tipo)";
+                            if ($tipo == 1)
+                                $consignacao_icone = "consignacao.png";
+                            if ($tipo == 2)
+                                $revenda_icone = "revenda.png";                                
+                        }
+                        ?>
+                        <img width="15px" src="../imagens/icones/geral/<?php echo $consignacao_icone; ?>" title="Consignação" alt="Consignação">
+                    </a>
+                    <a href="#" class="link">
+                        <img width="15px" src="../imagens/icones/geral/<?php echo $revenda_icone; ?>" title="Revenda" alt="Revenda">
+                    </a>
+                </td>
+
+
+
+                <?php if ($permissao_produtos_ver == 1) { ?>
+                    <td align="center" class="fundo1" width="35px">
+                        <a href="produtos_cadastrar.php?codigo=<?php echo"$codigo"; ?>&ver=1" class="link1"><img   width="15px" src="<?php echo $icones; ?>detalhes.png" title="Detalhes" alt="Detalhes"/> </a>
+                    </td>
+    <?php } ?>
+                <?php if ($permissao_produtos_editar == 1) { ?>                
+                    <td align="center" class="fundo1" width="35px">
+                        <a href="produtos_cadastrar.php?codigo=<?php echo"$codigo"; ?>" class="link1"><img   width="15px" src="<?php echo $icones; ?>editar.png" title="Editar"  alt="Editar" /></a> 
+                    </td>
+    <?php } ?>  
+                <?php if ($permissao_produtos_excluir == 1) { ?>                
+                    <td align="center" class="fundo1" width="35px"> 
+                        <a href="produtos_deletar.php?codigo=<?php echo"$codigo"; ?>" class="link1"><img  width="15px"  src="<?php echo $icones; ?>excluir.png"  title="Excluir" alt="Excluir" /></a> 
+                    </td>
+                <?php } ?> 
+                <?php
+            }
+            if ($linhas == "0") {
+                ?> <tr><td colspan="10" align="center" class="errado"> <?php echo "Nenhum resultado!" ?> </td></tr> <?php
             }
             ?>
+        </tr>
+    </table>
+    <table class="paginacao_fundo" width="100%" border="0">
+        <tr valign="middle" align="center" class="paginacao_linha">
+            <td align="right">
+                <input onclick="paginacao_retroceder()" type="image" width="25px"   src="<?php echo $icones; ?>esquerda.png"  title="Anterior" alt="Anterior" />
             </td>
-            <td width="35px"><?php echo " $siglatipo"; ?>
-            </td>            
-            <td><?php
-            $sql3 = "SELECT * FROM produtos_categorias WHERE cat_codigo=$categoria";
-            $query3 = mysql_query($sql3);
-            while ($array3 = mysql_fetch_array($query3)) {
-                $nomecat = $array3 ['cat_nome'];
-                echo "$nomecat";
-            }
-            ?>
+            <td width="170px">
+                <input size="5" type="text" name="paginaatual" class="campofiltro" value="<?php echo $paginaatual; ?>">
+                <span>/</span>
+                <input disabled size="5" type="text" name="paginas" class="campofiltro" value="<?php echo $paginas; ?>">
             </td>
-            <?php if ($permissao_produtos_ver == 1) { ?>
-            <td align="center" class="fundo1" width="35px">
-                <a href="produtos_cadastrar.php?codigo=<?php echo"$codigo"; ?>&ver=1" class="link1"><img   width="15px" src="<?php echo $icones; ?>detalhes.png" title="Detalhes" alt="Detalhes"/> </a>
+            <td align="left">
+                <input onclick="paginacao_avancar()"  type="image" width="25px"   src="<?php echo $icones; ?>direita.png"  title="Pr�xima" alt="Pr�xima" />
             </td>
-            <?php   } ?>
-            <?php if ($permissao_produtos_editar == 1) { ?>                
-            <td align="center" class="fundo1" width="35px">
-                <a href="produtos_cadastrar.php?codigo=<?php echo"$codigo"; ?>" class="link1"><img   width="15px" src="<?php echo $icones; ?>editar.png" title="Editar"  alt="Editar" /></a> 
-            </td>
-            <?php } ?>  
-            <?php if ($permissao_produtos_excluir == 1) { ?>                
-            <td align="center" class="fundo1" width="35px"> 
-                <a href="produtos_deletar.php?codigo=<?php echo"$codigo"; ?>" class="link1"><img  width="15px"  src="<?php echo $icones; ?>excluir.png"  title="Excluir" alt="Excluir" /></a> 
-            </td>
-            <?php }  ?> 
-    <?php
-}
-if ($linhas == "0") {
-    ?> <tr><td colspan="10" align="center" class="errado"> <?php echo "Nenhum resultado!" ?> </td></tr> <?php
-}
-?>
-</tr>
-</table>
-<table class="paginacao_fundo" width="100%" border="0">
-    <tr valign="middle" align="center" class="paginacao_linha">
-    <td align="right">
-        <input onclick="paginacao_retroceder()" type="image" width="25px"   src="<?php echo $icones; ?>esquerda.png"  title="Anterior" alt="Anterior" />
-    </td>
-    <td width="170px">
-        <input size="5" type="text" name="paginaatual" class="campofiltro" value="<?php echo $paginaatual; ?>">
-        <span>/</span>
-        <input disabled size="5" type="text" name="paginas" class="campofiltro" value="<?php echo $paginas; ?>">
-    </td>
-    <td align="left">
-        <input onclick="paginacao_avancar()"  type="image" width="25px"   src="<?php echo $icones; ?>direita.png"  title="Pr�xima" alt="Pr�xima" />
-    </td>
-</tr>
-</table>
+        </tr>
+    </table>
 </form>    
 
 

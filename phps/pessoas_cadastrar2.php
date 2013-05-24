@@ -53,6 +53,7 @@ $cnpj = str_replace('/', '', $cnpj);
 $ramal1 = $_POST['fone1ramal'];
 $ramal2 = $_POST['fone2ramal'];
 $tipopessoa = $_POST['tipopessoa'];
+$tiponegociacao = $_POST['box2'];
 $pessoacontato = $_POST['pessoacontato'];
 $categoria = $_POST['categoria'];
 
@@ -266,6 +267,21 @@ if ($operacao == "cadastrar") {
     }
 }
 
+//Verifica se foi selecionado pelo menos um tipo de negociacao
+if (empty($tiponegociacao)) {
+$tpl_notificacao = new Template("templates/notificacao.html");
+    $tpl_notificacao->ICONES = $icones;
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "É necessário selecionar pelo menos um tipo de negociação!";
+    //$tpl_notificacao->DESTINO = "produtos.php";
+    $tpl_notificacao->block("BLOCK_ERRO");
+    $tpl_notificacao->block("BLOCK_NAOEDITADO");
+    //$tpl_notificacao->block("BLOCK_MOTIVO_JAEXISTE");
+    $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
+    $tpl_notificacao->show();
+    exit;
+}
+
+
 
 //Insere no banco ou atualiza
 if ($operacao == "cadastrar") {
@@ -348,6 +364,24 @@ if ($operacao == "cadastrar") {
         if (!mysql_query($sql2))
             die("Erro7: " . mysql_error());
     }
+    foreach ($tiponegociacao as $tiponegociacao) {
+        $sql4 = "
+    INSERT INTO 
+        fornecedores_tiponegociacao (
+            fortipneg_pessoa,
+            fortipneg_tiponegociacao
+        ) 
+    VALUES (
+        '$pessoa',
+        '$tiponegociacao'
+    )";
+        if (!mysql_query($sql4))
+            die("Erro7: " . mysql_error());
+    }
+
+
+
+
     $tpl_notificacao->block("BLOCK_CONFIRMAR");
     $tpl_notificacao->block("BLOCK_CADASTRADO");
     $tpl_notificacao->block("BLOCK_BOTAO");
@@ -420,6 +454,30 @@ if ($operacao == "cadastrar") {
             )";
             if (!mysql_query($sql2))
                 die("Erro10: " . mysql_error());
+        }
+
+        //Deleta os tipo de negociação e insere denovo
+        $sqldel = "
+        DELETE FROM 
+            fornecedores_tiponegociacao 
+        WHERE 
+            fortipneg_pessoa='$codigo'
+        ";
+        if (!mysql_query($sqldel))
+            die("Erro91: " . mysql_error());
+        foreach ($tiponegociacao as $tiponegociacao) {
+            $sql4 = "
+            INSERT INTO 
+            fornecedores_tiponegociacao (
+                fortipneg_pessoa,
+                fortipneg_tiponegociacao
+            ) 
+            VALUES (
+            '$codigo',
+            '$tiponegociacao'
+            )";
+            if (!mysql_query($sql4))
+                die("Erro71: " . mysql_error());
         }
     }
     $tpl_notificacao->block("BLOCK_CONFIRMAR");

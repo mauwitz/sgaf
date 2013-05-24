@@ -80,6 +80,12 @@ $query = mysql_query($sql);
 if (!$query) {
     die("Erro SQL: " . mysql_error());
 }
+$sql3 = "DELETE FROM mestre_produtos_tipo WHERE mesprotip_produto=$produtocodigo";
+//$query = mysql_query($sql);
+$query3 = mysql_query($sql3);
+if (!$query3) {
+    die("Erro SQL: " . mysql_error());
+}
 $tpl_notificacao = new Template("templates/notificacao.html");
 $tpl_notificacao->ICONES = $icones;
 $tpl_notificacao->DESTINO = "produtos.php";

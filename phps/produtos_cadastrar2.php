@@ -1,4 +1,5 @@
 <?php
+
 //Verifica se o usu�rio tem permiss�o para acessar este conte�do
 require "login_verifica.php";
 if ($permissao_produtos_cadastrar <> 1) {
@@ -14,8 +15,10 @@ $nome2 = ucwords(strtolower($_POST['nome2']));
 $tipo = $_POST['tipo'];
 $categoria = $_POST['categoria'];
 $descricao = $_POST['descricao'];
+$tiponegociacao = $_POST['box'];
 $data = date("Y/m/d");
 $hora = date("h:i:s");
+
 
 //Template de Título e Sub-título
 $tpl_titulo = new Template("templates/titulos.html");
@@ -25,6 +28,19 @@ $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "produtos.png";
 $tpl_titulo->show();
 
+//Verifica se foi selecionado pelo menos um tipo de negociacao
+if (empty($tiponegociacao)) {
+$tpl_notificacao = new Template("templates/notificacao.html");
+    $tpl_notificacao->ICONES = $icones;
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "É necessário selecionar pelo menos um tipo de negociação!";
+    //$tpl_notificacao->DESTINO = "produtos.php";
+    $tpl_notificacao->block("BLOCK_ERRO");
+    $tpl_notificacao->block("BLOCK_NAOEDITADO");
+    //$tpl_notificacao->block("BLOCK_MOTIVO_JAEXISTE");
+    $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
+    $tpl_notificacao->show();
+    exit;
+}
 
 
 if ($codigo == "") { //caso seja um cadastro novo fazer isso
@@ -35,7 +51,7 @@ if ($codigo == "") { //caso seja um cadastro novo fazer isso
         die("Erro1: " . mysql_error());
     $linhas = mysql_num_rows($query);
     if ($linhas > 0) {
-                $tpl_notificacao = new Template("templates/notificacao.html");
+        $tpl_notificacao = new Template("templates/notificacao.html");
         $tpl_notificacao->ICONES = $icones;
         $tpl_notificacao->MOTIVO_COMPLEMENTO = "nome";
         $tpl_notificacao->DESTINO = "produtos.php";
@@ -49,7 +65,25 @@ if ($codigo == "") { //caso seja um cadastro novo fazer isso
 	VALUES ('$nome','$tipo','$categoria','$descricao','$data','$hora',$usuario_cooperativa);";
         $query = mysql_query($sql);
         if (!$query)
-            die("Erro2: " . mysql_error());
+            die("Erro22: " . mysql_error());
+        $ultimo = mysql_insert_id();
+        $produto = $ultimo;
+        foreach ($tiponegociacao as $tiponegociacao) {
+            $sql2 = "
+                INSERT INTO 
+                    mestre_produtos_tipo (
+                        mesprotip_produto,
+                        mesprotip_tipo                       
+                    ) 
+                VALUES (
+                    '$produto',
+                    '$tiponegociacao'
+                )";
+            if (!mysql_query($sql2))
+                die("Erro7: " . mysql_error());
+        }
+
+
         $tpl_notificacao = new Template("templates/notificacao.html");
         $tpl_notificacao->ICONES = $icones;
         $tpl_notificacao->MOTIVO_COMPLEMENTO = "";
@@ -93,6 +127,23 @@ if ($codigo == "") { //caso seja um cadastro novo fazer isso
     ";
         if (!mysql_query($sql))
             die("Erro: " . mysql_error());
+//Deleta os tipos de negociação para depois incluir de novo no novo formato
+        $sqldel = " DELETE FROM mestre_produtos_tipo WHERE mesprotip_produto='$codigo'";
+        if (!mysql_query($sqldel))
+            die("Erro9: " . mysql_error());
+        foreach ($tiponegociacao as $tiponegociacao) {
+            $sql2 = "
+            INSERT INTO mestre_produtos_tipo (
+                mesprotip_produto,
+                mesprotip_tipo
+            ) VALUES (
+                '$codigo',
+                '$tiponegociacao'
+            )";
+            if (!mysql_query($sql2))
+                die("Erro78: " . mysql_error());
+        }
+
         $tpl_notificacao = new Template("templates/notificacao.html");
         $tpl_notificacao->ICONES = $icones;
         $tpl_notificacao->MOTIVO_COMPLEMENTO = "";

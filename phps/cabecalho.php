@@ -19,7 +19,7 @@ if ($usuario_grupo == 7) {
 }
 
 if ($usuario_grupo == 0) {
-    //$tpl8->USUARIO_TIPO_ARQUIVO = "../geral/help.png";
+    //$tpl8->USUARIO_TIPO_ARQUIVO = "../geral/info.png";
     $tpl8->USUARIO_GRUPO = "Desconhecido";
 } else {
     $tpl8->USUARIO_GRUPO = $permissao_nome;
