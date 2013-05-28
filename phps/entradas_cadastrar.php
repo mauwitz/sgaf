@@ -39,7 +39,6 @@ $valuni = $_POST['valuni'];
 $valuni2 = $_POST['valuni2'];
 $valunicusto = $_POST['valunicusto'];
 $valunicusto2 = $_POST['valunicusto2'];
-
 //Se o valor unit�rio estiver desabilitado ent�o devemos pegar o valuni2 que veio por hidden e alimentado via javascript
 if (($valuni2 != "") && ($valuni == "")) {
     $valuni = $valuni2;
@@ -58,6 +57,8 @@ if (($valunicusto2 != "") && ($valunicusto == "")) {
 }
 $valunicusto = str_replace('.', '', $valunicusto);
 $valunicusto = str_replace(',', '.', $valunicusto);
+echo "($valuni2-$valunicusto2)";
+echo "($valuni-$valunicusto)";
 
 $validade = $_POST['validade'];
 $validade2 = $_POST['validade2'];
