@@ -62,8 +62,8 @@
         $senha2 = $_POST["senha2"];
         $email_senha = $_POST["email_senha"];
         $check_perguntasecreta = $_POST["check_perguntasecreta"];
-        if (($pergunta!="")&&($resposta!=""))
-            $check_perguntasecreta=1;
+        if (($pergunta != "") && ($resposta != ""))
+            $check_perguntasecreta = 1;
         $pergunta = $_POST["pergunta"];
         $resposta = $_POST["resposta"];
         $check_termo = $_POST["check_termo"];
@@ -125,101 +125,127 @@
             //Cadastrar o quiosque dentro da cooperativa
             $cooperativa_ultimo = mysql_insert_id();
             $sql2 = "
-      INSERT INTO quiosques (
-      qui_nome,
-      qui_cidade,
-      qui_cep,
-      qui_bairro,
-      qui_endereco,
-      qui_numero,
-      qui_complemento,
-      qui_referencia,
-      qui_fone1,
-      qui_fone1ramal,
-      qui_fone2,
-      qui_fone2ramal,
-      qui_email,
-      qui_datacadastro,
-      qui_horacadastro,
-      qui_cooperativa
-      ) VALUES (
-      '$nomepv',
-      '$cidadepv',
-      '$ceppv',
-      '$bairropv',
-      '$enderecopv',
-      '$numeropv',
-      '$complementopv',
-      '$pontorefpv',
-      '$telefone1pv',
-      '$telefone1pvramal',
-      '$telefone2pv',
-      '$telefone2pvramal',
-      '$emailpv',
-      '$dataatual',
-      '$horaatual',
-      '$cooperativa_ultimo'
-      );
-      ";
+                INSERT INTO quiosques (
+                qui_nome,
+                qui_cidade,
+                qui_cep,
+                qui_bairro,
+                qui_endereco,
+                qui_numero,
+                qui_complemento,
+                qui_referencia,
+                qui_fone1,
+                qui_fone1ramal,
+                qui_fone2,
+                qui_fone2ramal,
+                qui_email,
+                qui_datacadastro,
+                qui_horacadastro,
+                qui_cooperativa
+                ) VALUES (
+                '$nomepv',
+                '$cidadepv',
+                '$ceppv',
+                '$bairropv',
+                '$enderecopv',
+                '$numeropv',
+                '$complementopv',
+                '$pontorefpv',
+                '$telefone1pv',
+                '$telefone1pvramal',
+                '$telefone2pv',
+                '$telefone2pvramal',
+                '$emailpv',
+                '$dataatual',
+                '$horaatual',
+                '$cooperativa_ultimo'
+                );
+            ";
             if (!mysql_query($sql2))
                 die("Erro Quiosque Inserir: " . mysql_error());
             $quiosque_ultimo = mysql_insert_id();
+            
+            $sql3="
+                INSERT INTO
+                quiosques_tiponegociacao (
+                    quitipneg_quiosque,                
+                    quitipneg_tipo                
+                ) VALUES (
+                    '$quiosque_ultimo',
+                    '1'    
+                )
+            ";
+            if (!mysql_query($sql3))
+                die("Erro Quiosque Tipo Negociação Consignação: " . mysql_error());            
+            
+            $sql4="
+                INSERT INTO
+                quiosques_tiponegociacao (
+                    quitipneg_quiosque,                
+                    quitipneg_tipo                
+                ) VALUES (
+                    '$quiosque_ultimo',
+                    '2'    
+                )
+            ";
+            if (!mysql_query($sql4))
+                die("Erro Quiosque Tipo Negociação Revenda: " . mysql_error());            
 
             //Inserir pessoa
             $senha = md5($senha);
             $sql = "
-      INSERT INTO
-      pessoas (
-      pes_nome,
-      pes_cidade,
-      pes_bairro,
-      pes_endereco,
-      pes_numero,
-      pes_complemento,
-      pes_referencia,
-      pes_cep,
-      pes_fone1,
-      pes_fone2,
-      pes_email,
-      pes_cooperativa,
-      pes_possuiacesso,
-      pes_datacadastro,
-      pes_horacadastro,
-      pes_senha,
-      pes_cpf,
-      pes_grupopermissoes,
-      pes_quiosqueusuario,
-      pes_email_senha,
-      pes_usarperguntasecreta,
-      pes_perguntasecreta,
-      pes_respostasecreta
-      )
-      VALUES (
-      '$nome',
-      '$cidade',
-      '$bairro',
-      '$endereco',
-      '$numero',
-      '$complemento',
-      '$pontoref',
-      '$cep',
-      '$telefone1',
-      '$telefone2',
-      '$email',
-      '$cooperativa_ultimo',
-      '1',
-      '$dataatual',
-      '$horaatual',
-      '$senha',
-      '$cpf',
-      '3',
-      '$quiosque_ultimo',
-      '$email_senha',
-      '$check_perguntasecreta',
-      '$pergunta',
-      '$resposta'
+                INSERT INTO
+                pessoas (
+                pes_nome,
+                pes_cidade,
+                pes_bairro,
+                pes_endereco,
+                pes_numero,
+                pes_complemento,
+                pes_referencia,
+                pes_cep,
+                pes_fone1,
+                pes_fone2,
+                pes_email,
+                pes_cooperativa,
+                pes_possuiacesso,
+                pes_datacadastro,
+                pes_horacadastro,
+                pes_senha,
+                pes_cpf,
+                pes_grupopermissoes,
+                pes_quiosqueusuario,
+                pes_email_senha,
+                pes_usarperguntasecreta,
+                pes_perguntasecreta,
+                pes_respostasecreta
+                )
+                VALUES (
+                '$nome',
+                '$cidade',
+                '$bairro',
+                '$endereco',
+                '$numero',
+                '$complemento',
+                '$pontoref',
+                '$cep',
+                '$telefone1',
+                '$telefone2',
+                '$email',
+                '$cooperativa_ultimo',
+                '1',
+                '$dataatual',
+                '$horaatual',
+                '$senha',
+                '$cpf',
+                '3',
+                '$quiosque_ultimo',
+                '$email_senha',
+                '$check_perguntasecreta',
+                '$pergunta',
+                '$resposta'
 
-      )";
+                )";
             if (!mysql_query($sql))
                 die("Erro6: " . mysql_error());
             $pessoa_ultimo = mysql_insert_id();

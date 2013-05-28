@@ -57,8 +57,6 @@ if (($valunicusto2 != "") && ($valunicusto == "")) {
 }
 $valunicusto = str_replace('.', '', $valunicusto);
 $valunicusto = str_replace(',', '.', $valunicusto);
-echo "($valuni2-$valunicusto2)";
-echo "($valuni-$valunicusto)";
 
 $validade = $_POST['validade'];
 $validade2 = $_POST['validade2'];
