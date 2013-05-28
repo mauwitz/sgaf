@@ -45,7 +45,7 @@
 
 <table border="1" class="tabela1" cellpadding="4" width="100%">
     <tr valign="middle" class="tabelacabecalho1">
-        <td width="">PRODUTO</td>        
+        <td width="" colspan="2">PRODUTO</td>        
         <td colspan="2">QUANTIDADE</td>        
         <td width="">VAL. UNIT. MÉD.</td>        
         <!-- BEGIN BLOCK_LISTA_CABECALHO_TOTAL -->
@@ -58,6 +58,7 @@
     </tr>
     <!-- BEGIN BLOCK_LISTA -->
     <tr class="{ATINGIU_ESTOQUE_MINIMO}">
+        <td align="right">{PRODUTO_CODIGO}</td>
         <td><a href="produtos_cadastrar.php?codigo={PRODUTO_CODIGO}&ver=1&link=estoque.php" class="link {ATINGIU_ESTOQUE_MINIMO}" title="Ver detalhes"><span class="{ATINGIU_ESTOQUE_MINIMO}">{PRODUTO}</span></a></td>
         <td align="right" width="" >{QUANTIDADE}</td>        
         <td align="left" width="" >{SIGLA}</td>        
@@ -100,6 +101,7 @@
         <td> </td>
         <td> </td>
         <!-- END BLOCK_LISTA_RODAPE_FORNECEDORES -->
+        <td> </td>
         <td> </td>
     </tr>
     <!-- END BLOCK_LISTA_RODAPE -->    

@@ -25,13 +25,14 @@
 </br>
 <table border="1" class="tabela1" cellpadding="4" width="100%" >
     <tr valign="middle" class="tabelacabecalho1">                 
-        <td width="" >PRODUTOS</td>            
+        <td width="" colspan="2">PRODUTOS</td>            
         <td colspan="2" >QTD. TOTAL</td>            
         <td width="" >VALOR TOTAL</td> 
         <td width="" colspan="2" >LOTES</td>            
     </tr>
     <!-- BEGIN BLOCK_LISTA -->
     <tr>
+        <td align="right" >{PRODUTO_CODIGO}</td> 
         <td align="left" ><a href="produtos_cadastrar.php?codigo={PRODUTO_CODIGO}&ver=1&link=estoque_porfornecedor_produto.php&fornecedor={FORNECEDOR_CODIGO}" title="Ver Detalhes" class="link">{PRODUTO_NOME}</a></td> 
         <td align="right" width="100px">{QUANTIDADE_TOTAL}</td>
         <td align="left" width="35px">{SIGLA}</td>
@@ -60,6 +61,7 @@
         <td align="right">{VALOR_TOTAL_GERAL}</td>
         <td> </td>
         <td> </td>
+        <td> </td>
     </tr>
     <!-- END BLOCK_LISTA_RODAPE -->
 </table>
@@ -75,7 +77,7 @@
         <input disabled size="5" type="text" name="paginas" class="campofiltro" value="{PAGINAS}">
     </td>
     <td align="left">
-        <input onclick="paginacao_avancar()"  type="image" width="25px"   src="{PASTA_ICONES}direita.png"  title="Próxima" alt="Próxima" />
+        <input onclick="paginacao_avancar()"  type="image" width="25px"   src="{PASTA_ICONES}direita.png"  title="Prï¿½xima" alt="Prï¿½xima" />
     </td>
 </tr>
 </table>
