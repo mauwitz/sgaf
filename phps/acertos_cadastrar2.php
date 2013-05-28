@@ -44,6 +44,7 @@ $sql = "
             join saidas on (saipro_saida=sai_codigo)
         WHERE
             saipro_acertado=0 and
+            ent_tiponegociacao=1 and
             ent_fornecedor=$fornecedor and
             ent_quiosque=$usuario_quiosque and
             sai_tipo=1 and

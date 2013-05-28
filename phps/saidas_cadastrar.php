@@ -296,7 +296,7 @@ if ($retirar_produto == '1') { //Se o usu�rio clicou no excluir produto da lis
             INSERT INTO
                 saidas_produtos (saipro_saida, saipro_produto, saipro_lote, saipro_quantidade, saipro_valorunitario,saipro_valortotal)
             VALUES
-                ('$saida','$produto','$lote','$qtd','$valuni','$valtot')        
+                ('$saida','$produto','$lote','$qtd','$valuni',$valuni*$qtd)        
             ";
             $query_saida_produto = mysql_query($sql_saida_produto);
             if (!$query_saida_produto) {

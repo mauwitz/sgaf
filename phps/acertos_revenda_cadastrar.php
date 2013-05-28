@@ -115,7 +115,7 @@ $tpl->block("BLOCK_COLUNA");
 //Data final
 $tpl->COLUNA_ALINHAMENTO = "";
 $tpl->COLUNA_TAMANHO = "";
-if ($passo==2) {
+if ($passo == 2) {
     $tpl->CAMPO_TIPO = "text";
     $tpl->CAMPO_VALOR = converte_data($datafim);
 } else {
@@ -139,7 +139,7 @@ $tpl->block("BLOCK_COLUNA");
 //Hora final
 $tpl->COLUNA_ALINHAMENTO = "";
 $tpl->COLUNA_TAMANHO = "";
-if ($passo==2) {
+if ($passo == 2) {
     $tpl->CAMPO_TIPO = "text";
     $tpl->CAMPO_VALOR = converte_hora($horafim);
 } else {
@@ -288,6 +288,9 @@ if ($passo == 2) {
     $tpl2->block("BLOCK_CABECALHO_COLUNA");
     $tpl2->block("BLOCK_CABECALHO_LINHA");
     $tpl2->block("BLOCK_CABECALHO");
+    //Total Venda
+    //$dados = $obj->dados("
+    //");
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "";
     $tpl2->TEXTO = "";
@@ -408,7 +411,6 @@ if ($passo == 2) {
 
     //Detalhes Produtos
     if ($detprodutos == 1) {
-
         echo "<br>";
         $tpl = new Template("templates/tituloemlinha_2.html");
         $tpl->block("BLOCK_TITULO");
@@ -439,55 +441,89 @@ if ($passo == 2) {
         $tpl2->block("BLOCK_CABECALHO_COLUNA");
         $tpl2->block("BLOCK_CABECALHO_LINHA");
         $tpl2->block("BLOCK_CABECALHO");
-        $tpl2->COLUNA_TAMANHO = "";
-        $tpl2->COLUNA_ALINHAMENTO = "";
-        $tpl2->TEXTO = "";
-        $tpl2->block("BLOCK_TEXTO");
-        $tpl2->block("BLOCK_CONTEUDO");
-        $tpl2->block("BLOCK_COLUNA");
-        $tpl2->COLUNA_TAMANHO = "";
-        $tpl2->COLUNA_ALINHAMENTO = "";
-        $tpl2->TEXTO = "";
-        $tpl2->block("BLOCK_TEXTO");
-        $tpl2->block("BLOCK_CONTEUDO");
-        $tpl2->block("BLOCK_COLUNA");
-        $tpl2->COLUNA_TAMANHO = "";
-        $tpl2->COLUNA_ALINHAMENTO = "";
-        $tpl2->TEXTO = "";
-        $tpl2->block("BLOCK_TEXTO");
-        $tpl2->block("BLOCK_CONTEUDO");
-        $tpl2->block("BLOCK_COLUNA");
-        $tpl2->COLUNA_TAMANHO = "";
-        $tpl2->COLUNA_ALINHAMENTO = "";
-        $tpl2->TEXTO = "";
-        $tpl2->block("BLOCK_TEXTO");
-        $tpl2->block("BLOCK_CONTEUDO");
-        $tpl2->block("BLOCK_COLUNA");
-        $tpl2->COLUNA_TAMANHO = "";
-        $tpl2->COLUNA_ALINHAMENTO = "";
-        $tpl2->TEXTO = "";
-        $tpl2->block("BLOCK_TEXTO");
-        $tpl2->block("BLOCK_CONTEUDO");
-        $tpl2->block("BLOCK_COLUNA");
-        $tpl2->COLUNA_TAMANHO = "";
-        $tpl2->COLUNA_ALINHAMENTO = "";
-        $tpl2->TEXTO = "";
-        $tpl2->block("BLOCK_TEXTO");
-        $tpl2->block("BLOCK_CONTEUDO");
-        $tpl2->block("BLOCK_COLUNA");
-        $tpl2->COLUNA_TAMANHO = "";
-        $tpl2->COLUNA_ALINHAMENTO = "";
-        $tpl2->TEXTO = "";
-        $tpl2->block("BLOCK_TEXTO");
-        $tpl2->block("BLOCK_CONTEUDO");
-        $tpl2->block("BLOCK_COLUNA");
-        $tpl2->COLUNA_TAMANHO = "";
-        $tpl2->COLUNA_ALINHAMENTO = "";
-        $tpl2->TEXTO = "";
-        $tpl2->block("BLOCK_TEXTO");
-        $tpl2->block("BLOCK_CONTEUDO");
-        $tpl2->block("BLOCK_COLUNA");
-        $tpl2->block("BLOCK_LINHA");
+        $query = $obj->query("
+            SELECT pro_codigo,
+            pro_nome, 
+            round(sum(saipro_quantidade),3) as qtd, 
+            protip_sigla, 
+            round(sum(saipro_valortotal),2) as valtot,
+            round(sum(entpro_valtotcusto),2) as valtotcusto,
+            protip_codigo
+            FROM  saidas_produtos
+            join produtos on (saipro_produto=pro_codigo)
+            join produtos_tipo on (pro_tipocontagem=protip_codigo)
+            join entradas on (saipro_lote=ent_codigo)
+            join entradas_produtos on (entpro_entrada=ent_codigo and entpro_produto=saipro_produto)
+            join saidas on (saipro_saida=sai_codigo)
+            WHERE saipro_fechado=0 
+            AND ent_tiponegociacao=2
+            AND sai_quiosque=$usuario_quiosque
+            AND sai_tipo=1
+            AND  sai_status=1            
+            GROUP BY saipro_produto               
+        ");
+        while ($dados = mysql_fetch_assoc($query)) {
+            $produto = $dados['pro_codigo'];
+            $produto_nome = $dados['pro_nome'];
+            $qtd = $dados['qtd'];
+            $sigla = $dados['protip_sigla'];
+            $valuni = $dados['valuni'];
+            $valtot = $dados['valtot'];
+            $valtotcusto = $dados['valtotcusto'];
+            $tipocontagem = $dados['protip_codigo'];
+            $tpl2->COLUNA_TAMANHO = "";
+            $tpl2->COLUNA_ALINHAMENTO = "right";
+            $tpl2->TEXTO = "$produto";
+            $tpl2->block("BLOCK_TEXTO");
+            $tpl2->block("BLOCK_CONTEUDO");
+            $tpl2->block("BLOCK_COLUNA");
+            $tpl2->COLUNA_TAMANHO = "";
+            $tpl2->COLUNA_ALINHAMENTO = "left";
+            $tpl2->TEXTO = "$produto_nome";
+            $tpl2->block("BLOCK_TEXTO");
+            $tpl2->block("BLOCK_CONTEUDO");
+            $tpl2->block("BLOCK_COLUNA");
+            $tpl2->COLUNA_TAMANHO = "";
+            $tpl2->COLUNA_ALINHAMENTO = "right";
+            if ($tipocontagem == 2)
+                $tpl2->TEXTO = number_format($qtd, 3, ',', '.');
+            else
+                $tpl2->TEXTO = number_format($qtd, 0, '', '.');
+            $tpl2->block("BLOCK_TEXTO");
+            $tpl2->block("BLOCK_CONTEUDO");
+            $tpl2->block("BLOCK_COLUNA");
+            $tpl2->COLUNA_TAMANHO = "";
+            $tpl2->COLUNA_ALINHAMENTO = "left";
+            $tpl2->TEXTO = "$sigla";
+            $tpl2->block("BLOCK_TEXTO");
+            $tpl2->block("BLOCK_CONTEUDO");
+            $tpl2->block("BLOCK_COLUNA");
+            $tpl2->COLUNA_TAMANHO = "";
+            $tpl2->COLUNA_ALINHAMENTO = "right";
+            $tpl2->TEXTO = "R$ " . number_format($valtot,2, ',', '.');
+            $tpl2->block("BLOCK_TEXTO");
+            $tpl2->block("BLOCK_CONTEUDO");
+            $tpl2->block("BLOCK_COLUNA");
+            $tpl2->COLUNA_TAMANHO = "";
+            $tpl2->COLUNA_ALINHAMENTO = "";
+            $tpl2->TEXTO = "R$ " . number_format($valtotcusto,2, ',', '.');
+            $tpl2->block("BLOCK_TEXTO");
+            $tpl2->block("BLOCK_CONTEUDO");
+            $tpl2->block("BLOCK_COLUNA");
+            $tpl2->COLUNA_TAMANHO = "";
+            $tpl2->COLUNA_ALINHAMENTO = "";
+            $tpl2->TEXTO = "";
+            $tpl2->block("BLOCK_TEXTO");
+            $tpl2->block("BLOCK_CONTEUDO");
+            $tpl2->block("BLOCK_COLUNA");
+            $tpl2->COLUNA_TAMANHO = "";
+            $tpl2->COLUNA_ALINHAMENTO = "";
+            $tpl2->TEXTO = "";
+            $tpl2->block("BLOCK_TEXTO");
+            $tpl2->block("BLOCK_CONTEUDO");
+            $tpl2->block("BLOCK_COLUNA");
+            $tpl2->block("BLOCK_LINHA");
+        }
         $tpl2->block("BLOCK_CORPO");
         $tpl2->block("BLOCK_LISTAGEM");
         $tpl2->show();

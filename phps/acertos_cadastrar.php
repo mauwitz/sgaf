@@ -291,6 +291,7 @@ if ($passo == 2) {
             saipro_acertado=0 and
             ent_fornecedor=$fornecedor and
             ent_quiosque=$usuario_quiosque and
+            ent_tiponegociacao=1 and
             sai_tipo=1 and
             sai_status=1
         GROUP BY 
