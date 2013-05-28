@@ -70,8 +70,8 @@ if ($operacao == 'cadastrar') {
         $query2 = mysql_query($sql2);
         if (!$query2)
             die("Erro de SQL:" . mysql_error());
-        $dados = mysql_fetch_array($query);
-        $possiacesso = $dados[0];
+        $dados2 = mysql_fetch_array($query2);
+        $possiacesso = $dados2[0];
         if ($possiacesso == 0) {
             echo "<br>";
             $tpl_notificacao->block("BLOCK_ATENCAO");

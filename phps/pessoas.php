@@ -179,14 +179,14 @@ if ($permissao_pessoas_criarusuarios == 1) {
     $tpl->block("BLOCK_LISTA_CABECALHO");
 }
 
-$tpl->CABECALHO_COLUNA_TAMANHO = "15px";
-$tpl->CABECALHO_COLUNA_COLSPAN = "";
-$tpl->CABECALHO_COLUNA_NOME = "TIPO NEG.";
-$tpl->block("BLOCK_LISTA_CABECALHO");
-
-$tpl->CABECALHO_COLUNA_TAMANHO = "110px";
+$tpl->CABECALHO_COLUNA_TAMANHO = "";
 $tpl->CABECALHO_COLUNA_COLSPAN = "";
 $tpl->CABECALHO_COLUNA_NOME = "TIPO";
+$tpl->block("BLOCK_LISTA_CABECALHO");
+
+$tpl->CABECALHO_COLUNA_TAMANHO = "";
+$tpl->CABECALHO_COLUNA_COLSPAN = "";
+$tpl->CABECALHO_COLUNA_NOME = "TIPO NEG.";
 $tpl->block("BLOCK_LISTA_CABECALHO");
 
 $tpl->CABECALHO_COLUNA_COLSPAN = "3";
@@ -341,40 +341,10 @@ while ($dados = mysql_fetch_assoc($query)) {
         $tpl->block("BLOCK_LISTA_COLUNA");
     }
 
-    //Tipo de negociação    
-    $icone_tamanho = "15px";
-    $sql2 = "SELECT * FROM fornecedores_tiponegociacao WHERE fortipneg_pessoa=$codigo";
-    $query2 = mysql_query($sql2);
-    if (!$query2)
-        die("Erro: 8" . mysql_error());
-    $tpl->LINK = "#";
-    $tpl->IMAGEM_TAMANHO = $icone_tamanho;
-    $tpl->IMAGEM_PASTA = "$icones";
-    $tipo_consignacao=0;
-    $tipo_revenda=0;
-    while ($dados2 = mysql_fetch_assoc($query2)) {
-        $tipo2 = $dados2["fortipneg_tiponegociacao"];
-        if ($tipo2 == 1)
-            $tipo_consignacao = 1;
-        if ($tipo2 == 2)
-            $tipo_revenda = 1;
-    }    
-    $tpl->IMAGEM_TITULO = "Consignação";
-    $tpl->IMAGEM_NOMEARQUIVO = "consignacao_desabilitado.png";
-    if ($tipo_consignacao == 1) {
-        $tpl->IMAGEM_NOMEARQUIVO = "consignacao.png";
-    }
-    $tpl->block("BLOCK_LISTA_COLUNA_IMAGEM");
-    $tpl->IMAGEM_TITULO = "Revenda";
-    $tpl->IMAGEM_NOMEARQUIVO = "revenda_desabilitado.png";
-    if ($tipo_revenda == 1) {
-        $tpl->IMAGEM_NOMEARQUIVO = "revenda.png";
-    }
-    $tpl->block("BLOCK_LISTA_COLUNA_IMAGEM");
-    $tpl->block("BLOCK_LISTA_COLUNA_ICONES");    
-    
+
 
     //Coluna Tipo    
+    $tpl->IMAGEM_ALINHAMENTO="right";
     $sql_tipo = "SELECT * FROM mestre_pessoas_tipo WHERE mespestip_pessoa='$codigo'";
     $query_tipo = mysql_query($sql_tipo);
     if (!$query)
@@ -512,6 +482,48 @@ while ($dados = mysql_fetch_assoc($query)) {
         $tpl->block("BLOCK_LISTA_COLUNA_IMAGEM");
     }
     $tpl->block("BLOCK_LISTA_COLUNA_ICONES");
+
+
+
+
+    //Tipo de negociação  
+    $tpl->IMAGEM_ALINHAMENTO="center";
+    if ($tipo_fornecedor == 1) {
+
+        $icone_tamanho = "18px";
+        $sql2 = "SELECT * FROM fornecedores_tiponegociacao WHERE fortipneg_pessoa=$codigo";
+        $query2 = mysql_query($sql2);
+        if (!$query2)
+            die("Erro: 8" . mysql_error());
+        $tpl->LINK = "#";
+        $tpl->IMAGEM_TAMANHO = $icone_tamanho;
+        $tpl->IMAGEM_PASTA = "$icones";
+        $tipo_consignacao = 0;
+        $tipo_revenda = 0;
+        while ($dados2 = mysql_fetch_assoc($query2)) {
+            $tipo2 = $dados2["fortipneg_tiponegociacao"];
+            if ($tipo2 == 1)
+                $tipo_consignacao = 1;
+            if ($tipo2 == 2)
+                $tipo_revenda = 1;
+        }
+        $tpl->IMAGEM_TITULO = "Consignação";
+        $tpl->IMAGEM_NOMEARQUIVO = "consignacao_desabilitado.png";
+        if ($tipo_consignacao == 1) {
+            $tpl->IMAGEM_NOMEARQUIVO = "consignacao.png";
+        }
+        $tpl->block("BLOCK_LISTA_COLUNA_IMAGEM");
+        $tpl->IMAGEM_TITULO = "Revenda";
+        $tpl->IMAGEM_NOMEARQUIVO = "revenda_desabilitado.png";
+        if ($tipo_revenda == 1) {
+            $tpl->IMAGEM_NOMEARQUIVO = "revenda.png";
+        }
+        $tpl->block("BLOCK_LISTA_COLUNA_IMAGEM");
+    }
+    $tpl->block("BLOCK_LISTA_COLUNA_ICONES");
+
+
+
 
     //Coluna Opera�ões    
     $tpl->ICONE_ARQUIVO = $icones;

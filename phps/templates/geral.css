@@ -14,7 +14,7 @@
 
 
 .campopadrao {
-    height: 22px;
+    height: 18px;
     border-collapse:collapse; 
     background-color: white;
     font-size: 10pt;
@@ -38,7 +38,7 @@
 
 .campofiltro
 {
-    height: 22px;
+    height: 18px;
     border-collapse:collapse; 
     background-color: white;
     font-size: 10pt;

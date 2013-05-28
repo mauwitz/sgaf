@@ -122,12 +122,15 @@ while ($dados = mysql_fetch_array($query)) {
 
 
     //Coluna Presidente
+    $tpl->COLUNA_LINK="pessoas_cadastrar.php?codigo=$presidente&operacao=ver";
+    $tpl->block("BLOCK_LISTA_COLUNA_LINK");
     $sql2 = "SELECT * FROM pessoas WHERE pes_codigo=$presidente ORDER BY pes_nome";
     $query2 = mysql_query($sql2);
     if (!$query2)
         die("Erro: " . mysql_error());
     $dados2 = mysql_fetch_array($query2);
     $tpl->LISTA_COLUNA_VALOR = $dados2["pes_nome"];
+    $tpl->block("BLOCK_LISTA_COLUNA_LINK_FIM");
     $tpl->block("BLOCK_LISTA_COLUNA");
 
 

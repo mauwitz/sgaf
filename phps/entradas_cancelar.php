@@ -51,7 +51,8 @@ if ($linhas == 0) {
     $tpl->block("BLOCK_MOTIVO");    
     $tpl->PERGUNTA="Tem certeza que deseja cancelar esta entrada?";
     $tpl->block("BLOCK_PERGUNTA");
-    $tpl->block("BLOCK_BOTAO_NAO_VOLTAR");
+    $tpl->NAO_LINK="entradas_cadastrar.php?codigo=$entrada&operacao=2";
+    $tpl->block("BLOCK_BOTAO_NAO_LINK");
     $tpl->block("BLOCK_BOTAO_SIMNAO");
 }
 

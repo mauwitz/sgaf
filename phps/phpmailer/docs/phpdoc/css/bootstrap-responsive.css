@@ -17,7 +17,7 @@
   }
   .page-header h1 small {
     display: block;
-    line-height: 18px;
+    line-height: 15px;
   }
   input[class*="span"],
   select[class*="span"],
@@ -251,7 +251,7 @@
     width: 156px;
   }
   input.span4, textarea.span4, .uneditable-input.span4 {
-    width: 218px;
+    width: 215px;
   }
   input.span5, textarea.span5, .uneditable-input.span5 {
     width: 280px;
@@ -284,7 +284,7 @@
   }
   .navbar-fixed-top {
     position: static;
-    margin-bottom: 18px;
+    margin-bottom: 15px;
   }
   .navbar-fixed-top .navbar-inner {
     padding: 5px;

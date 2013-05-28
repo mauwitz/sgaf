@@ -40,6 +40,16 @@
             alert("Erro de envio de parametros para a função");
         }       
     }
+    
+    function aparece_tiponegociacao() {
+        //alert("opa");
+        var fornec= $("input[id=fornec]").val();
+        if (document.form1.fornec.checked == true) {
+            $("tr[id=tr_tiponegociacao]").show();
+        }
+        else
+            $("tr[id=tr_tiponegociacao]").hide();       
+    }
 </script>
 <style>
     .aparece {display: block;}
@@ -293,7 +303,7 @@ if (($tipopessoa == 1) || ($codigo == "")) {
     $tpl1->LINHA_CLASSE = "some";
 } else {
     $tpl1->LINHA_CLASSE = "";
-    $tpl1->block("BLOCK_SELECT_OBRIGATORIO");    
+    $tpl1->block("BLOCK_SELECT_OBRIGATORIO");
 }
 $tpl1->block("BLOCK_LINHA_CLASSE");
 $tpl1->LINHA_ID = "tr_categoria";
@@ -844,6 +854,7 @@ if ($usuario_codigo != $codigo) {
     //Tipo Administrador
     if (($permissao_pessoas_cadastrar_administradores == 1) || (($permissao_pessoas_ver_administradores == 1) && ($operacao = 'ver'))) {
         $tpl1->CHECKBOX_NOME = "box[0]";
+        $tpl1->CAMPO_ID = "admin";
         $tpl1->CHECKBOX_VALOR = "1";
         $tpl1->LABEL_NOME = "Administrador";
         if ($tipo_administrador == 1)
@@ -858,6 +869,7 @@ if ($usuario_codigo != $codigo) {
     //Tipo Presidente
     if (($permissao_pessoas_cadastrar_presidentes == 1) || (($permissao_pessoas_ver_presidentes == 1) && ($operacao = 'ver'))) {
         $tpl1->CHECKBOX_NOME = "box[1]";
+        $tpl1->CHECKBOX_ID = "presid";
         $tpl1->CHECKBOX_VALOR = "2";
         $tpl1->LABEL_NOME = "Presidente";
         if ($tipo_presidente == 1) {
@@ -896,6 +908,7 @@ if ($usuario_codigo != $codigo) {
     //Tipo Supervisor
     if (($permissao_pessoas_cadastrar_supervisores == 1) || (($permissao_pessoas_ver_supervisores == 1) && ($operacao = 'ver'))) {
         $tpl1->CHECKBOX_NOME = "box[2]";
+        $tpl1->CHECKBOX_ID = "super";
         $tpl1->CHECKBOX_VALOR = "3";
         $tpl1->LABEL_NOME = "Supervisor";
         if ($tipo_supervisor == 1)
@@ -933,6 +946,7 @@ if ($usuario_codigo != $codigo) {
     //Tipo Vendedor
     if (($permissao_pessoas_cadastrar_vendedores == 1) || (($permissao_pessoas_ver_vendedores == 1) && ($operacao = 'ver'))) {
         $tpl1->CHECKBOX_NOME = "box[3]";
+        $tpl1->CHECKBOX_ID = "vend";
         $tpl1->CHECKBOX_VALOR = "4";
         $tpl1->LABEL_NOME = "Vendedor";
         if ($tipo_vendedor == 1)
@@ -971,12 +985,15 @@ if ($usuario_codigo != $codigo) {
 
     if (($permissao_pessoas_cadastrar_fornecedores == 1) || (($permissao_pessoas_ver_fornecedores == 1) && ($operacao = 'ver'))) {
         $tpl1->CHECKBOX_NOME = "box[4]";
+        $tpl1->CHECKBOX_ID = "fornec";
         $tpl1->CHECKBOX_VALOR = "5";
         $tpl1->LABEL_NOME = "Fornecedor";
         if ($tipo_fornecedor == 1)
             $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
         if ($operacao == 'ver')
             $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+        $tpl1->CHECKBOX_ONCLICK = "aparece_tiponegociacao();";
+        $tpl1->block("BLOCK_CHECKBOX_ONCLICK");
         $tpl1->CHECKBOX_SPAN_CLASSE = "";
         $tpl1->CHECKBOX_SPAN_ID = "span_fornecedor";
         $tpl1->block("BLOCK_CHECKBOX");
@@ -985,6 +1002,7 @@ if ($usuario_codigo != $codigo) {
     //Tipo Consumidor
     if (($permissao_pessoas_cadastrar_consumidores == 1) || (($permissao_pessoas_ver_consumidores == 1) && ($operacao = 'ver'))) {
         $tpl1->CHECKBOX_NOME = "box[5]";
+        $tpl1->CHECKBOX_ID = "consum";
         $tpl1->CHECKBOX_VALOR = "6";
         $tpl1->LABEL_NOME = "Consumidor";
         if ($tipo_consumidor == 1)
@@ -1044,6 +1062,13 @@ $tpl1->block("BLOCK_ITEM");
 
 
 //Tipo de negociação
+if ($operacao == 'cadastrar')
+    $tpl1->LINHA_CLASSE = "some";
+else
+    $tpl1->LINHA_CLASSE = "";
+$tpl1->block("BLOCK_LINHA_CLASSE");
+$tpl1->LINHA_ID = "tr_tiponegociacao";
+$tpl1->block("BLOCK_LINHA_ID");
 $tpl1->TITULO = "Tipo de negociação";
 $tpl1->block("BLOCK_TITULO");
 if (($operacao == "editar") || ($operacao == "ver")) {
@@ -1051,6 +1076,8 @@ if (($operacao == "editar") || ($operacao == "ver")) {
     $query = mysql_query($sql);
     if (!$query)
         die("Erro: 8" . mysql_error());
+    $tipo_consignacao = 0;
+    $tipo_revenda = 0;
     while ($dados = mysql_fetch_assoc($query)) {
         $tipo = $dados["fortipneg_tiponegociacao"];
         if ($tipo == 1)
@@ -1059,30 +1086,47 @@ if (($operacao == "editar") || ($operacao == "ver")) {
             $tipo_revenda = 1;
     }
 }
-//Tipo Consignação
-$tpl1->CHECKBOX_NOME = "box2[1]";
-$tpl1->CHECKBOX_VALOR = "1";
-$tpl1->LABEL_NOME = "Consignação";
-if ($tipo_consignacao == 1) {
-    $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
+if ($usuario_quiosque == "0")
+    $sql11 = "SELECT tipneg_codigo FROM tipo_negociacao";
+else
+    $sql11 = "SELECT quitipneg_tipo FROM quiosques_tiponegociacao WHERE quitipneg_quiosque=$usuario_quiosque";
+$query11 = mysql_query($sql11);
+if (!$query11)
+    die("Erro: " . mysql_error());
+while ($dados11 = mysql_fetch_array($query11)) {
+    $tipon = $dados11[0];
+    if ($tipon == 1)
+        $quiosque_consignacao = 1;
+    IF ($tipon == 2)
+        $quiosque_revenda = 1;
 }
-if ($operacao == 'ver')
-    $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
-$tpl1->CHECKBOX_SPAN_ID = "";
-$tpl1->block("BLOCK_CHECKBOX");
+
+if ($quiosque_consignacao == 1) {
+    $tpl1->CHECKBOX_NOME = "box2[1]";
+    $tpl1->CHECKBOX_VALOR = "1";
+    $tpl1->LABEL_NOME = "Consignação";
+    if ($tipo_consignacao == 1) {
+        $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
+    }
+    if ($operacao == 'ver')
+        $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+    $tpl1->CHECKBOX_SPAN_ID = "";
+    $tpl1->block("BLOCK_CHECKBOX");
+}
 
 //Tipo Revenda
-$tpl1->CHECKBOX_NOME = "box2[2]";
-$tpl1->CHECKBOX_VALOR = "2";
-$tpl1->LABEL_NOME = "Revenda";
-if ($tipo_revenda == 1) {
-    $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
+if ($quiosque_revenda == 1) {
+    $tpl1->CHECKBOX_NOME = "box2[2]";
+    $tpl1->CHECKBOX_VALOR = "2";
+    $tpl1->LABEL_NOME = "Revenda";
+    if ($tipo_revenda == 1) {
+        $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
+    }
+    if ($operacao == 'ver')
+        $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
+    $tpl1->CHECKBOX_SPAN_ID = "";
+    $tpl1->block("BLOCK_CHECKBOX");
 }
-if ($operacao == 'ver')
-    $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
-$tpl1->CHECKBOX_SPAN_ID = "";
-$tpl1->block("BLOCK_CHECKBOX");
-
 
 $tpl1->block("BLOCK_CONTEUDO");
 $tpl1->block("BLOCK_ITEM");

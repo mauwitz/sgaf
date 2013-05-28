@@ -49,7 +49,7 @@ $tpl_titulo = new Template("templates/titulos.html");
 $tpl_titulo->TITULO = "ACERTOS";
 $tpl_titulo->SUBTITULO = "CADASTRO";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
-$tpl_titulo->NOME_ARQUIVO_ICONE = "acertos2.jpg";
+$tpl_titulo->NOME_ARQUIVO_ICONE = "acertos2.png";
 $tpl_titulo->show();
 
 //Verifica se há produtos no estoque

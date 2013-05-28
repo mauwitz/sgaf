@@ -73,8 +73,21 @@
         </tr>
         <!-- BEGIN BLOCK_LISTA -->
         <tr class="{LISTA_LINHA_CLASSE} lin">
+                        
+            
             <!-- BEGIN BLOCK_LISTA_COLUNA -->
-            <td align="{LISTA_COLUNA_ALINHAMENTO}" class="{LISTA_COLUNA_CLASSE}">{LISTA_COLUNA_VALOR}</td> 
+            <td align="{LISTA_COLUNA_ALINHAMENTO}" class="{LISTA_COLUNA_CLASSE}">
+                <!-- BEGIN BLOCK_LISTA_COLUNA_LINK -->
+                <a href="{COLUNA_LINK}" class="link">
+                <!-- END BLOCK_LISTA_COLUNA_LINK -->
+                    {LISTA_COLUNA_VALOR}
+                <!-- BEGIN BLOCK_LISTA_COLUNA_LINK_FIM -->
+                </a>
+                <!-- END BLOCK_LISTA_COLUNA_LINK_FIM -->                    
+            </td> 
+
+
+
             <!-- END BLOCK_LISTA_COLUNA -->                               
 
             <!-- BEGIN BLOCK_LISTA_COLUNA_ICONE -->
@@ -103,6 +116,8 @@
             <!-- END BLOCK_LISTA_COLUNA_OPERACAO_DESABILITADO -->            
             <!-- END BLOCK_LISTA_COLUNA_OPERACAO_TODAS -->
             </td>
+            
+            
         </tr>
         <!-- END BLOCK_LISTA -->
 
@@ -124,7 +139,7 @@
             <input disabled size="5" type="text" name="paginas" class="campofiltro" value="{PAGINAS}">
         </td>
         <td align="left">
-            <input onclick="paginacao_avancar()"  type="image" width="25px"   src="{PASTA_ICONES}direita.png"  title="Próxima" alt="Próxima" />
+            <input onclick="paginacao_avancar()"  type="image" width="25px"   src="{PASTA_ICONES}direita.png"  title="Prï¿½xima" alt="Prï¿½xima" />
         </td>
     </tr>
     </table>

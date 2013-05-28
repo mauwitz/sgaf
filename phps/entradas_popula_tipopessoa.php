@@ -3,34 +3,26 @@
 include "controle/conexao.php";
 include "controle/conexao_tipo.php";
 require "login_verifica.php";
-$tipopessoa = $_POST["tipopessoa"];
 $tiponegociacao = $_POST["tiponegociacao"];
 
-if ($tipopessoa==1) { //pessoa física
-    $sql_filtro=$sql_filtro." AND pes_tipopessoa=1 ";
-} else if ($tipopessoa==2) { //pessoa jurídica
-    $sql_filtro=$sql_filtro." AND pes_tipopessoa=2 ";
-} else { //Todos tipos de pessoa
-    
-}
-
 $sql = "
-    SELECT pes_codigo,pes_nome        
-    FROM pessoas 
-    JOIN fornecedores_tiponegociacao ON (fortipneg_pessoa=pes_codigo)
+    SELECT DISTINCT pestippes_codigo,pestippes_nome
+    FROM pessoas_tipopessoa
+    JOIN pessoas ON (pes_tipopessoa=pestippes_codigo)
     JOIN mestre_pessoas_tipo on (mespestip_pessoa=pes_codigo)
+    JOIN fornecedores_tiponegociacao ON (fortipneg_pessoa=pes_codigo)
     WHERE pes_cooperativa=$usuario_cooperativa
-    AND mespestip_tipo=5
+    AND mespestip_tipo=5    
     AND fortipneg_tiponegociacao=$tiponegociacao
-    $sql_filtro
 ";
 $query = mysql_query($sql);
 if (!$query)
     die("Erro: " . mysql_error());
 if (mysql_num_rows($query) > 0) {    
+    echo "<option value=''>Todos</option>";
     while ($dados = mysql_fetch_array($query)) {
-        $codigo = $dados["pes_codigo"];
-        $nome = $dados["pes_nome"];
+        $codigo = $dados["pestippes_codigo"];
+        $nome = $dados["pestippes_nome"];
         echo "<option value='$codigo'>$nome</option>";
     }
 } else {

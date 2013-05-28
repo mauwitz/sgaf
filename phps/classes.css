@@ -26,6 +26,7 @@
 .menulinha {                
     margin-top: 3px;
     border-bottom: 1px solid black;  
+    background-color: #f6f6f6;
 
 }
 .menulink {
@@ -179,7 +180,7 @@
 
 .campo1
 {
-    height: 22px;
+    height: 18px;
     border-collapse:collapse; 
     background-color: white;
     font-size: 10pt;
@@ -203,7 +204,7 @@
 
 .campo5
 {
-    height: 22px;
+    height: 18px;
     border-collapse:collapse; 
     background-color: white;
     font-size: 10pt;
@@ -230,7 +231,7 @@
 
 .campofiltro
 {
-    height: 22px;
+    height: 18px;
     border-collapse:collapse; 
     background-color: white;
     font-size: 10pt;

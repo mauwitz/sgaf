@@ -184,6 +184,7 @@ $sql = "
             <tr valign="middle" class="tabelacabecalho1">
                 <td width="35px">LOTE</td>
                 <td width="" colspan="2">DATA</td>            
+                <td width="">TIPO NEG.</td>            
                 <td width="">FORNECEDOR</td>
                 <td width="">SUPERVISOR</td>
                 <td width="">QTD. PROD.</td>            
@@ -259,6 +260,26 @@ $sql = "
                     <td align="right" ><?php echo "$codigo"; ?></td>
                     <td width="80px" align="right"><?php echo converte_data($data); ?></td>
                     <td width="35px"><?php echo converte_hora($hora); ?></td>
+
+                    <!-- COLUNA TIPO NEGOCIAÇÃO -->    
+                    <td align="center">                     
+                        <?php
+                        $sql11 = "SELECT ent_tiponegociacao FROM entradas WHERE ent_codigo=$codigo";
+                        $query11 = mysql_query($sql11);
+                        $dados11 = mysql_fetch_array($query11);                       
+                        $tiponegociacao=$dados11["ent_tiponegociacao"];
+                        if ($tiponegociacao==1) {
+                            $titulo="Consignação";
+                            $imagemtip=$icones."consignacao.png";
+                        }
+                        else {
+                            $imagemtip=$icones."revenda.png";
+                            $titulo="Revenda";
+                        }
+                        ?>    
+                        <img width="15px" src="<?php echo $imagemtip; ?>" title="<?php echo $titulo; ?>" alt="<?php echo $titulo; ?>"/>
+                    </td>                    
+                    
                     <td>
                         <a href="pessoas_cadastrar.php?codigo=<?php echo $fornecedor; ?>&operacao=ver" class="link">
                             <?php
@@ -308,6 +329,8 @@ $sql = "
                             ?></b>
                     </td>
 
+                   
+                    
                     <!-- COLUNA SITUACAO -->    
                     <td align="center">                     
                         <?php
@@ -368,7 +391,7 @@ $sql = "
             <?php } ?>
             <?php if ($linhas == "0") { ?>
                 <tr>
-                    <td colspan="10" align="center" class="errado">
+                    <td colspan="12" align="center" class="errado">
                         <?php echo "Nenhum resultado!" ?>
                     </td>
                 </tr>

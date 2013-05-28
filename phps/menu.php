@@ -99,11 +99,11 @@ if ($permissao_saidas_ver == 1) {
 }
 
 //Acertos
-$tpl_menu->IMAGEM_TITULO = "Fechamentos";
-$tpl_menu->TITULO = "Fechamentos";
+$tpl_menu->IMAGEM_TITULO = "Negociações";
+$tpl_menu->TITULO = "Negociações";
 if (($permissao_acertos_ver == 1)||($permissao_fechamentos_ver == 1)) {
     if ($usuario_quiosque != 0) {
-        $tpl_menu->IMAGEM_ARQUIVO = "acertos2.jpg";
+        $tpl_menu->IMAGEM_ARQUIVO = "acertos2.png";
         $tpl_menu->LINK = "acertos.php";
         $tpl_menu->block("BLOCK_MENU_ITEM_IMG");
         $tpl_menu->block("BLOCK_MENU_ITEM");

@@ -203,10 +203,10 @@ ORDER BY
                                 $revenda_icone = "revenda.png";                                
                         }
                         ?>
-                        <img width="15px" src="../imagens/icones/geral/<?php echo $consignacao_icone; ?>" title="Consignação" alt="Consignação">
+                        <img width="18px" src="../imagens/icones/geral/<?php echo $consignacao_icone; ?>" title="Consignação" alt="Consignação">
                     </a>
                     <a href="#" class="link">
-                        <img width="15px" src="../imagens/icones/geral/<?php echo $revenda_icone; ?>" title="Revenda" alt="Revenda">
+                        <img width="18px" src="../imagens/icones/geral/<?php echo $revenda_icone; ?>" title="Revenda" alt="Revenda">
                     </a>
                 </td>
 

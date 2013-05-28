@@ -21,7 +21,11 @@ include "includes.php";
 $id = $_POST['id'];
 $cpf = $_POST['cpf'];
 $cpf = limpa_cpf($cpf);
-$nome = ucwords(strtolower($_POST['nome']));
+$tipopessoa = $_POST['tipopessoa'];
+if ($tipopessoa == 1)
+    $nome = ucwords(strtolower($_POST['nome']));
+else
+    $nome = $_POST['nome'];
 $cidade = $_POST['cidade'];
 $vila = ucwords(strtolower($_POST['vila']));
 $bairro = ucwords(strtolower($_POST['bairro']));
@@ -52,7 +56,6 @@ $cnpj = str_replace('-', '', $cnpj);
 $cnpj = str_replace('/', '', $cnpj);
 $ramal1 = $_POST['fone1ramal'];
 $ramal2 = $_POST['fone2ramal'];
-$tipopessoa = $_POST['tipopessoa'];
 $tiponegociacao = $_POST['box2'];
 $pessoacontato = $_POST['pessoacontato'];
 $categoria = $_POST['categoria'];
@@ -268,18 +271,22 @@ if ($operacao == "cadastrar") {
 }
 
 //Verifica se foi selecionado pelo menos um tipo de negociacao
-if (empty($tiponegociacao)) {
-$tpl_notificacao = new Template("templates/notificacao.html");
-    $tpl_notificacao->ICONES = $icones;
-    $tpl_notificacao->MOTIVO_COMPLEMENTO = "É necessário selecionar pelo menos um tipo de negociação!";
-    //$tpl_notificacao->DESTINO = "produtos.php";
-    $tpl_notificacao->block("BLOCK_ERRO");
-    $tpl_notificacao->block("BLOCK_NAOEDITADO");
-    //$tpl_notificacao->block("BLOCK_MOTIVO_JAEXISTE");
-    $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
-    $tpl_notificacao->show();
-    exit;
-}
+/* foreach ($tipo as $tipo) {    
+  if ($tipo == 5) {
+  if (empty($tiponegociacao)) {
+  $tpl_notificacao = new Template("templates/notificacao.html");
+  $tpl_notificacao->ICONES = $icones;
+  $tpl_notificacao->MOTIVO_COMPLEMENTO = "É necessário selecionar pelo menos um tipo de negociação!";
+  //$tpl_notificacao->DESTINO = "produtos.php";
+  $tpl_notificacao->block("BLOCK_ERRO");
+  $tpl_notificacao->block("BLOCK_NAOEDITADO");
+  //$tpl_notificacao->block("BLOCK_MOTIVO_JAEXISTE");
+  $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
+  $tpl_notificacao->show();
+  exit;
+  }
+  }
+  } */
 
 
 
@@ -457,12 +464,36 @@ if ($operacao == "cadastrar") {
         }
 
         //Deleta os tipo de negociação e insere denovo
-        $sqldel = "
-        DELETE FROM 
-            fornecedores_tiponegociacao 
-        WHERE 
-            fortipneg_pessoa='$codigo'
-        ";
+        //apaga somente os tipos que o quiosque pode manipular
+        $sql11 = "SELECT quitipneg_tipo FROM quiosques_tiponegociacao WHERE quitipneg_quiosque=$usuario_quiosque";
+        $query11 = mysql_query($sql11);
+        if (!$query11)
+            die("Erro: " . mysql_error());
+        while ($dados11 = mysql_fetch_assoc($query11)) {
+            $tipon = $dados11["quitipneg_tipo"];
+            if ($tipon == 1)
+                $quiosque_consignacao = 1;
+            IF ($tipon == 2)
+                $quiosque_revenda = 1;
+        }
+
+        if ($usuario_quiosque == 0) {
+            $sqldel = "
+            DELETE FROM fornecedores_tiponegociacao 
+            WHERE fortipneg_pessoa='$codigo'            
+            ";            
+        } else {
+            $sqldel = "
+            DELETE FROM fornecedores_tiponegociacao 
+            WHERE fortipneg_pessoa='$codigo' 
+            AND fortipneg_tiponegociacao in (
+                SELECT quitipneg_tipo 
+                FROM quiosques_tiponegociacao 
+                WHERE quitipneg_quiosque=$usuario_quiosque
+            )
+            ";
+        }
+
         if (!mysql_query($sqldel))
             die("Erro91: " . mysql_error());
         foreach ($tiponegociacao as $tiponegociacao) {

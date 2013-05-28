@@ -11,8 +11,19 @@
         verifica_incluir()
     });    
     
-    function valida_produto () {
+    function valida_produto() {
         verifica_incluir()
+        $("input[name=valuni]").val("").priceFormat({prefix: 'R$ ',centsSeparator: ',',thousandsSeparator: '.'});
+        $("input[name=valuni]").disabled=true;
+        $("input[name=valunicusto]").val("").priceFormat({prefix: 'R$ ',centsSeparator: ',',thousandsSeparator: '.'}); 
+        $("input[name=valunicusto]").disabled=true;            
+        $("input[name=qtd]").val("");
+        $("input[name=qtd]").disabled=true;    
+        $("input[name=validade]").val("");
+        $("input[name=local]").val("");
+        $("span[name=tipocontagem]").html("");
+        $("span[name=qtdtipcon]").html("");
+           
         $.post("entradas_valorunitario2.php",{
             produto:$("select[name=produto]").val() , 
             fornecedor:$("select[name=fornecedor]").val() ,
@@ -21,6 +32,7 @@
             //alert(valor);
             if (valor=="naoestanalista") {                    
                 document.forms["form1"].valuni.disabled=false;
+                document.forms["form1"].valunicusto.disabled=false;
                 desabilita_campos ();
                 //alert('n�o esta na lista');
                 $.post("entradas_valorunitario.php",{
@@ -30,8 +42,11 @@
                     //alert(valor2);
                     var quebra=valor2.split("|");
                     var valuni=quebra[0];
+                    var valunicusto=quebra[2];
                     $("input[name=valuni]").val(valuni).priceFormat({prefix: 'R$ ',centsSeparator: ',',thousandsSeparator: '.'}); 
                     $("input[name=valuni2]").val(valuni).priceFormat({prefix: '',centsSeparator: ',',thousandsSeparator: '.'}); 
+                    $("input[name=valunicusto]").val(valunicusto).priceFormat({prefix: 'R$ ',centsSeparator: ',',thousandsSeparator: '.'}); 
+                    $("input[name=valunicusto2]").val(valunicusto).priceFormat({prefix: '',centsSeparator: ',',thousandsSeparator: '.'}); 
                     $("input[name=validade]").val("");
                     $("input[name=validade2]").val("");  
                 });                     
@@ -44,12 +59,16 @@
                 if (validade=='00/00/0000') {
                     validade="";
                 }
+                var valunicusto=quebra[2];
                 $("input[name=valuni]").val(valuni).priceFormat({prefix: 'R$ ',centsSeparator: ',',thousandsSeparator: '.'}); 
                 $("input[name=valuni2]").val(valuni).priceFormat({prefix: '',centsSeparator: ',',thousandsSeparator: '.'}); 
+                $("input[name=valunicusto]").val(valunicusto).priceFormat({prefix: 'R$ ',centsSeparator: ',',thousandsSeparator: '.'}); 
+                $("input[name=valunicusto2]").val(valunicusto).priceFormat({prefix: '',centsSeparator: ',',thousandsSeparator: '.'}); 
              
                 $("input[name=validade]").val(validade);
                 $("input[name=validade2]").val(validade);                
                 document.forms["form1"].valuni.disabled=true;
+                document.forms["form1"].valunicusto.disabled=true;
                 document.forms["form1"].validade.disabled=true;
                 //alert('esta na lista');
 
@@ -135,12 +154,46 @@
             <td><input type="text" size="8" required name="entrada_codigo" class="campo1" disabled value="{ENTRADA}"> </td>
         </tr>
         <!--  END BLOCK_SELECT_ENTRADA -->
+
+        <!--  BEGIN BLOCK_DATAHORA -->
+        <tr>
+            <td align="right"><b>Data: <label class="obrigatorio"></label></b></td>
+            <td><input type="text" size="8" required name="data1" class="campo1" disabled value="{ENTRADAS_DATA}"> </td>
+        </tr>    
+        <tr>
+            <td align="right"><b>Hora: <label class="obrigatorio"></label></b></td>
+            <td><input type="text" size="8" required name="hora1" class="campo1" disabled value="{ENTRADAS_HORA}"></td>
+        </tr> 
+        <!--  END BLOCK_DATAHORA --> 
+        
+        
+        <!--  BEGIN BLOCK_SELECT_TIPONEGOCIACAO -->
+        <tr>
+            <td align="right" width="200px"><b>Tipo de Negociação: <label class="obrigatorio"></label></b></td>
+            <td>
+                <select autofocus="1" name="tiponegociacao" onchange="popula_tipopessoa(this.value);" class="campo1" {SELECT_OBRIGATORIO} {SELECT_DESABILITADO} >
+                    <option value="">Selecione</option>	
+                    <!--  BEGIN BLOCK_OPTIONS_TIPONEGOCIACAO -->
+                    <option value="{OPTION_VALOR}" {OPTION_SELECIONADO} >{OPTION_TEXTO}</option>
+                    <!--  END BLOCK_OPTIONS_TIPONEGOCIACAO -->
+                </select>
+                <input type="hidden" name="tiponegociacao2" value="{TIPONEGOCIACAO}">
+            </td>            
+        </tr>
+        <!--  END BLOCK_SELECT_TIPONEGOCIACAO -->        
+
+
         <!--  BEGIN BLOCK_SELECT_TIPOPESSOA -->
         <tr>
             <td align="right" width="200px"><b>Tipo de Pessoa: <label class="obrigatorio"></label></b></td>
             <td>
                 <select autofocus="" name="tipopessoa" class="campo1" {SELECT_TIPOPESSOA_OBRIGATORIO} {SELECT_TIPOPESSOA_DESABILITADO} onchange="popula_fornecedores(this.value);">
-                        <option value="">Todos</option>	
+                    <!-- BEGIN BLOCK_OPTIONPADRAO -->
+                    <option value="">Todos</option>	
+                    <!-- END BLOCK_OPTIONPADRAO -->
+                    <!-- BEGIN BLOCK_OPTIONPADRAO2 -->
+                    <option value="">Selecione</option>	
+                    <!-- END BLOCK_OPTIONPADRAO2 -->
                     <!--  BEGIN BLOCK_OPTIONS_TIPOPESSOA -->
                     <option value="{OPTION_TIPOPESSOA_VALOR}" {OPTION_TIPOPESSOA_SELECIONADO} >{OPTION_TIPOPESSOA_TEXTO}</option>
                     <!--  END BLOCK_OPTIONS_TIPOPESSOA -->
@@ -154,7 +207,7 @@
             <td align="right" width="200px"><b>Fornecedor: <label class="obrigatorio"></label></b></td>
             <td>
                 <select autofocus="1" name="fornecedor" class="campo1" {SELECT_OBRIGATORIO} {SELECT_DESABILITADO} >
-                        <option value="">Selecione</option>	
+                    <option value="">Selecione</option>	
                     <!--  BEGIN BLOCK_OPTIONS_FORNECEDOR -->
                     <option value="{OPTION_VALOR}" {OPTION_SELECIONADO} >{OPTION_TEXTO}</option>
                     <!--  END BLOCK_OPTIONS_FORNECEDOR -->
@@ -168,7 +221,7 @@
             <td align="right" width="200px"><b>Supervisor: <label class="obrigatorio"></label></b></td>
             <td>
                 <select autofocus="1" name="fornecedor" class="campo1"  {SELECT_OBRIGATORIO} {SELECT_DESABILITADO} >
-                        <option value="">Selecione</option>	
+                    <option value="">Selecione</option>	
                     <!--  BEGIN BLOCK_OPTIONS_SUPERVISOR -->
                     <option value="{OPTION_VALOR}" {OPTION_SELECIONADO} >{OPTION_TEXTO}</option>
                     <!--  END BLOCK_OPTIONS_SUPERVISOR -->
@@ -178,16 +231,7 @@
         </tr>
         <!--  END BLOCK_SUPERVISOR -->      
 
-        <!--  BEGIN BLOCK_DATAHORA -->
-        <tr>
-            <td align="right"><b>Data: <label class="obrigatorio"></label></b></td>
-            <td><input type="text" size="8" required name="data1" class="campo1" disabled value="{ENTRADAS_DATA}"> </td>
-        </tr>    
-        <tr>
-            <td align="right"><b>Hora: <label class="obrigatorio"></label></b></td>
-            <td><input type="text" size="8" required name="hora1" class="campo1" disabled value="{ENTRADAS_HORA}"></td>
-        </tr> 
-        <!--  END BLOCK_DATAHORA -->      
+   
 
 
         <!--  BEGIN BLOCK_BOTAO_PASSO1 -->
@@ -208,7 +252,7 @@
             <td align="right" width="200px"><b>Produto: <label class="obrigatorio"></label></b></td>
             <td>
                 <select autofocus="2" name="produto" onchange=" valida_produto()"   id="{SELECT2_NOME}" class="campo1" {SELECT2_OBRIGATORIO} {SELECT2_DESABILITADO} >
-                        <option value="">Selecione</option>	
+                    <option value="">Selecione</option>	
                     <!--  BEGIN BLOCK_OPTIONS_PRODUTO -->
                     <option value="{OPTION2_VALOR}" {OPTION2_SELECIONADO} >{OPTION2_TEXTO}</option>
                     <!--  END BLOCK_OPTIONS_PRODUTO -->
@@ -218,11 +262,17 @@
         </tr>
         <tr>
             <td align="right"><b>Quantidade: <label class="obrigatorio"></label></b></td>
-            <td><input type="text" size="8" required name="qtd" id="qtd" onclick="this.select()"  onkeyup="mascara_pesoqtd()" class="campo1" autocomplete="off" >&nbsp;<span name="tipocontagem" class="fonte1"></span></td>
+            <td><input type="text" size="8" required disabled name="qtd" id="qtd" onclick="this.select()"  onkeyup="mascara_pesoqtd()" class="campo1" autocomplete="off" >&nbsp;<span name="tipocontagem" class="fonte1"></span></td>
         </tr>
+        <!--  BEGIN BLOCK_CAMPO_VALCUSTO -->
         <tr>
-            <td align="right"><b>Valor Unitário: <label class="obrigatorio"></label></b></td>
-            <td><input type="text" size="8" required name="valuni" class="campo1" autocomplete="off" onclick="this.select()" onkeyup="verifica_incluir()" >&nbsp;<span name="qtdtipcon" class="fonte1" autocomplete="off" ></span></td>
+            <td align="right"><b>Valor Unitário Custo: <label class="obrigatorio"></label></b></td>
+            <td><input type="text" size="8" required disabled name="valunicusto" class="campo1" autocomplete="off" onclick="this.select()" onkeyup="" >&nbsp;<span name="qtdtipcon" class="fonte1" autocomplete="off" ></span></td>
+        </tr>
+        <!--  END BLOCK_CAMPO_VALCUSTO -->
+        <tr>
+            <td align="right"><b>Valor Unitário Venda: <label class="obrigatorio"></label></b></td>
+            <td><input type="text" size="8" required disabled name="valuni" class="campo1" autocomplete="off" onclick="this.select()" onkeyup="verifica_incluir()" >&nbsp;<span name="qtdtipcon" class="fonte1" autocomplete="off" ></span></td>
         </tr>
         <tr>
             <td align="right"><b>Validade: <label class="obrigatorio"></label></b></td>
@@ -253,12 +303,19 @@
     <table border="1" class="tabela1" cellpadding="4" width="100%">
         <tr valign="middle" class="tabelacabecalho1">
             <td width="">Nº</td>
-            <td width="150px">PRODUTOS</td>
-            <td width="" align="center" colspan="2">QUANTIDADE</td>	
-            <td width="" align="center">VALOR UNIT.</td>
-            <td width="100px">LOCAL</td>
-            <td width="" align="center">VALIDADE</td>
-            <td width="" align="center">VALOR TOTAL</td>	
+            <td width="330px" colspan="2">PRODUTO</td>
+            <td width="100px" align="center" colspan="2">QUANTIDADE</td>	
+            <!-- BEGIN BLOCK_CUSTO_CABECALHO -->
+            <td width="" align="center">VALOR UNIT. CUSTO</td>          
+            <td width="" align="center">VALOR TOT. CUSTO</td> 
+            <!-- END BLOCK_CUSTO_CABECALHO -->
+            <!-- BEGIN BLOCK_VENDA_CABECALHO -->
+            <td width="" align="center">VALOR UNIT. VENDA</td>          
+            <td width="" align="center">VALOR TOT. VENDA</td> 
+            <!-- END BLOCK_VENDA_CABECALHO -->
+            <!-- BEGIN BLOCK_LUCRO_CABECALHO -->
+            <td width="" align="center">LUCRO TOT. PREVISTO</td> 
+            <!-- END BLOCK_LUCRO_CABECALHO -->
             <!--  BEGIN BLOCK_CABECALHO_OPERACAO -->
             <td width="70px" colspan="{OPER_COLSPAN}">OPER.</td>
             <!--  END BLOCK_CABECALHO_OPERACAO -->
@@ -267,25 +324,33 @@
         <!--  BEGIN BLOCK_LISTA -->
         <tr class="lin">
             <td>{ENTRADAS_NUMERO}</td>
+            <td align="right" width="30px">{ENTRADAS_PRODUTO}</td>
             <td>{ENTRADAS_PRODUTO_NOME}</td>
             <td align="right">{ENTRADAS_QTD}</td>
             <td align="left">{SIGLA}</td>
-            <td align="right">{ENTRADAS_VALORUNI}</td>
-            <td>{ENTRADAS_LOCAL}</td>
-            <td align="right">{ENTRADAS_VALIDADE}</td>
+            <!-- BEGIN BLOCK_CUSTO -->
+            <td align="right">{ENTRADAS_VALORUNI_CUSTO}</td>
+            <td align="right">{ENTRADAS_VALOR_TOTAL_CUSTO}</td>
+            <!-- END BLOCK_CUSTO -->
+            <!-- BEGIN BLOCK_VENDA -->
+            <td align="right">{ENTRADAS_VALORUNI}</td>            
             <td align="right">{ENTRADAS_VALOR_TOTAL}</td>
+            <!-- END BLOCK_VENDA -->
+            <!-- BEGIN BLOCK_LUCRO -->
+            <td align="right">{ENTRADAS_VALOR_LUCRO}</td>
+            <!-- END BLOCK_LUCRO -->
             <!--  BEGIN BLOCK_LISTA_OPERACAO -->
             <!--  BEGIN BLOCK_LISTA_OPERACAO_ETIQUETAS -->
             <td align="center" class="fundo1"> 
                 <a href="{IMPRIMIR_LINK}" target="_blank" class="link1">
-                    <img  width="18px"  src="{IMPRIMIR}"  title="Imprimir Etiqueta" alt="Imprimir Etiqueta" />
+                    <img  width="15px"  src="{IMPRIMIR}"  title="Imprimir Etiqueta" alt="Imprimir Etiqueta" />
                 </a>
             </td>
             <!--  END BLOCK_LISTA_OPERACAO_ETIQUETAS -->
             <!--  BEGIN BLOCK_LISTA_OPERACAO_EXCLUIR -->
             <td align="center" class="fundo1">
-                <a href="entradas_cadastrar.php?fornecedor={FORNECEDOR}&cancelar=1&passo=3&entrada={ENTRADA}&produto={PRODUTO}&item_numero={ENTRADAS_NUMERO}" class="link1">
-                    <img  width="18px"  src="{ICONES_CAMINHO}remover.png"  title="Remover" alt="Remover" />
+                <a href="entradas_cadastrar.php?fornecedor={FORNECEDOR}&cancelar=1&passo=3&entrada={ENTRADA}&produto={PRODUTO}&item_numero={ENTRADAS_NUMERO}&tiponegociacao={TIPONEGOCIACAO}" class="link1">
+                    <img  width="15px"  src="{ICONES_CAMINHO}remover.png"  title="Remover" alt="Remover" />
                 </a>
             </td>
             <!--  END BLOCK_LISTA_OPERACAO_EXCLUIR -->
@@ -294,7 +359,11 @@
         <!--  END BLOCK_LISTA -->
 
         <!--  BEGIN BLOCK_LISTA_NADA -->
-        <tr><td colspan="11" align="center" class="errado">Nenhum produto na lista!</td></tr>
+        <tr>
+            <td colspan="11" align="center" class="errado">
+                Nenhum produto na lista!
+            </td>
+        </tr>
         <!--  END BLOCK_LISTA_NADA -->
         <tr class="tabelarodape1">
             <td> </td>
@@ -302,9 +371,17 @@
             <td> </td>
             <td> </td>
             <td> </td>
+            <!-- BEGIN BLOCK_CUSTO_RODAPE -->
             <td> </td>
+            <td align="right">{TOTAL_CUSTO}</td>
+            <!-- END BLOCK_CUSTO_RODAPE -->
+            <!-- BEGIN BLOCK_VENDA_RODAPE -->
             <td> </td>
             <td align="right">{TOTAL_ENTRADA}</td>
+            <!-- END BLOCK_VENDA_RODAPE -->
+            <!-- BEGIN BLOCK_LUCRO_RODAPE -->
+            <td align="right">{TOTAL_LUCRO}</td>
+            <!-- END BLOCK_LUCRO_RODAPE -->
             <!--  BEGIN BLOCK_LISTA_NADA_OPERACAO -->            
             <td> </td>
             <!--  END BLOCK_LISTA_NADA_OPERACAO -->
@@ -312,11 +389,11 @@
 
     </table>
     <br>
-    
+
     <!-- BEGIN BLOCK_HR -->
     <hr >
     <!-- END BLOCK_HR -->
-    
+
     <input type="hidden" name="entrada2" value="{ENTRADA}">
     <!-- este valor � alimentado pelo javascript, � necess�rio para quando h� mais de um produto na lista de produtos porque o campo fica desabilitado-->
     <input type="hidden" name="valuni2" id="valuni2" value="">
@@ -341,23 +418,29 @@
                            {SALVAR_DESABILIDADO}
                            class="botao fonte3"
                            value="FINALIZAR ENTRADA"
-                    >
+                           >
                 </a>
             </td>
         </tr>
     </table>
     <!-- END BLOCK_BOTOES -->
-    
-    
+
+
     <!-- BEGIN BLOCK_BOTAO_VOLTAR -->
     <a class="link" href="javascript:window.history.go(-1)"><input type="button" value="VOLTAR" class="botao fonte3" autofocus="1"></a>    
     <!-- END BLOCK_BOTAO_VOLTAR -->
-    
+
     <!-- BEGIN BLOCK_BOTAO_IMPRIMIR -->
-    <a class="link" href="entradas_imprimir.php?codigo={ENTRADA}" target="_blank">
-        <input type="button" value="IMPRIMIR" class="botao fonte3">
+    <a class="link" href="entradas_imprimir.php?codigo={ENTRADA}&tipo=1" target="_blank">
+        <input type="button" value="IMPRIMIR CUPOM" class="botao fonte3">
     </a>    
     <!-- END BLOCK_BOTAO_IMPRIMIR -->
+
+    <!-- BEGIN BLOCK_BOTAO_IMPRIMIR_CUSTO -->
+    <a class="link" href="entradas_imprimir.php?codigo={ENTRADA}&tipo=2" target="_blank">
+        <input type="button" value="IMPRIMIR CUPOM REVENDA" class="botao fonte3">
+    </a>    
+    <!-- END BLOCK_BOTAO_IMPRIMIR_CUSTO -->
 
 
 

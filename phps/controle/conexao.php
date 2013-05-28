@@ -8,9 +8,9 @@
    
    $link = mysql_connect($hostname, $user, $pass);
    if (!$link) {
-       echo "Não foi possivel conectar ao Banco de Dados! Descriço do erro:".mysql_error();
+       echo "Nï¿½o foi possivel conectar ao Banco de Dados! Descriï¿½o do erro:".mysql_error();
        exit;
    }
    mysql_select_db($db, $link);
-
+    $banco="sgaf";
  ?>

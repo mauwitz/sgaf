@@ -295,7 +295,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl->block("BLOCK_LISTA_COLUNA2");
 
     //Tipo de negociação    
-    $icone_tamanho = "15px";
+    $icone_tamanho = "18px";
     $sql2 = "SELECT * FROM quiosques_tiponegociacao WHERE quitipneg_quiosque=$codigo";
     $query2 = mysql_query($sql2);
     if (!$query2)
@@ -311,8 +311,7 @@ while ($dados = mysql_fetch_assoc($query)) {
             $tipo_consignacao = 1;
         if ($tipo2 == 2)
             $tipo_revenda = 1;
-    }
-    echo "($tipo_consignacao-$tipo_revenda)";
+    }    
     $tpl->IMAGEM_TITULO = "Consignação";
     $tpl->IMAGEM_NOMEARQUIVO = "consignacao_desabilitado.png";
     if ($tipo_consignacao == 1) {
@@ -325,6 +324,7 @@ while ($dados = mysql_fetch_assoc($query)) {
         $tpl->IMAGEM_NOMEARQUIVO = "revenda.png";
     }
     $tpl->block("BLOCK_LISTA_COLUNA_IMAGEM");
+    $tpl->IMAGEM_ALINHAMENTO="center";
     $tpl->block("BLOCK_LISTA_COLUNA_ICONES");
 
 

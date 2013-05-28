@@ -391,8 +391,8 @@ function popula_quiosques() {
 }
 
 function verifica_cpf_cadastro(valor,valor2,pessoa_cod,operacao) {
-//valor2 = 1 quando é verificação normal
-//valor2 = 2 quando é para a tela de esquecí minha senha
+    //valor2 = 1 quando é verificação normal
+    //valor2 = 2 quando é para a tela de esquecí minha senha
     valor = valor.replace("_", "");
     valor = valor.replace("_", "");
     valor = valor.replace("_", "");
@@ -563,11 +563,46 @@ function verifica_maioridade (valor) {
         }
     }
 }
+function popula_tipopessoa(valor) {
+    //alert (valor);
+    if (valor=="") {
+        $("select[name=tipopessoa]").html("<option value=''>Selecione</option>");
+        $("select[name=fornecedor]").html("<option value=''>Selecione</option>");
+    } else {
+        $("select[name=fornecedor]").html("<option value=''>Selecione</option>");
+        $.post("entradas_popula_tipopessoa.php",{
+            tiponegociacao: valor
+        },function(valor2){
+            //alert(valor2);            
+            $("select[name=tipopessoa]").html(valor2);
+        });
+        tippes =  "";
+        $.post("entradas_popula_fornecedores.php",{
+            tipopessoa: tippes,
+            tiponegociacao: valor
+        },function(valor2){
+            //alert(valor2);
+            $("select[name=fornecedor]").html(valor2);
+        });        
+    }
+}
 function popula_fornecedores(valor) {
+    var tiponeg =  $("select[name=tiponegociacao]").val();
+    //alert (tiponeg);
     $.post("entradas_popula_fornecedores.php",{
-        tipopessoa:valor            
+        tipopessoa:valor,
+        tiponegociacao: tiponeg
     },function(valor2){
         //alert(valor2);
         $("select[name=fornecedor]").html(valor2);
     });        
+}
+
+function popula_quiosque_tiponegociacao (valor) {    
+    $.post("taxas_popula_tiponegociacao.php",{
+        quiosque:valor            
+    },function(valor2){
+        //alert(valor2);
+        $("select[name=tiponegociacao]").html(valor2);
+    });    
 }

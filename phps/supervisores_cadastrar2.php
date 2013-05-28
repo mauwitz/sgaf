@@ -1,7 +1,7 @@
 
 <?php
 
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 if ($permissao_quiosque_definirsupervisores <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -24,15 +24,15 @@ $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "../pessoas2/supervisor.png";
 $tpl_titulo->show();
 
-//Estrutura da notificação
+//Estrutura da notificaï¿½ï¿½o
 $tpl_notificacao = new Template("templates/notificacao.html");
 $tpl_notificacao->ICONES = $icones;
 $tpl_notificacao->DESTINO = "supervisores.php?quiosque=$quiosque";
 
 
-//Se a operação for cadastro então
+//Se a operaï¿½ï¿½o for cadastro entï¿½o
 if ($operacao=='cadastrar') {
-    //Verifica se o supervisor já está na lista de supervisores do quiosque
+    //Verifica se o supervisor jï¿½ estï¿½ na lista de supervisores do quiosque
     $sql = "SELECT * FROM quiosques_supervisores WHERE quisup_supervisor=$supervisor and quisup_quiosque=$quiosque";
     $query = mysql_query($sql);
     if (!$query)
@@ -40,7 +40,7 @@ if ($operacao=='cadastrar') {
     //$dados=  mysql_fetch_assoc($query);
     $linhas = mysql_num_rows($query);
     if ($linhas > 0) {
-        $tpl_notificacao->MOTIVO_COMPLEMENTO = "Este supervisor já está na lista!";
+        $tpl_notificacao->MOTIVO_COMPLEMENTO = "Este supervisor jï¿½ estï¿½ na lista!";
         $tpl_notificacao->block("BLOCK_ERRO");
         $tpl_notificacao->block("BLOCK_NAOEDITADO");
         $tpl_notificacao->block("BLOCK_MOTIVO_FALTADADOS");
@@ -64,13 +64,35 @@ if ($operacao=='cadastrar') {
         $query = mysql_query($sql);
         if (!$query)
             die("Erro de SQL:" . mysql_error());
-        $tpl_notificacao->MOTIVO_COMPLEMENTO = "";
-        $tpl_notificacao->block("BLOCK_CONFIRMAR");
-        $tpl_notificacao->block("BLOCK_CADASTRADO");
-        $tpl_notificacao->block("BLOCK_BOTAO");
-        $tpl_notificacao->show();    
+        //Verifica se esse supervisor jÃ¡ possui um usuÃ¡rio no sistema
+        $sql2 = "SELECT pes_possuiacesso FROM pessoas WHERE pes_codigo=$supervisor";
+        $query2 = mysql_query($sql2);
+        if (!$query2)
+            die("Erro de SQL:" . mysql_error());
+        $dados2 = mysql_fetch_array($query2);
+        $possiacesso = $dados2[0];
+        if ($possiacesso == 0) {
+            echo "<br>";
+            $tpl_notificacao->block("BLOCK_ATENCAO");
+            $tpl_notificacao->LINK = "pessoas_cadastrar.php?codigo=$supervisor&operacao=editar";
+            $tpl_notificacao->MOTIVO = "Este supervisor ainda nÃ£o possui acesso ao sistema!";
+            $tpl_notificacao->block("BLOCK_MOTIVO");
+            $tpl_notificacao->PERGUNTA = "Deseja definir uma senha de acesso para ele agora mesmo?";
+            $tpl_notificacao->block("BLOCK_PERGUNTA");
+            $tpl_notificacao->NAO_LINK = "supervisores.php?quiosque=$quiosque";
+            $tpl_notificacao->block("BLOCK_BOTAO_NAO_LINK");
+            $tpl_notificacao->block("BLOCK_BOTAO_SIMNAO");
+            $tpl_notificacao->show();
+        } else {
+            $tpl_notificacao->MOTIVO_COMPLEMENTO = "";
+            $tpl_notificacao->block("BLOCK_CONFIRMAR");
+            $tpl_notificacao->block("BLOCK_CADASTRADO");
+            $tpl_notificacao->block("BLOCK_BOTAO");
+            $tpl_notificacao->show();
+        }        
+   
     }
-} else { //Se for uma edição
+} else { //Se for uma ediï¿½ï¿½o
     $sql = "
     UPDATE
         quiosques_supervisores
