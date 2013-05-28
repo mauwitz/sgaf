@@ -168,12 +168,6 @@ if ($linhas != "") {
         $tpl->SIGLA = $dados['protip_sigla'];
         //Se o usu�rio for um fornecedor ent�o n�o mostrar algumas colunas
         
-        if ($usuario_grupo != 5) {
-            $valortot = $dados['valortot'];
-            $tpl->VALOR_TOTAL = "R$ " . number_format($valortot, 2, ',', '.');
-            $tpl->block("BLOCK_LISTA_TOTAL");
-            $tpl->block("BLOCK_LISTA_FORNECEDORES");
-        }                   
         $tpl->CATEGORIA = $dados['cat_nome'];
         $tpl->PRODUTO_CODIGO = $dados['pro_codigo'];
         $produto = $dados['pro_codigo'];
@@ -185,10 +179,17 @@ if ($linhas != "") {
             WHERE etq_produto=$produto 
             AND ent_quiosque=$usuario_quiosque
         ";
-        $tot = mysql_num_rows(mysql_query($sqltot));
-        
+        $tot = mysql_num_rows(mysql_query($sqltot));        
         $tpl->QTD_FORNECEDORES = $tot;
 
+        if ($usuario_grupo != 5) {
+            $valortot = $dados['valortot'];
+            $tpl->VALOR_TOTAL = "R$ " . number_format($valortot, 2, ',', '.');
+            $tpl->block("BLOCK_LISTA_TOTAL");
+            $tpl->block("BLOCK_LISTA_FORNECEDORES");
+        }                   
+        
+        
         $tpl->block("BLOCK_LISTA");
     }
 } else {
