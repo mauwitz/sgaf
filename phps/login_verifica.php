@@ -5,25 +5,24 @@ session_start();
 
 include "controle/conexao.php";
 //include "controle/conexao_tipo.php";
-
 //Variaveis globais
-$icones="../imagens/icones/geral/";
-$icones2="../imagens/icones/pessoas2/";
-$usuario_paginacao=15;
+$icones = "../imagens/icones/geral/";
+$icones2 = "../imagens/icones/pessoas2/";
+$usuario_paginacao = 15;
 
 // Verifica se existe os dados da sessão de login
 $usuario_nome = $_SESSION["usuario_nome"];
 $usuario_cpf = $_SESSION["usuario_cpf"];
 $usuario_codigo = $_SESSION["usuario_codigo"];
 $usuario_grupo = $_SESSION["usuario_grupo"];
-$usuario_cooperativa= $_SESSION["usuario_cooperativa"];
-$usuario_cooperativanomecompleto= $_SESSION["usuario_cooperativanomecompleto"];
-$usuario_cooperativaabreviacao= $_SESSION["usuario_cooperativaabreviacao"];
-$usuario_quiosque= $_SESSION["usuario_quiosque"];
-$usuario_quiosquenome= $_SESSION["usuario_quiosquenome"];
-$usuario_cidade= $_SESSION["usuario_cidade"];
-$usuario_estado= $_SESSION["usuario_estado"];
-$usuario_pais= $_SESSION["usuario_pais"];
+$usuario_cooperativa = $_SESSION["usuario_cooperativa"];
+$usuario_cooperativanomecompleto = $_SESSION["usuario_cooperativanomecompleto"];
+$usuario_cooperativaabreviacao = $_SESSION["usuario_cooperativaabreviacao"];
+$usuario_quiosque = $_SESSION["usuario_quiosque"];
+$usuario_quiosquenome = $_SESSION["usuario_quiosquenome"];
+$usuario_cidade = $_SESSION["usuario_cidade"];
+$usuario_estado = $_SESSION["usuario_estado"];
+$usuario_pais = $_SESSION["usuario_pais"];
 
 
 
@@ -38,7 +37,7 @@ if (!isset($_SESSION["usuario_cpf"]) || !isset($_SESSION["usuario_nome"]) || !is
     if (!$query)
         die("Erro de sql 1:" . mysql_error());
     $dados = mysql_fetch_assoc($query);
-    $permissao_nome = $dados["gruper_nome"];    
+    $permissao_nome = $dados["gruper_nome"];
     $permissao_cooperativa_ver = $dados["gruper_cooperativa_ver"];
     $permissao_cooperativa_cadastrar = $dados["gruper_cooperativa_cadastrar"];
     $permissao_cooperativa_editar = $dados["gruper_cooperativa_editar"];
@@ -105,7 +104,7 @@ if (!isset($_SESSION["usuario_cpf"]) || !isset($_SESSION["usuario_nome"]) || !is
     $permissao_tipocontagem_editar = $dados["gruper_tipocontagem_editar"];
     $permissao_tipocontagem_excluir = $dados["gruper_tipocontagem_excluir"];
     $permissao_estoque_ver = $dados["gruper_estoque_ver"];
-    $permissao_estoque_qtdide_definir=$dados["gruper_estoque_qtdide_definir"];
+    $permissao_estoque_qtdide_definir = $dados["gruper_estoque_qtdide_definir"];
     $permissao_entradas_ver = $dados["gruper_entradas_ver"];
     $permissao_entradas_cadastrar = $dados["gruper_entradas_cadastrar"];
     $permissao_entradas_editar = $dados["gruper_entradas_editar"];
@@ -126,7 +125,7 @@ if (!isset($_SESSION["usuario_cpf"]) || !isset($_SESSION["usuario_nome"]) || !is
     $permissao_relatorios_excluir = $dados["gruper_relatorios_excluir"];
     $permissao_acertos_cadastrar = $dados["gruper_acertos_cadastrar"];
     $permissao_acertos_editar = $dados["gruper_acertos_editar"];
-    $permissao_acertos_ver = $dados["gruper_acertos_ver"];    
+    $permissao_acertos_ver = $dados["gruper_acertos_ver"];
     $permissao_acertos_excluir = $dados["gruper_acertos_excluir"];
     $permissao_taxas_cadastrar = $dados["gruper_taxas_cadastrar"];
     $permissao_taxas_editar = $dados["gruper_taxas_editar"];
@@ -136,6 +135,21 @@ if (!isset($_SESSION["usuario_cpf"]) || !isset($_SESSION["usuario_nome"]) || !is
     $permissao_quiosque_versupervisores = $dados["gruper_quiosque_versupervisores"];
     $permissao_quiosque_vervendedores = $dados["gruper_quiosque_vervendedores"];
     $permissao_quiosque_vertaxas = $dados["gruper_quiosque_vertaxas"];
+}
+
+//Verifica os tipos de negociação do quiosque
+$sql11 = "SELECT quitipneg_tipo FROM quiosques_tiponegociacao WHERE quitipneg_quiosque=$usuario_quiosque";
+$query11 = mysql_query($sql11);
+if (!$query11)
+    die("Erro: " . mysql_error());
+$quiosque_consignacao=0;
+$quiosque_revenda=0;
+while ($dados11 = mysql_fetch_array($query11)) {
+    $tipon = $dados11[0];
+    if ($tipon == 1)
+        $quiosque_consignacao = 1;
+    IF ($tipon == 2)
+        $quiosque_revenda = 1;
 }
 
 ?>

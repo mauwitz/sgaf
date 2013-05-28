@@ -8,7 +8,7 @@ if ($permissao_acertos_ver <> 1) {
     header("Location: permissoes_semacesso.php");
     exit;
 }
-$tipopagina = "acertos";
+$tipopagina = "negociacoes";
 include "includes.php";
 
 

@@ -98,13 +98,16 @@ if ($permissao_saidas_ver == 1) {
     }
 }
 
-//Acertos
+//Negociações
 $tpl_menu->IMAGEM_TITULO = "Negociações";
 $tpl_menu->TITULO = "Negociações";
-if (($permissao_acertos_ver == 1)||($permissao_fechamentos_ver == 1)) {
+if ($permissao_acertos_ver == 1) {
     if ($usuario_quiosque != 0) {
         $tpl_menu->IMAGEM_ARQUIVO = "acertos2.png";
-        $tpl_menu->LINK = "acertos.php";
+        if ($quiosque_consignacao==1)
+            $tpl_menu->LINK = "acertos.php";
+        else
+            $tpl_menu->LINK = "acertos_revenda.php";
         $tpl_menu->block("BLOCK_MENU_ITEM_IMG");
         $tpl_menu->block("BLOCK_MENU_ITEM");
     }
@@ -339,7 +342,26 @@ if ($tipopagina == "saidas") {
     }
 }
 
-
+//Negociações
+if ($tipopagina == "negociacoes") {
+    //Consignados
+    if ($quiosque_consignacao == 1) {
+        $tpl_menu->LINK = "acertos.php";
+        $tpl_menu->IMAGEM_ARQUIVO = "consignacao.png";
+        $tpl_menu->IMAGEM_TITULO = "Acertos Consignações";
+        $tpl_menu->TITULO = "Acertos Consignações";
+        $tpl_menu->block("BLOCK_MENU_ITEM_IMG");
+        $tpl_menu->block("BLOCK_MENU_ITEM");
+    }
+    if ($quiosque_revenda == 1) {
+        $tpl_menu->LINK = "acertos_revenda.php";
+        $tpl_menu->IMAGEM_ARQUIVO = "revenda.png";
+        $tpl_menu->IMAGEM_TITULO = "Fechamento Revendas";
+        $tpl_menu->TITULO = "Fechamento Revendas";
+        $tpl_menu->block("BLOCK_MENU_ITEM_IMG");
+        $tpl_menu->block("BLOCK_MENU_ITEM");
+    }
+}
 
 
 
