@@ -1,7 +1,7 @@
 <?php
-$titulopagina="Acertos Cadastro/Edição";
+$titulopagina="Acertos Cadastro/EdiÃ§Ã£o";
 
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 if (($permissao_acertos_cadastrar == 0)&&($permissao_acertos_ver==0)) {
     header("Location: permissoes_semacesso.php");
@@ -9,7 +9,7 @@ if (($permissao_acertos_cadastrar == 0)&&($permissao_acertos_ver==0)) {
 }
 
 
-//Verifica se o usuário logado é um fornecedor
+//Verifica se o usuï¿½rio logado ï¿½ um fornecedor
 $codigo = $_GET["codigo"];
 $sql_for = "
 SELECT ace_fornecedor
@@ -75,11 +75,11 @@ $tpl_titulo = new Template("templates/titulos.html");
 $tpl_titulo->TITULO = "ACERTOS";
 $tpl_titulo->SUBTITULO = "DETALHES";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
-$tpl_titulo->NOME_ARQUIVO_ICONE = "acertos2.jpg";
+$tpl_titulo->NOME_ARQUIVO_ICONE = "consignacao.png";
 $tpl_titulo->show();
 
 
-//--------------------TEMPLATE FORNECEDOR E BOTÃO --------------------
+//--------------------TEMPLATE FORNECEDOR E BOTï¿½O --------------------
 $tpl1 = new Template("templates/cadastro_edicao_detalhes_2.html");
 $tpl1->LINK_DESTINO = "acertos_cadastrar.php";
 
@@ -134,8 +134,8 @@ $tpl1->block("BLOCK_CAMPO");
 $tpl1->block("BLOCK_CONTEUDO");
 $tpl1->block("BLOCK_ITEM");
 
-//Nº
-$tpl1->TITULO = "Nº";
+//Nï¿½
+$tpl1->TITULO = "NÂº";
 $tpl1->block("BLOCK_TITULO");
 $tpl1->CAMPO_QTD_CARACTERES = "";
 $tpl1->CAMPO_TIPO = "text";
@@ -175,14 +175,14 @@ $tpl2->CABECALHO_COLUNA_NOME = "QUANTIDADE";
 $tpl2->block(BLOCK_LISTA_CABECALHO);
 $tpl2->CABECALHO_COLUNA_TAMANHO = "150px";
 $tpl2->CABECALHO_COLUNA_COLSPAN = "";
-$tpl2->CABECALHO_COLUNA_NOME = "VALOR UNIT. MÉDIO";
+$tpl2->CABECALHO_COLUNA_NOME = "VALOR UNIT. MÃ‰DIO";
 $tpl2->block(BLOCK_LISTA_CABECALHO);
 $tpl2->CABECALHO_COLUNA_TAMANHO = "150px";
 $tpl2->CABECALHO_COLUNA_COLSPAN = "";
 $tpl2->CABECALHO_COLUNA_NOME = "VALOR BRUTO";
 $tpl2->block(BLOCK_LISTA_CABECALHO);
 
-//Mostra todos os produtos que foram acertados referente ao acerto em questão
+//Mostra todos os produtos que foram acertados referente ao acerto em questï¿½o
 $sql = "
     SELECT pro_nome, round(sum(saipro_quantidade),2) as qtd, protip_sigla, avg(saipro_valorunitario) as valuni, round(sum(saipro_valortotal),2) as total
 FROM 
@@ -232,7 +232,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     $total_bruto = $total_bruto + $dados["total"];
     $tpl2->block("BLOCK_LISTA");
 }
-//Rodapé da lisagem
+//Rodapï¿½ da lisagem
 $tpl2->LISTA_CLASSE = "tabelarodape1";
 $tpl2->block("BLOCK_LISTA_CLASSE");
 $tpl2->LISTA_COLUNA_VALOR = " ";
@@ -314,7 +314,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     $valtaxtot = $valtaxtot + $valtax;
     $tpl5->block("BLOCK_LISTA");
 }
-//Rodapé da lisagem
+//Rodapï¿½ da lisagem
 $tpl5->LISTA_CLASSE = "tabelarodape1";
 $tpl5->block("BLOCK_LISTA_CLASSE");
 $tpl5->LISTA_COLUNA_VALOR = " ";
@@ -449,7 +449,7 @@ $tpl4->block("BLOCK_CAMPO");
 $tpl4->block("BLOCK_CONTEUDO");
 $tpl4->block("BLOCK_ITEM");
 
-//Botão Voltar
+//Botï¿½o Voltar
 if ($operacao != 'imprimir') {
     $tpl4->block("BLOCK_BOTAO_VOLTAR");
     $tpl4->block("BLOCK_BOTOES");

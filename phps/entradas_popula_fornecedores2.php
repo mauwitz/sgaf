@@ -13,14 +13,14 @@ if ($tipopessoa==1) { //pessoa física
 } else { //Todos tipos de pessoa
     
 }
-if ($tiponegociacao!='undefined')
-    $sql_filtro= $sql_filtro." AND fortipneg_tiponegociacao=$tiponegociacao";
 
-echo $sql = "
-    SELECT pes_codigo,pes_nome        
+$sql = "
+    SELECT DISTINCT pes_codigo,pes_nome        
     FROM pessoas 
     JOIN fornecedores_tiponegociacao ON (fortipneg_pessoa=pes_codigo)
     JOIN mestre_pessoas_tipo on (mespestip_pessoa=pes_codigo)
+    JOIN entradas on (ent_fornecedor=pes_codigo)
+    JOIN saidas_produtos on (saipro_lote=ent_codigo)
     WHERE pes_cooperativa=$usuario_cooperativa
     AND mespestip_tipo=5    
     $sql_filtro

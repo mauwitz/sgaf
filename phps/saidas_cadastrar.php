@@ -275,7 +275,7 @@ if ($retirar_produto == '1') { //Se o usu�rio clicou no excluir produto da lis
     if (($saida != "") && ($produto != "") && ($lote != "")) {
 
         //Verifica a quantida atual do estoque
-        echo $sql = "SELECT etq_quantidade FROM estoque WHERE etq_quiosque=$usuario_quiosque and etq_produto=$produto and etq_lote=$lote";
+        $sql = "SELECT etq_quantidade FROM estoque WHERE etq_quiosque=$usuario_quiosque and etq_produto=$produto and etq_lote=$lote";
         $query = mysql_query($sql);
         if (!$query) {
             die("Erro de SQL7:" . mysql_error());
@@ -286,7 +286,7 @@ if ($retirar_produto == '1') { //Se o usu�rio clicou no excluir produto da lis
 
         //Calculando a quantidade final
         $qtdfinal = $qtdatual - $qtd;
-        echo "qtdfinal = $qtdatual - $qtd;";
+        //echo "qtdfinal = $qtdatual - $qtd;";
 
         //Se a quantidade final do estoque ficar negativa ent�o n�o permitir seja inserido a saida deste produto e nem atualizado o estoque        
         //(Isso acontece quando o usu�rio inclui um produto na lista e pressiona F5)

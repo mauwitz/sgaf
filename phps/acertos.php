@@ -2,7 +2,7 @@
 
 $titulopagina = "Acertos Listagem";
 
-//Verifica se o usu�rio tem permiss�o para acessar este conte�do
+//Verifica se o usuário tem permissão para acessar este conteúdo
 require "login_verifica.php";
 if ($permissao_acertos_ver <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -17,7 +17,7 @@ $tpl_titulo = new Template("templates/titulos.html");
 $tpl_titulo->TITULO = "ACERTOS  ";
 $tpl_titulo->SUBTITULO = "PEQUISA/LISTAGEM";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
-$tpl_titulo->NOME_ARQUIVO_ICONE = "acertos2.png";
+$tpl_titulo->NOME_ARQUIVO_ICONE = "consignacao.png";
 $tpl_titulo->show();
 
 
@@ -120,7 +120,7 @@ $tpl->block("BLOCK_FILTRO_BOTOES");
 $tpl->block("BLOCK_FILTRO");
 //Filtro Fim
 //LISTAGEM INICIO
-//Cabe�alho
+//Cabeçalho
 $tpl->CABECALHO_COLUNA_TAMANHO = "50px";
 $tpl->CABECALHO_COLUNA_COLSPAN = "";
 $tpl->CABECALHO_COLUNA_NOME = "CODIGO";
@@ -213,7 +213,7 @@ ORDER BY
     ace_codigo DESC
 ";
 
-//Pagina��o
+//Paginação
 $query = mysql_query($sql);
 if (!$query)
     die("Erro SQL Principal Paginação:" . mysql_error());
@@ -221,7 +221,7 @@ $linhas = mysql_num_rows($query);
 $por_pagina = $usuario_paginacao;
 $paginaatual = $_POST["paginaatual"];
 $paginas = ceil($linhas / $por_pagina);
-//Se � a primeira vez que acessa a pagina ent�o come�ar na pagina 1
+//Se é a primeira vez que acessa a pagina ent�o come�ar na pagina 1
 if (($paginaatual == "") || ($paginas < $paginaatual) || ($paginaatual <= 0)) {
     $paginaatual = 1;
 }

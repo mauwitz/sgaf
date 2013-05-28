@@ -1,4 +1,5 @@
 
+
 function valida_filtro_entradas_numero() {  
     if(document.formfiltro.filtronumero.value == "") {
         document.formfiltro.filtrofornecedor.disabled=false;
@@ -586,12 +587,12 @@ function popula_tipopessoa(valor) {
         });        
     }
 }
-function popula_fornecedores(valor) {
+function popula_fornecedores2(valor) {
     var tiponeg =  $("select[name=tiponegociacao]").val();
-    //alert (tiponeg);
-    $.post("entradas_popula_fornecedores.php",{
-        tipopessoa:valor,
-        tiponegociacao: tiponeg
+     //alert (tiponeg);
+    $.post("entradas_popula_fornecedores2.php",{
+        tipopessoa:valor
+        
     },function(valor2){
         //alert(valor2);
         $("select[name=fornecedor]").html(valor2);

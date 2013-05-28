@@ -49,7 +49,7 @@ $tpl_titulo = new Template("templates/titulos.html");
 $tpl_titulo->TITULO = "ACERTOS";
 $tpl_titulo->SUBTITULO = "CADASTRO";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
-$tpl_titulo->NOME_ARQUIVO_ICONE = "acertos2.png";
+$tpl_titulo->NOME_ARQUIVO_ICONE = "consignacao.png";
 $tpl_titulo->show();
 
 //Verifica se há produtos no estoque
@@ -112,7 +112,7 @@ $tpl1->SELECT_NOME = "tipopessoa";
 $tpl1->CAMPO_DICA = "";
 $tpl1->SELECT_ID = "tipopessoa";
 $tpl1->SELECT_TAMANHO = "";
-$tpl1->SELECT_ONCHANGE = "popula_fornecedores(this.value);";
+$tpl1->SELECT_ONCHANGE = "popula_fornecedores2(this.value);";
 $tpl1->block("BLOCK_SELECT_ONCHANGE");
 //$tpl1->block("BLOCK_SELECT_OBRIGATORIO");
 $tpl1->block("BLOCK_SELECT_NORMAL");
