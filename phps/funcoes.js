@@ -588,8 +588,6 @@ function popula_tipopessoa(valor) {
     }
 }
 function popula_fornecedores2(valor) {
-    var tiponeg =  $("select[name=tiponegociacao]").val();
-     //alert (tiponeg);
     $.post("entradas_popula_fornecedores2.php",{
         tipopessoa:valor
         

@@ -1,9 +1,10 @@
 <?php
-$titulopagina="Acertos Cadastro/Edição";
+
+$titulopagina = "Acertos Cadastro/Edição";
 
 //Verifica se o usu�rio tem permiss�o para acessar este conte�do
 require "login_verifica.php";
-if (($permissao_acertos_cadastrar == 0)&&($permissao_acertos_ver==0)) {
+if (($permissao_acertos_cadastrar == 0) && ($permissao_acertos_ver == 0)) {
     header("Location: permissoes_semacesso.php");
     exit;
 }
@@ -20,15 +21,15 @@ WHERE ace_codigo='$codigo'
 $query_for = mysql_query($sql_for);
 if (!$query_for)
     die("Erro Fornecedor:" . mysql_error());
-$dados_for=  mysql_fetch_assoc($query_for);
-$for=$dados_for['ace_fornecedor'];
-if (($usuario_grupo==5)&&($for!=$usuario_codigo)) {    
+$dados_for = mysql_fetch_assoc($query_for);
+$for = $dados_for['ace_fornecedor'];
+if (($usuario_grupo == 5) && ($for != $usuario_codigo)) {
     header("Location: permissoes_semacesso.php");
 }
 
 $tipopagina = "acertos";
 $operacao = $_GET["operacao"];
-if ($operacao == "ver")    
+if ($operacao == "ver")
     include "includes.php";
 else if ($operacao == "imprimir") {
     include "includes2.php";
@@ -278,13 +279,16 @@ $tpl5->block(BLOCK_LISTA_CABECALHO);
 
 //Mostra todas as taxas cobradas neste acerto
 $sql = "
-    SELECT * FROM acertos_taxas join taxas on (tax_codigo=acetax_taxa)    
-WHERE
-    acetax_acerto=$codigo
+    SELECT * 
+    FROM acertos_taxas 
+    join taxas on (tax_codigo=acetax_taxa)    
+    WHERE acetax_acerto=$codigo
+    and tax_tiponegociacao=1    
 ";
 $query = mysql_query($sql);
 if (!$query)
     die("Erro43" . mysql_error());
+$taxas=0;
 while ($dados = mysql_fetch_assoc($query)) {
 
     $valtax = $dados["acetax_valor"];
@@ -297,7 +301,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl5->block("BLOCK_LISTA_COLUNA");
 
     $tpl5->LISTA_COLUNA_ALINHAMENTO = "right";
-    $tpl5->LISTA_COLUNA_CLASSE = "";
+    $tpl5->LISTA_COLUNA_CLASSE = "";    
     $tpl5->LISTA_COLUNA_VALOR = number_format($dados["acetax_referencia"], 2, ',', '.');
     $tpl5->block("BLOCK_LISTA_COLUNA");
 
@@ -308,22 +312,29 @@ while ($dados = mysql_fetch_assoc($query)) {
 
     $tpl5->LISTA_COLUNA_ALINHAMENTO = "right";
     $tpl5->LISTA_COLUNA_CLASSE = "";
+
     $tpl5->LISTA_COLUNA_VALOR = "R$ " . number_format($dados["acetax_valor"], 2, ',', '.');
     $tpl5->block("BLOCK_LISTA_COLUNA");
-
+    $taxas=$taxas+ $dados["acetax_referencia"];
     $valtaxtot = $valtaxtot + $valtax;
     $tpl5->block("BLOCK_LISTA");
 }
 //Rodap� da lisagem
 $tpl5->LISTA_CLASSE = "tabelarodape1";
 $tpl5->block("BLOCK_LISTA_CLASSE");
-$tpl5->LISTA_COLUNA_VALOR = " ";
+$tpl5->LISTA_COLUNA_ALINHAMENTO = "left";
+$tpl5->LISTA_COLUNA_VALOR = "Fornecedor";
 $tpl5->block("BLOCK_LISTA_COLUNA");
-$tpl5->LISTA_COLUNA_VALOR = " ";
+$taxa_fornecedor = 100 - $taxas;
+$tpl5->LISTA_COLUNA_ALINHAMENTO = "right";
+$tpl5->LISTA_COLUNA_VALOR = number_format($taxa_fornecedor, 2, ',', '.');
 $tpl5->block("BLOCK_LISTA_COLUNA");
-$tpl5->LISTA_COLUNA_VALOR = " ";
+$tpl5->LISTA_COLUNA_ALINHAMENTO = "left";
+$tpl5->LISTA_COLUNA_VALOR = "%";
 $tpl5->block("BLOCK_LISTA_COLUNA");
-$tpl5->LISTA_COLUNA_VALOR = "R$ " . number_format($valtaxtot, 2, ",", ".");
+$tpl5->LISTA_COLUNA_ALINHAMENTO = "right";
+$valor_fornecedor = $total_bruto - $valtaxtot;
+$tpl5->LISTA_COLUNA_VALOR = "R$ " . number_format($valor_fornecedor, 2, ",", ".");
 $tpl5->block("BLOCK_LISTA_COLUNA");
 $tpl5->block("BLOCK_LISTA");
 
@@ -465,5 +476,4 @@ else if ($operacao == "imprimir") {
     echo "Erro Grave";
     exit;
 }
-
 ?>

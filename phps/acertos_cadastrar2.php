@@ -1,5 +1,5 @@
 <?php
-$titulopagina="Acertos Cadastro/Edi��o";
+$titulopagina="Acertos Cadastro/Edição";
 
 //Verifica se o usuário tem permissão para acessar este conteúdo
 require "login_verifica.php";
@@ -111,6 +111,7 @@ $sql = "
     SELECT * FROM quiosques_taxas join taxas on (tax_codigo=quitax_taxa)    
 WHERE
     quitax_quiosque=$usuario_quiosque
+        and tax_tiponegociacao=1
 ";
 $query = mysql_query($sql);
 if (!$query)
@@ -154,6 +155,7 @@ WHERE
     saipro_acertado=0 and
     ent_fornecedor=$fornecedor and
     ent_quiosque=$usuario_quiosque and
+    ent_tiponegociacao=1 and
     sai_tipo=1 and
     sai_status=1
 ";

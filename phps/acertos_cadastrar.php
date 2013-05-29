@@ -158,7 +158,8 @@ FROM
     join saidas_produtos on (saipro_lote=ent_codigo)
 WHERE
    mespestip_tipo=5 and 
-   ent_quiosque=$usuario_quiosque   
+   ent_quiosque=$usuario_quiosque  and 
+   ent_tiponegociacao=1
 ORDER BY pes_nome
 ";
 $query2 = mysql_query($sql2);
@@ -230,6 +231,7 @@ if ($passo == 2) {
             saipro_acertado=    0 and
             ent_fornecedor=$fornecedor and
             ent_quiosque=$usuario_quiosque and
+            ent_tiponegociacao=1 and
             sai_tipo=1 and
             sai_status=1
         GROUP BY 
@@ -291,8 +293,8 @@ if ($passo == 2) {
             saipro_acertado=0 and
             ent_fornecedor=$fornecedor and
             ent_quiosque=$usuario_quiosque and
-            ent_tiponegociacao=1 and
             sai_tipo=1 and
+            ent_tiponegociacao=1 and
             sai_status=1
         GROUP BY 
             saipro_produto
@@ -384,13 +386,16 @@ if ($passo == 2) {
 
         //Mostra o valor das taxas dos produtos a serem acertados
         $sql = "
-            SELECT * FROM quiosques_taxas join taxas on (tax_codigo=quitax_taxa)    
-        WHERE
-            quitax_quiosque=$usuario_quiosque
+            SELECT * 
+            FROM quiosques_taxas 
+            join taxas on (tax_codigo=quitax_taxa)    
+            WHERE quitax_quiosque=$usuario_quiosque
+            and tax_tiponegociacao=1
         ";
         $query = mysql_query($sql);
         if (!$query)
             die("Erro43" . mysql_error());
+        $taxas=0;
         while ($dados = mysql_fetch_assoc($query)) {
             $tpl5->LISTA_CLASSE = "tab_linhas2";
             $tpl5->block("BLOCK_LISTA_CLASSE");
@@ -402,6 +407,7 @@ if ($passo == 2) {
 
             $tpl5->LISTA_COLUNA_ALINHAMENTO = "right";
             $tpl5->LISTA_COLUNA_CLASSE = "";
+            $taxas=$taxas+$dados["quitax_valor"];
             $tpl5->LISTA_COLUNA_VALOR = number_format($dados["quitax_valor"], 2, ',', '.');
             $tpl5->block("BLOCK_LISTA_COLUNA");
 
@@ -422,13 +428,19 @@ if ($passo == 2) {
         //Rodap� da lisagem
         $tpl5->LISTA_CLASSE = "tabelarodape1";
         $tpl5->block("BLOCK_LISTA_CLASSE");
-        $tpl5->LISTA_COLUNA_VALOR = " ";
+        $tpl5->LISTA_COLUNA_ALINHAMENTO = "left";
+        $tpl5->LISTA_COLUNA_VALOR = "Fornecedor";
         $tpl5->block("BLOCK_LISTA_COLUNA");
-        $tpl5->LISTA_COLUNA_VALOR = " ";
+        $taxa_fornecedor=100-$taxas;
+        $tpl5->LISTA_COLUNA_ALINHAMENTO = "right";
+        $tpl5->LISTA_COLUNA_VALOR = number_format($taxa_fornecedor,2,',','.');
         $tpl5->block("BLOCK_LISTA_COLUNA");
-        $tpl5->LISTA_COLUNA_VALOR = " ";
+        $tpl5->LISTA_COLUNA_ALINHAMENTO = "left";
+        $tpl5->LISTA_COLUNA_VALOR = "%";
         $tpl5->block("BLOCK_LISTA_COLUNA");
-        $tpl5->LISTA_COLUNA_VALOR = "R$ " . number_format($valtaxtot, 2, ",", ".");
+        $tpl5->LISTA_COLUNA_ALINHAMENTO = "right";
+        $valor_fornecedor=$total_bruto-$valtaxtot;
+        $tpl5->LISTA_COLUNA_VALOR = "R$ " . number_format($valor_fornecedor, 2, ",", ".");
         $tpl5->block("BLOCK_LISTA_COLUNA");
         $tpl5->block("BLOCK_LISTA");
 
@@ -498,13 +510,14 @@ if ($passo == 2) {
         $tpl4->CAMPO_ID = "";
         $tpl4->CAMPO_TAMANHO = "";
         $sql = "
-        SELECT
-            ace_valorpendente
-        FROM
-            acertos
-        WHERE 
-            ace_codigo = (SELECT max(ace_codigo) FROM acertos WHERE ace_fornecedor=$fornecedor and ace_quiosque=$usuario_quiosque)
-        ";
+        SELECT ace_valorpendente
+        FROM acertos
+        WHERE ace_codigo = (
+            SELECT max(ace_codigo) 
+            FROM acertos 
+            WHERE ace_fornecedor=$fornecedor 
+            and ace_quiosque=$usuario_quiosque
+        )";
         $query = mysql_query($sql);
         if (!$query)
             die("Erro53" . mysql_error());

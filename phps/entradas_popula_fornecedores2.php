@@ -4,7 +4,7 @@ include "controle/conexao.php";
 include "controle/conexao_tipo.php";
 require "login_verifica.php";
 $tipopessoa = $_POST["tipopessoa"];
-$tiponegociacao = $_POST["tiponegociacao"];
+$tiponegociacao = 1;
 
 if ($tipopessoa==1) { //pessoa física
     $sql_filtro=$sql_filtro." AND pes_tipopessoa=1 ";
@@ -22,7 +22,8 @@ $sql = "
     JOIN entradas on (ent_fornecedor=pes_codigo)
     JOIN saidas_produtos on (saipro_lote=ent_codigo)
     WHERE pes_cooperativa=$usuario_cooperativa
-    AND mespestip_tipo=5    
+    AND mespestip_tipo=5   
+    and ent_tiponegociacao=$tiponegociacao
     $sql_filtro
 ";
 $query = mysql_query($sql);

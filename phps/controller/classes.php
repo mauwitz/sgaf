@@ -1,4 +1,4 @@
-<?
+<?php
 
 class banco {
 
@@ -38,6 +38,24 @@ class banco {
         $this->desconecta();
         return $qry;
     }
+    
+    function query_semconexao($sql) {
+        $this->acentos();
+        $qry = mysql_query($sql) or 
+        die(
+            $this->erro("
+                <br><b>Erro de SQL</b> 
+                <br> SQL: ".$sql."
+                <br>DESCRIÇÃO: ".mysql_error()."<br>
+            ")
+        );
+        return $qry;
+    }
+
+    function ultimo_registro() {
+        $this->acentos();
+        return mysql_insert_id();
+    }
 
     function dados($sql) {
         $this->conectar();
@@ -63,5 +81,4 @@ class banco {
     }
 
 }
-
 ?>
