@@ -38,6 +38,33 @@ function valida_filtro_saidas_devolucao_numero() {
     //document.formfiltro.filtro_fornecedor.disabled=true;
     } 
 }
+function valida_filtro_acertos_revenda_numero() {  
+    if(document.form_filtro.filtro_numero.value == "") {
+        document.form_filtro.filtro_supervisor.disabled=false;
+        document.form_filtro.filtro_dataini.disabled=false;
+        document.form_filtro.filtro_datafim.disabled=false;
+        document.form_filtro.filtro_horaini.disabled=false;
+        document.form_filtro.filtro_horafim.disabled=false;
+    //document.formfiltro.filtro_fornecedor.disabled=false;
+    }
+    else {  
+        document.form_filtro.filtro_supervisor.disabled=true;
+        document.form_filtro.filtro_dataini.disabled=true;
+        document.form_filtro.filtro_datafim.disabled=true;
+        document.form_filtro.filtro_horaini.disabled=true;
+        document.form_filtro.filtro_horafim.disabled=true;
+    } 
+}
+function valida_filtro_acertos_revenda_datas() {  
+    if((document.form_filtro.filtro_dataini.value != "")||(document.form_filtro.filtro_datafim.value != "")||(document.form_filtro.filtro_horaaini.value != "")||(document.form_filtro.filtro_horafim.value != "")) {
+        document.form_filtro.filtro_supervisor.disabled=true;
+        document.form_filtro.filtro_numero.disabled=true;
+    }
+    else {  
+        document.form_filtro.filtro_supervisor.disabled=false;
+        document.form_filtro.filtro_numero.disabled=false;
+    } 
+}
 function valida_filtro_pessoas_id() {  
     if(document.formfiltro.filtroid.value == "") {
         document.formfiltro.filtronome.disabled=false;

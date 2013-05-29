@@ -143,7 +143,11 @@ ADD INDEX (  saipro_fechado );
 
 # Alteração na entidade fechamentos
 ALTER TABLE  `fechamentos` ADD  `fch_quiosque` INT NOT NULL ,
-ADD INDEX (  `fch_quiosque` )
+ADD INDEX (  `fch_quiosque` );
+
+
+
+
 
 # -----------------------------------------------------
 # Versão 1.3

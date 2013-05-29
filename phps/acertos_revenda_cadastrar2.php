@@ -41,7 +41,7 @@ $tpl_titulo->NOME_ARQUIVO_ICONE = "revenda.png";
 $tpl_titulo->show();
 
 
-
+//Verifica se tem produtos a serem acertados
 $sql="
 SELECT saipro_produto
 FROM saidas_produtos
