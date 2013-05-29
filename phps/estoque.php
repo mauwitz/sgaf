@@ -15,12 +15,22 @@ $tpl->ICONES_CAMINHO = "$icones";
 
 //Inicio do FILTRO
 $filtro_produto = $_POST["filtroproduto"];
-if (empty($filtro_produto)) {
-    $filtro_produto = "%";
+if (!empty($filtro_produto)) {
+    $sql_filtro= $sql_filtro." and etq_produto=$filtro_produto";
 }
 $filtro_categoria = $_POST["filtrocategoria"];
-if (empty($filtro_categoria)) {
-    $filtro_categoria = "%";
+if (!empty($filtro_categoria)) {
+    $sql_filtro= $sql_filtro." and pro_categoria=$filtro_categoria";
+}
+
+$filtro_tiponegociacao = $_POST["filtrotiponegociacao"];
+if (!empty($filtro_tiponegociacao)) {
+    $sql_filtro= $sql_filtro." and etq_produto not in (
+        SELECT mesprotip_produto 
+        FROM  mestre_produtos_tipo
+        WHERE mesprotip_tipo=$filtro_tiponegociacao
+    )"; 
+   
 }
 
 //Filtro produto
@@ -51,6 +61,7 @@ while ($dados_produto = mysql_fetch_array($query_produto)) {
     $tpl->block("BLOCK_FILTRO_PRODUTO");
 }
 
+
 //Filtro categoria
 $sql_categoria = "
     SELECT DISTINCT
@@ -79,8 +90,37 @@ while ($dados_categoria = mysql_fetch_array($query_categoria)) {
     }
     $tpl->block("BLOCK_FILTRO_CATEGORIA");
 }
-$tpl->block("BLOCK_FILTRO");
 
+
+//Filtro tiponegociacao
+$sql6 = "
+    SELECT DISTINCT tipneg_codigo,tipneg_nome
+    FROM tipo_negociacao    
+    JOIN mestre_produtos_tipo on (mesprotip_tipo=tipneg_codigo)
+    join produtos on (mesprotip_produto=pro_codigo)
+    join estoque on (etq_produto=pro_codigo)
+    WHERE etq_quiosque=$usuario_quiosque     
+";
+$query6 = mysql_query($sql6);
+if (!$query6) {
+    DIE("Erro2 SQL:" . mysql_error());
+}
+while ($dados6 = mysql_fetch_array($query6)) {    
+    $tpl->TIPONEGOCIACAO_CODIGO = $dados6[0];    
+    $tpl->TIPONEGOCIACAO_NOME = $dados6[1];
+    if ($dados6[0] == $filtro_tiponegociacao) {
+        $tpl->TIPONEGOCIACAO_SELECIONADA = " selected ";
+    } else {
+        $tpl->TIPONEGOCIACAO_SELECIONADA = " ";
+    }    
+    $tpl->block("BLOCK_FILTRO_TIPONEGOCIACAO");
+}
+
+
+
+
+
+$tpl->block("BLOCK_FILTRO");
 
 //Inicio da tabela de listagem
 //SQL principal
@@ -103,9 +143,7 @@ FROM
     join pessoas on (etq_fornecedor=pes_codigo)
     join produtos_tipo on (pro_tipocontagem=protip_codigo)
 WHERE
-    pro_cooperativa='$usuario_cooperativa' and
-    etq_produto like '$filtro_produto' and
-    pro_categoria like '$filtro_categoria' and
+    pro_cooperativa='$usuario_cooperativa' and   
     etq_quiosque=$usuario_quiosque 
     $sql_filtro 
 GROUP BY
