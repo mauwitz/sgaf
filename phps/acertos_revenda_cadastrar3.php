@@ -44,10 +44,16 @@ $sql = "
 $query = $obj->query($sql);
 $dados = mysql_fetch_array($query);
 $numero = $dados["fch_codigo"];
-$dataini = $dados["fch_dataini"];
-$horaini = $dados["fch_horaini"];
-$datafim = $dados["fch_datafim"];
-$horafim = $dados["fch_horafim"];
+$dat = explode(' ', $dados["fch_dataini"]);
+$dataini = $dat[0];
+$horaini = $dat[1];
+$horaini = explode(':', $horaini);
+$horaini = $horaini[0] . ":" . $horaini[1];
+$dat = explode(' ', $dados["fch_datafim"]);
+$datafim = $dat[0];
+$horafim = $dat[1];
+
+
 $supervisor_nome = $dados["pes_nome"];
 $totalvenda = $dados["fch_totalvenda"];
 $totalcusto = $dados["fch_totalcusto"];

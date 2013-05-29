@@ -455,6 +455,13 @@ if ($linhas == 0) {
             die("Erro de SQL (22):" . mysql_error());
         $linhas22 = mysql_num_rows($query22);
 
+        //Verifica se algum produto desta saida foi fechado
+        $sql23 = "SELECT saipro_fechado FROM `saidas_produtos` WHERE saipro_saida=$numero and saipro_fechado !=0";
+        $query23 = mysql_query($sql23);
+        if (!$query23)
+            die("Erro de SQL (23):" . mysql_error());
+        $linhas23 = mysql_num_rows($query23);
+
 
         //editar        
         if ($permissao_saidas_editar == 1) {
@@ -463,6 +470,10 @@ if ($linhas == 0) {
                 $tpl->OPERACAO_NOME = "Você não pode editar esta Saída porque algum produto desta venda já foi acertado com o fornecedor!";
                 $tpl->ICONE_ARQUIVO = $icones . "editar_desabilitado.png";
                 $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_DESABILITADO");
+            } else if ($linhas23 > 0) {
+                $tpl->OPERACAO_NOME = "Você não pode editar esta saída porque algum produto desta venda já foi fechado/acertado!";
+                $tpl->ICONE_ARQUIVO = $icones . "editar_desabilitado.png";
+                $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_DESABILITADO");                
             } else {
                 //Se for um vendedor deve permitir a edição de apenas a ultima venda realizada por ele sob algumas condições
                 if ($usuario_grupo == 4) {

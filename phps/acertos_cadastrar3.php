@@ -73,7 +73,7 @@ $trocodevolvido = $dados["ace_trocodevolvido"];
 
 //--------------------TEMPLATE TÍTULO PRINCIPAL--------------------
 $tpl_titulo = new Template("templates/titulos.html");
-$tpl_titulo->TITULO = "ACERTOS";
+$tpl_titulo->TITULO = "ACERTOS DE CONSIGNAÇÕES";
 $tpl_titulo->SUBTITULO = "DETALHES";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "consignacao.png";

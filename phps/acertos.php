@@ -14,7 +14,7 @@ include "includes.php";
 
 //Template de Título e Sub-título
 $tpl_titulo = new Template("templates/titulos.html");
-$tpl_titulo->TITULO = "ACERTOS  ";
+$tpl_titulo->TITULO = "ACERTOS DE CONSIGNAÇÕES ";
 $tpl_titulo->SUBTITULO = "PEQUISA/LISTAGEM";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "consignacao.png";

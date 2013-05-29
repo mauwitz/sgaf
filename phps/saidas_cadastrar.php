@@ -342,12 +342,12 @@ if ($retirar_produto == '1') { //Se o usu�rio clicou no excluir produto da lis
 //Inserir saida principal com o status incompleto. Esse processo � feito uma unica vez, antes de come�ar 
 //a inser��o dos produtos dentro dessa saida
 if (($saida == 0) && ($passo == 2)) {
-
+    $datahoracadastro=$dataatual." ".$horaatual;
     $sql_saida = "
     INSERT INTO
-        saidas (sai_quiosque, sai_vendedor, sai_consumidor, sai_tipo, sai_saidajustificada,sai_descricao, sai_datacadastro, sai_horacadastro,sai_status)
+        saidas (sai_quiosque, sai_vendedor, sai_consumidor, sai_tipo, sai_saidajustificada,sai_descricao, sai_datacadastro, sai_horacadastro,sai_status,sai_datahoracadastro)
     VALUES
-        ('$usuario_quiosque','$usuario_codigo','$consumidor','$tiposaida','$motivo','$descricao','$dataatual','$horaatual',2)        
+        ('$usuario_quiosque','$usuario_codigo','$consumidor','$tiposaida','$motivo','$descricao','$dataatual','$horaatual',2,'$datahoracadastro')        
     ";
     $query_saida = mysql_query($sql_saida);
     if (!$query_saida)

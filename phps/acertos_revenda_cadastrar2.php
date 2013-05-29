@@ -17,6 +17,9 @@ $dataini = $_POST["dataini"];
 $datafim = $_POST["datafim"];
 $horaini = $_POST["horaini"];
 $horafim = $_POST["horafim"];
+$datafim_datetime=$datafim." ".$horafim;
+$dataini_datetime=$dataini." ".$horaini;
+
 $supervisor = $usuario_codigo;
 $totalvenda = $_POST["totalvenda"];
 $totalcusto = $_POST["totalcusto"];
@@ -74,9 +77,7 @@ INSERT INTO
         fch_datacadastro,
         fch_horacadastro,
         fch_dataini,
-        fch_horaini,
         fch_datafim,
-        fch_horafim,
         fch_supervisor,
         fch_totalvenda,
         fch_totalcusto,
@@ -92,10 +93,8 @@ INSERT INTO
 VALUES (
     '$datacadastro',
     '$horacadastro',
-    '$dataini',
-    '$horaini',
-    '$datafim',
-    '$horafim',
+    '$dataini_datetime',
+    '$datafim_datetime',
     '$supervisor',
     '$totalvenda',
     '$totalcusto',
@@ -160,6 +159,7 @@ $sql8="
     AND ent_tiponegociacao=2     
     AND ent_quiosque=$usuario_quiosque
     AND sai_tipo=1
+    AND sai_datahoracadastro BETWEEN '$dataini_datetime' AND '$datafim_datetime:59'
     AND sai_status=1      
 ";
 $query8 = $obj->query($sql8);
@@ -171,7 +171,7 @@ $tpl6->block("BLOCK_CONFIRMAR");
 //$tpl6->block("BLOCK_CADASTRADO");    
 $tpl6->MOTIVO = "O fechamento foi registrado com sucesso!";
 
-$tpl6->LINK = "acertos_revenda_cadastrar3.php?codigo=$ultimo&operacao=imprimir";
+$tpl6->LINK = "acertos_revenda_cadastrar3.php?codigo=$ultimo&ope=5";
 $tpl6->block("BLOCK_MOTIVO");
 $tpl6->PERGUNTA = "Deseja imprimir o relatórios do fechamento?";
 $tpl6->block("BLOCK_PERGUNTA");

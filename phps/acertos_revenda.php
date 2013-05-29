@@ -61,17 +61,17 @@ $tpl_filtro->CAMPO_VALOR = $filtro_dataini;
 $tpl_filtro->block("BLOCK_CAMPO_FILTRO");
 $tpl_filtro->block("BLOCK_CAMPO");
 $tpl_filtro->block("BLOCK_ESPACO");
-/*//Filtro Hora inicial
-//$tpl_filtro->block("BLOCK_CAMPO_TITULO_VAZIO");
-$tpl_filtro->CAMPO_TIPO = "time";
-$tpl_filtro->CAMPO_QTDCARACTERES = "";
-$tpl_filtro->CAMPO_NOME = "filtro_horaini";
-$tpl_filtro->CAMPO_ONKEYUP = "valida_filtro_acertos_revenda_datas();";
-$tpl_filtro->CAMPO_TAMANHO = "6";
-$tpl_filtro->CAMPO_VALOR = $filtro_horaini;
-$tpl_filtro->block("BLOCK_CAMPO_FILTRO");
-$tpl_filtro->block("BLOCK_CAMPO");
-$tpl_filtro->block("BLOCK_ESPACO");*/
+/* //Filtro Hora inicial
+  //$tpl_filtro->block("BLOCK_CAMPO_TITULO_VAZIO");
+  $tpl_filtro->CAMPO_TIPO = "time";
+  $tpl_filtro->CAMPO_QTDCARACTERES = "";
+  $tpl_filtro->CAMPO_NOME = "filtro_horaini";
+  $tpl_filtro->CAMPO_ONKEYUP = "valida_filtro_acertos_revenda_datas();";
+  $tpl_filtro->CAMPO_TAMANHO = "6";
+  $tpl_filtro->CAMPO_VALOR = $filtro_horaini;
+  $tpl_filtro->block("BLOCK_CAMPO_FILTRO");
+  $tpl_filtro->block("BLOCK_CAMPO");
+  $tpl_filtro->block("BLOCK_ESPACO"); */
 $tpl_filtro->block("BLOCK_COLUNA");
 
 //Filtro Data final
@@ -86,17 +86,17 @@ $tpl_filtro->CAMPO_VALOR = $filtro_datafim;
 $tpl_filtro->block("BLOCK_CAMPO_FILTRO");
 $tpl_filtro->block("BLOCK_CAMPO");
 $tpl_filtro->block("BLOCK_ESPACO");
-/*//Filtro Hora final
-//$tpl_filtro->block("BLOCK_CAMPO_TITULO_VAZIO");
-$tpl_filtro->CAMPO_TIPO = "time";
-$tpl_filtro->CAMPO_QTDCARACTERES = "";
-$tpl_filtro->CAMPO_NOME = "filtro_horafim";
-$tpl_filtro->CAMPO_ONKEYUP = "valida_filtro_acertos_revenda_datas();";
-$tpl_filtro->CAMPO_TAMANHO = "6";
-$tpl_filtro->CAMPO_VALOR = $filtro_horafim;
-$tpl_filtro->block("BLOCK_CAMPO_FILTRO");
-$tpl_filtro->block("BLOCK_CAMPO");
-$tpl_filtro->block("BLOCK_ESPACO");*/
+/* //Filtro Hora final
+  //$tpl_filtro->block("BLOCK_CAMPO_TITULO_VAZIO");
+  $tpl_filtro->CAMPO_TIPO = "time";
+  $tpl_filtro->CAMPO_QTDCARACTERES = "";
+  $tpl_filtro->CAMPO_NOME = "filtro_horafim";
+  $tpl_filtro->CAMPO_ONKEYUP = "valida_filtro_acertos_revenda_datas();";
+  $tpl_filtro->CAMPO_TAMANHO = "6";
+  $tpl_filtro->CAMPO_VALOR = $filtro_horafim;
+  $tpl_filtro->block("BLOCK_CAMPO_FILTRO");
+  $tpl_filtro->block("BLOCK_CAMPO");
+  $tpl_filtro->block("BLOCK_ESPACO"); */
 $tpl_filtro->block("BLOCK_COLUNA");
 
 
@@ -157,19 +157,19 @@ $tpl4->block("BLOCK_BOTAOPADRAO");
 $tpl4->block("BLOCK_COLUNA");
 
 //Botão Cadastrar
-    $tpl4->COLUNA_LINK_ARQUIVO = "acertos_revenda_cadastrar.php";
-    $tpl4->COLUNA_LINK_TARGET = "";
-    $tpl4->COLUNA_TAMANHO = "100%";
-    $tpl4->COLUNA_ALINHAMENTO = "right";
-    $tpl4->block("BLOCK_COLUNA_LINK");
-    $tpl4->BOTAO_TIPO = "BUTTON";
-    $tpl4->BOTAO_VALOR = "REALIZAR NOVO FECHAMENTO";
-    $tpl4->BOTAOPADRAO_CLASSE = "botaopadraocadastrar";
-    $tpl4->block("BLOCK_BOTAO_PADRAO");
-    $tpl4->block("BLOCK_BOTAOPADRAO_AUTOFOCO");
-    $tpl4->block("BLOCK_BOTAO");    
-    $tpl4->block("BLOCK_COLUNA");
-    
+$tpl4->COLUNA_LINK_ARQUIVO = "acertos_revenda_cadastrar.php";
+$tpl4->COLUNA_LINK_TARGET = "";
+$tpl4->COLUNA_TAMANHO = "100%";
+$tpl4->COLUNA_ALINHAMENTO = "right";
+$tpl4->block("BLOCK_COLUNA_LINK");
+$tpl4->BOTAO_TIPO = "BUTTON";
+$tpl4->BOTAO_VALOR = "REALIZAR NOVO FECHAMENTO";
+$tpl4->BOTAOPADRAO_CLASSE = "botaopadraocadastrar";
+$tpl4->block("BLOCK_BOTAO_PADRAO");
+$tpl4->block("BLOCK_BOTAOPADRAO_AUTOFOCO");
+$tpl4->block("BLOCK_BOTAO");
+$tpl4->block("BLOCK_COLUNA");
+
 
 
 $tpl4->block("BLOCK_LINHA");
@@ -224,7 +224,7 @@ if (!empty($filtro_numero))
     $sql_filtro = " and fch_codigo = $filtro_numero ";
 if (!empty($filtro_supervisor))
     $sql_filtro = " and fch_supervisor = $filtro_supervisor ";
-if ((!empty($filtro_dataini))||(!empty($filtro_datafim)))
+if ((!empty($filtro_dataini)) || (!empty($filtro_datafim)))
     $sql_filtro = " and fch_dataini >= '$filtro_dataini' and fch_datafim <= '$filtro_datafim' ";
 
 $sql = "
@@ -264,12 +264,20 @@ if (mysql_num_rows($query) == 0) {
 }
 
 //Listagem Linhas
+$sql8= "SELECT max(fch_codigo) FROM fechamentos";
+$query8 = mysql_query($sql8);
+if (!$query8)
+    die("Erro SQL: " . mysql_error());
+$dados8=  mysql_fetch_array($query8);
+$ultimo=$dados8[0];
 while ($dados = mysql_fetch_assoc($query)) {
     $numero = $dados["fch_codigo"];
-    $dataini = $dados["fch_dataini"];
-    $horaini = $dados["fch_horaini"];
-    $datafim = $dados["fch_datafim"];
-    $horafim = $dados["fch_horafim"];
+    $datahora = explode(" ", $dados["fch_dataini"]);
+    $dataini = $datahora[0];
+    $horaini = $datahora[1];
+    $datahora = explode(" ", $dados["fch_datafim"]);
+    $datafim = $datahora[0];
+    $horafim = $datahora[1];
     $supervisor_nome = $dados["pes_nome"];
     $totalvenda = $dados["fch_totalvenda"];
     $totalcusto = $dados["fch_totalcusto"];
@@ -319,21 +327,21 @@ while ($dados = mysql_fetch_assoc($query)) {
 
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "right";
-    $tpl2->TEXTO = "R$ ".number_format($totalvenda, 2, ',', '.');
+    $tpl2->TEXTO = "R$ " . number_format($totalvenda, 2, ',', '.');
     $tpl2->block("BLOCK_TEXTO");
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
 
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "right";
-    $tpl2->TEXTO = "R$ ".number_format($totalcusto, 2, ',', '.');
+    $tpl2->TEXTO = "R$ " . number_format($totalcusto, 2, ',', '.');
     $tpl2->block("BLOCK_TEXTO");
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
 
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "right";
-    $tpl2->TEXTO = "R$ ".number_format($totallucro, 2, ',', '.');
+    $tpl2->TEXTO = "R$ " . number_format($totallucro, 2, ',', '.');
     $tpl2->block("BLOCK_TEXTO");
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
@@ -369,11 +377,19 @@ while ($dados = mysql_fetch_assoc($query)) {
     //Operação Excluir    
     $tpl2->COLUNA_TAMANHO = "35px";
     $tpl2->COLUNA_ALINHAMENTO = "center";
-    $tpl2->ICONES_CAMINHO = $icones;
-    $tpl2->CONTEUDO_LINK_ARQUIVO = "acertos_revenda_deletar.php?codigo=$numero";
-    $tpl2->block("BLOCK_CONTEUDO_LINK");
-    $tpl2->block("BLOCK_OPERACAO_EXCLUIR_HABILITADO");
-    $tpl2->block("BLOCK_OPERACAO_EDITAR_TITULOPADRAO");
+    $tpl2->ICONES_CAMINHO = $icones;    
+    if ($numero == $ultimo) {
+        $tpl2->block("BLOCK_OPERACAO_EXCLUIR_HABILITADO");
+        $tpl2->CONTEUDO_LINK_ARQUIVO = "acertos_revenda_deletar.php?codigo=$numero";
+        $tpl2->block("BLOCK_CONTEUDO_LINK");
+        $tpl2->block("BLOCK_OPERACAO_EXCLUIR_TITULOPADRAO");
+    } else {
+        //$tpl2->CONTEUDO_LINK_ARQUIVO = "";
+        //$tpl2->block("BLOCK_CONTEUDO_LINK");     
+        $tpl2-> ICONES_TITULO="Você só pode excluir o ultimo fechamento!";
+        $tpl2->block("BLOCK_OPERACAO_EXCLUIR_DESABILITADO");
+    $tpl2->block("BLOCK_OPERACAO_EXCLUIR_TITULO");
+    }
     $tpl2->block("BLOCK_OPERACAO_EXCLUIR");
     $tpl2->block("BLOCK_OPERACAO");
     $tpl2->block("BLOCK_CONTEUDO");

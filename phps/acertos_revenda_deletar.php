@@ -7,6 +7,7 @@ if ($quiosque_revenda <> 1) {
 }
 $tipopagina = "negociacoes";
 include "includes.php";
+include "controller/classes.php";
 
 //TÍTULO PRINCIPAL
 $tpl_titulo = new Template("templates/titulos.html");
@@ -24,21 +25,21 @@ $tpl_titulo->show();
   Ao excluir devemos considerar algumas regras
  */
 
-
 $codigo = $_REQUEST["codigo"];
+$obj= new banco();
+
 
 //Altera todos os produtos vendidos que foram acertados para 'n�o acertados'
-$sql2 = "
+$sql = "
     UPDATE
     saidas_produtos   
     SET 
     saipro_fechado='0'
     WHERE 
-    saipro_fechado=$codigo
+    saipro_fechado='$codigo'
     ";
-$obj= new banco();
-$obj->query($sql);
 
+$obj->query($sql);
 
 
 //Deleta todoa as taxas do fechamento para depois excluir o fechamento
@@ -46,7 +47,7 @@ $sql = "
     DELETE FROM fechamentos_taxas 
     WHERE fchtax_fechamento=$codigo
 ";
-$obj= new banco();
+
 $obj->query($sql);
 
 
@@ -55,7 +56,7 @@ $sql = "
     DELETE FROM fechamentos 
     WHERE fch_codigo=$codigo
 ";
-$obj= new banco();
+
 $obj->query($sql);
 
 

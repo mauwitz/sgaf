@@ -145,9 +145,15 @@ ADD INDEX (  saipro_fechado );
 ALTER TABLE  `fechamentos` ADD  `fch_quiosque` INT NOT NULL ,
 ADD INDEX (  `fch_quiosque` );
 
+ALTER TABLE `fechamentos`
+  DROP `fch_horaini`,
+  DROP `fch_horafim`;
+
+# alterado de date para datetime o atributo fch_dataini e fch_datafim
+# ATENCAO
 
 
-
+ALTER TABLE  saidas ADD  sai_datahoracadastro DATETIME NOT NULL;
 
 # -----------------------------------------------------
 # Versão 1.3

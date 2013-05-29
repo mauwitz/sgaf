@@ -25,6 +25,13 @@ $valorpago = dinheiro_para_numero($valorpago);
 $valorpendenteatual = $valortotal - $valorpago;
 
 
+$tpl_titulo = new Template("templates/titulos.html");
+$tpl_titulo->TITULO = "ACERTOS DE CONSIGNAÇÕES";
+$tpl_titulo->SUBTITULO = "CADASTRO/EDIÇÂO";
+$tpl_titulo->ICONES_CAMINHO = "$icones";
+$tpl_titulo->NOME_ARQUIVO_ICONE = "consignacao.png";
+$tpl_titulo->show();
+
 
 //echo "valorpendenteatual = $valortotal - $valorpago";
 //$taxacoo =$_POST["taxacoo"];
