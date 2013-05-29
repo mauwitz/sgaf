@@ -1,3 +1,4 @@
+
 # Versão 1.1 - Módulo entidades
 
 
@@ -138,7 +139,11 @@ ALTER TABLE  entradas ADD  ent_valortotalcusto FLOAT NULL;
 ALTER TABLE  saidas_produtos ADD  saipro_fechado BIGINT NULL ,
 ADD INDEX (  saipro_fechado );
 
+# ------foi executado na base quente até aqui -----
 
+# Alteração na entidade fechamentos
+ALTER TABLE  `fechamentos` ADD  `fch_quiosque` INT NOT NULL ,
+ADD INDEX (  `fch_quiosque` )
 
 # -----------------------------------------------------
 # Versão 1.3

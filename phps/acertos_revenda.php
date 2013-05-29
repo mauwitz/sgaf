@@ -2,24 +2,23 @@
 
 //Verifica se o usu�rio tem permiss�o para acessar este conte�do
 require "login_verifica.php";
-if ($permissao_saidas_ver_devolucao <> 1) {
-    echo $permissao_saidas_ver_devolucao;
-    //header("Location: permissoes_semacesso.php");
+if ($quiosque_revenda <> 1) {
+    header("Location: permissoes_semacesso.php");
     exit;
 }
-$tipopagina = "saidas";
+$tipopagina = "negociacoes";
 include "includes.php";
 
 
-//TÍTULO GERAL DA PAGINA
+//TÍTULO PRINCIPAL
 $tpl_titulo = new Template("templates/titulos.html");
-$tpl_titulo->TITULO = "SAIDAS  ";
-$tpl_titulo->SUBTITULO = "LISTAGEM DE DEVOLUÇÕES";
+$tpl_titulo->TITULO = "FECHAMENTO DE REVENDAS";
+$tpl_titulo->SUBTITULO = "LISTAGEM DE FECHAMENTOS DE REVENDAS";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
-$tpl_titulo->NOME_ARQUIVO_ICONE = "saidas.png";
+$tpl_titulo->NOME_ARQUIVO_ICONE = "revenda.png";
 $tpl_titulo->show();
 
-
+/*
 //FILTRO
 $tpl_filtro = new Template("templates/filtro1.html");
 $tpl_filtro->FORM_ONLOAD = "";
@@ -155,9 +154,10 @@ $tpl_filtro->block("BLOCK_LINHA");
 $tpl_filtro->block("BLOCK_FILTRO_CAMPOS");
 $tpl_filtro->block("BLOCK_QUEBRA");
 $tpl_filtro->show();
+*/
 
 $tpl4 = new Template("templates/botoes1.html");
-
+/*
 //Bot�o Pesquisar
 $tpl4->COLUNA_TAMANHO = "";
 $tpl4->COLUNA_ALINHAMENTO = "";
@@ -166,7 +166,7 @@ $tpl4->block("BLOCK_BOTAOPADRAO_PESQUISAR");
 $tpl4->block("BLOCK_BOTAOPADRAO");
 $tpl4->block("BLOCK_COLUNA");
 
-//Bot�o Limpar
+//Botão Limpar
 $tpl4->COLUNA_LINK_ARQUIVO = "saidas_devolucao.php";
 $tpl4->COLUNA_LINK_TARGET = "";
 $tpl4->COLUNA_TAMANHO = "";
@@ -176,10 +176,9 @@ $tpl4->block("BLOCK_BOTAOPADRAO_SIMPLES");
 $tpl4->block("BLOCK_BOTAOPADRAO_LIMPAR");
 $tpl4->block("BLOCK_BOTAOPADRAO");
 $tpl4->block("BLOCK_COLUNA");
-
-//Bot�o Cadastrar
-if (($permissao_saidas_cadastrar_devolucao == 1) && ($usuario_quiosque != 0)) {
-    $tpl4->COLUNA_LINK_ARQUIVO = "saidas_cadastrar.php?tiposaida=3";
+*/
+//Botão Cadastrar
+    $tpl4->COLUNA_LINK_ARQUIVO = "acertos_revenda_cadastrar.php";
     $tpl4->COLUNA_LINK_TARGET = "";
     $tpl4->COLUNA_TAMANHO = "100%";
     $tpl4->COLUNA_ALINHAMENTO = "right";
@@ -189,7 +188,6 @@ if (($permissao_saidas_cadastrar_devolucao == 1) && ($usuario_quiosque != 0)) {
     $tpl4->block("BLOCK_BOTAOPADRAO_CADASTRAR");
     $tpl4->block("BLOCK_BOTAOPADRAO");
     $tpl4->block("BLOCK_COLUNA");
-}
 
 $tpl4->block("BLOCK_LINHA");
 $tpl4->block("BLOCK_BOTOES");
@@ -208,15 +206,11 @@ $tpl2->CABECALHO_COLUNA_NOME = "Nº";
 $tpl2->block("BLOCK_CABECALHO_COLUNA");
 $tpl2->CABECALHO_COLUNA_COLSPAN = "2";
 $tpl2->CABECALHO_COLUNA_TAMANHO = "";
-$tpl2->CABECALHO_COLUNA_NOME = "DATA";
+$tpl2->CABECALHO_COLUNA_NOME = "DE";
 $tpl2->block("BLOCK_CABECALHO_COLUNA");
-$tpl2->CABECALHO_COLUNA_COLSPAN = "";
+$tpl2->CABECALHO_COLUNA_COLSPAN = "2";
 $tpl2->CABECALHO_COLUNA_TAMANHO = "";
-$tpl2->CABECALHO_COLUNA_NOME = "MOTIVO";
-$tpl2->block("BLOCK_CABECALHO_COLUNA");
-$tpl2->CABECALHO_COLUNA_COLSPAN = "";
-$tpl2->CABECALHO_COLUNA_TAMANHO = "";
-$tpl2->CABECALHO_COLUNA_NOME = "DESCRIÇÃO";
+$tpl2->CABECALHO_COLUNA_NOME = "ATÉ";
 $tpl2->block("BLOCK_CABECALHO_COLUNA");
 $tpl2->CABECALHO_COLUNA_COLSPAN = "";
 $tpl2->CABECALHO_COLUNA_TAMANHO = "";
@@ -224,13 +218,17 @@ $tpl2->CABECALHO_COLUNA_NOME = "SUPERVISOR";
 $tpl2->block("BLOCK_CABECALHO_COLUNA");
 $tpl2->CABECALHO_COLUNA_COLSPAN = "";
 $tpl2->CABECALHO_COLUNA_TAMANHO = "";
-$tpl2->CABECALHO_COLUNA_NOME = "TOTAL";
+$tpl2->CABECALHO_COLUNA_NOME = "TOTAL VENDA";
 $tpl2->block("BLOCK_CABECALHO_COLUNA");
 $tpl2->CABECALHO_COLUNA_COLSPAN = "";
 $tpl2->CABECALHO_COLUNA_TAMANHO = "";
-$tpl2->CABECALHO_COLUNA_NOME = "SIT.";
+$tpl2->CABECALHO_COLUNA_NOME = "TOTAL CUSTO";
 $tpl2->block("BLOCK_CABECALHO_COLUNA");
-$tpl2->CABECALHO_COLUNA_COLSPAN = "4";
+$tpl2->CABECALHO_COLUNA_COLSPAN = "";
+$tpl2->CABECALHO_COLUNA_TAMANHO = "";
+$tpl2->CABECALHO_COLUNA_NOME = "TOTAL LUCRO.";
+$tpl2->block("BLOCK_CABECALHO_COLUNA");
+$tpl2->CABECALHO_COLUNA_COLSPAN = "3";
 $tpl2->CABECALHO_COLUNA_TAMANHO = "";
 $tpl2->CABECALHO_COLUNA_NOME = "OPERAÇÃO";
 $tpl2->block("BLOCK_CABECALHO_COLUNA");
@@ -239,7 +237,7 @@ $tpl2->block("BLOCK_CABECALHO");
 
 //Valida��o de filtros
 $sql_filtro = "";
-if (!empty($filtro_descricao))
+/*if (!empty($filtro_descricao))
     $sql_filtro = " and sai_descricao like '%$filtro_descricao%' ";
 if (!empty($filtro_numero))
     $sql_filtro = " and sai_codigo = $filtro_numero ";
@@ -249,22 +247,19 @@ if (!empty($filtro_supervisor))
     $sql_filtro = " and sai_vendedor = $filtro_supervisor ";
 if (!empty($filtro_fornecedor))
     $sql_filtro = " and ent_fornecedor = $filtro_fornecedor ";
-
+*/
 
 
 $sql = "
-    SELECT sai_codigo,sai_datacadastro,sai_horacadastro,saimot_nome,pes_nome,sai_totalbruto,sai_descricao,sai_status,pes_codigo
-    FROM saidas
-    JOIN saidas_motivo on (sai_saidajustificada=saimot_codigo)
-    JOIN pessoas on (sai_vendedor=pes_codigo)
-    JOIN saidas_produtos on (saipro_saida=sai_codigo)
-    JOIN entradas on (ent_codigo=saipro_lote)
-    WHERE sai_tipo=3
+    SELECT *
+    FROM fechamentos   
+    JOIN pessoas on (fch_supervisor=pes_codigo)
+    WHERE fch_quiosque=$usuario_quiosque
     $sql_filtro
-    ORDER BY sai_codigo DESC
+    ORDER BY fch_codigo DESC
 ";
 
-//Pagina��o
+//Paginação
 $query = mysql_query($sql);
 if (!$query)
     die("Erro SQL Principal Paginação:" . mysql_error());
@@ -293,18 +288,16 @@ if (mysql_num_rows($query) == 0) {
 
 //Listagem Linhas
 while ($dados = mysql_fetch_assoc($query)) {
-    $numero = $dados["sai_codigo"];
-    $data = $dados["sai_datacadastro"];
-    $hora = $dados["sai_horacadastro"];
-    $motivo_nome = $dados["saimot_nome"];
-    $descricao = $dados["sai_descricao"];
-    $supervisor = $dados["pes_codigo"];
+    $numero = $dados["fch_codigo"];
+    $dataini = $dados["fch_dataini"];
+    $horaini = $dados["fch_horaini"];
+    $datafim = $dados["fch_datafim"];
+    $horafim = $dados["fch_horafim"];
     $supervisor_nome = $dados["pes_nome"];
-    $totalbruto = $dados["sai_totalbruto"];
-    $status = $dados["sai_status"];
-    $editar_ocultar = 0;
+    $totalvenda = $dados["fch_totalvenda"];
+    $totalcusto = $dados["fch_totalcusto"];
+    $totallucro = $dados["fch_totallucro"];
 
-    //C�digo
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "right";
     $tpl2->TEXTO = "$numero";
@@ -312,39 +305,34 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
 
-    //Data do cadastro
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "right";
-    $tpl2->TEXTO = converte_data($data);
+    $tpl2->TEXTO = converte_data($dataini);
     $tpl2->block("BLOCK_TEXTO");
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
 
-    //Hora do cadastro
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "";
-    $tpl2->TEXTO = converte_hora($hora);
+    $tpl2->TEXTO = converte_hora($horaini);
     $tpl2->block("BLOCK_TEXTO");
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
 
-    //Motivo
+    $tpl2->COLUNA_TAMANHO = "";
+    $tpl2->COLUNA_ALINHAMENTO = "right";
+    $tpl2->TEXTO = converte_data($datafim);
+    $tpl2->block("BLOCK_TEXTO");
+    $tpl2->block("BLOCK_CONTEUDO");
+    $tpl2->block("BLOCK_COLUNA");
+
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "";
-    $tpl2->TEXTO = "$motivo_nome";
+    $tpl2->TEXTO = converte_hora($horafim);
     $tpl2->block("BLOCK_TEXTO");
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
 
-    //Descri��o
-    $tpl2->COLUNA_TAMANHO = "";
-    $tpl2->COLUNA_ALINHAMENTO = "";
-    $tpl2->TEXTO = "$descricao";
-    $tpl2->block("BLOCK_TEXTO");
-    $tpl2->block("BLOCK_CONTEUDO");
-    $tpl2->block("BLOCK_COLUNA");
-
-    //Supervisor
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "";
     $tpl2->TEXTO = "$supervisor_nome";
@@ -352,60 +340,35 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
 
-    //Total 
     $tpl2->COLUNA_TAMANHO = "";
     $tpl2->COLUNA_ALINHAMENTO = "right";
-    $tpl2->TEXTO = "R$ " . number_format($totalbruto, 2, ',', '.');
+    $tpl2->TEXTO = "R$ ".number_format($totalvenda, 2, ',', '.');
     $tpl2->block("BLOCK_TEXTO");
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
 
-    //Icone Situa��o
-    $tpl2->COLUNA_TAMANHO = "35px";
-    $tpl2->COLUNA_ALINHAMENTO = "center";
-    $tpl2->ICONE_TAMANHO = "15px";
-    $tpl2->ICONE_CAMINHO = "$icones";
-    if ($status == 2) {
-        if ($usuario_codigo == $supervisor) {
-            $tpl2->ICONE_NOMEARQUIVO = "bandeira3_vermelha.png";
-            $tpl2->ICONE_DICA = "Incompleta";
-            $tpl2->ICONE_NOMEALTERNATIVO = "Incompleta";
-        } else {
-            $dataatual = date("Y-m-d");
-            $horaatual = date("H:i:s");
-            $tempo1 = $data . "_" . $hora;
-            $tempo2 = $dataatual . "_" . $horaatual;
-            $total_segundos = diferenca_entre_datahora($tempo1, $tempo2);
-            if ($total_segundos > 5400) {
-                $tpl2->ICONE_NOMEARQUIVO = "bandeira3_vermelha.png";
-                $tpl2->ICONE_DICA = "Incompleta";
-                $tpl2->ICONE_NOMEALTERNATIVO = "Incompleta";
-            } else {
-                $tpl2->ICONE_NOMEARQUIVO = "bandeira3_laranja.png";
-                $tpl2->ICONE_DICA = "Esta saida está em andamento por outro supervisor!";
-                $tpl2->ICONE_NOMEALTERNATIVO = "Em uso";
-                $editar_ocultar = 1;
-                $editar_ocultar_motivo = "Esta devolução está em andamento por outro supervisor! Se este usuário não finalizar esta devolução em 1:30 (uma hora e meia) ela passará a ser incompleta e então você poderá finalizá-la!";
-            }
-        }
-    } else {
-        $tpl2->ICONE_NOMEARQUIVO = "bandeira3_verde.png";
-        $tpl2->ICONE_DICA = "Concluída";
-        $tpl2->ICONE_NOMEALTERNATIVO = "Concluída";
-    }
-    $tpl2->block("BLOCK_ICONE");
+    $tpl2->COLUNA_TAMANHO = "";
+    $tpl2->COLUNA_ALINHAMENTO = "right";
+    $tpl2->TEXTO = "R$ ".number_format($totalcusto, 2, ',', '.');
+    $tpl2->block("BLOCK_TEXTO");
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA");
 
+    $tpl2->COLUNA_TAMANHO = "";
+    $tpl2->COLUNA_ALINHAMENTO = "right";
+    $tpl2->TEXTO = "R$ ".number_format($totallucro, 2, ',', '.');
+    $tpl2->block("BLOCK_TEXTO");
+    $tpl2->block("BLOCK_CONTEUDO");
+    $tpl2->block("BLOCK_COLUNA");
 
-    //Opera�ões
+    //Operações
     $tpl2->ICONES_CAMINHO = $icones;
 
-    //Opera��o Imprimir
+    //Operação Imprimir
     $tpl2->COLUNA_TAMANHO = "35px";
     $tpl2->COLUNA_ALINHAMENTO = "center";
     $tpl2->block("BLOCK_CONTEUDO_LINK_NOVAJANELA");
-    $tpl2->CONTEUDO_LINK_ARQUIVO = "saidas_ver.php?codigo=$numero&tiposaida=3&ope=4";
+    $tpl2->CONTEUDO_LINK_ARQUIVO = "acertos_revenda_cadastrar3.php?codigo=$numero&ope=4";
     $tpl2->block("BLOCK_CONTEUDO_LINK");
     $tpl2->block("BLOCK_OPERACAO_IMPRIMIR_HABILITADO");
     $tpl2->block("BLOCK_OPERACAO_IMPRIMIR");
@@ -414,10 +377,10 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl2->block("BLOCK_COLUNA_OPERACAO");
     $tpl2->block("BLOCK_COLUNA");
 
-    //Opera��o Ver
+    //Operação Ver
     $tpl2->COLUNA_TAMANHO = "35px";
     $tpl2->COLUNA_ALINHAMENTO = "center";
-    $tpl2->CONTEUDO_LINK_ARQUIVO = "saidas_ver.php?codigo=$numero&tiposaida=3&ope=3";
+    $tpl2->CONTEUDO_LINK_ARQUIVO = "acertos_revenda_cadastrar3.php?codigo=$numero&ope=5";
     $tpl2->block("BLOCK_CONTEUDO_LINK");
     $tpl2->block("BLOCK_OPERACAO_DETALHES_HABILITADO");
     $tpl2->block("BLOCK_OPERACAO_DETALHES");
@@ -426,80 +389,21 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl2->block("BLOCK_COLUNA_OPERACAO");
     $tpl2->block("BLOCK_COLUNA");
 
-    //Opera��o Editar
-    $tpl2->COLUNA_TAMANHO = "35px";
-    $tpl2->COLUNA_ALINHAMENTO = "center";
-    $tpl2->CONTEUDO_LINK_ARQUIVO = "saidas_cadastrar.php?operacao=2&saidatipo=3&codigo=$numero";
-    $tpl2->block("BLOCK_CONTEUDO_LINK");
-    if ($permissao_saidas_editar_devolucao == 1) {
-        if ($editar_ocultar == 1) {
-            $tpl2->ICONES_TITULO = "$editar_ocultar_motivo";
-            $tpl2->block("BLOCK_OPERACAO_EDITAR_TITULO");
-            $tpl2->block("BLOCK_OPERACAO_EDITAR_DESABILITADO");
-        } else {
-            $tpl2->block("BLOCK_OPERACAO_EDITAR_HABILITADO");
-            $tpl2->block("BLOCK_OPERACAO_EDITAR_TITULOPADRAO");
-        }
-    } else {
-        $tpl2->block("BLOCK_OPERACAO_EDITAR_TITULOPADRAO");
-        $tpl2->block("BLOCK_OPERACAO_EDITAR_DESABILITADO");
-    }
-    $tpl2->block("BLOCK_OPERACAO_EDITAR");
-    $tpl2->block("BLOCK_OPERACAO");
-    $tpl2->block("BLOCK_CONTEUDO");
-    $tpl2->block("BLOCK_COLUNA_OPERACAO");
-    $tpl2->block("BLOCK_COLUNA");
-
-    //Opera��o Excluir    
+    //Operação Excluir    
     $tpl2->COLUNA_TAMANHO = "35px";
     $tpl2->COLUNA_ALINHAMENTO = "center";
     $tpl2->ICONES_CAMINHO = $icones;
-    $tpl2->CONTEUDO_LINK_ARQUIVO = "saidas_deletar.php?codigo=$numero&tiposaida=3";
+    $tpl2->CONTEUDO_LINK_ARQUIVO = "acertos_revenda_deletar.php?codigo=$numero";
     $tpl2->block("BLOCK_CONTEUDO_LINK");
-    if ($permissao_saidas_excluir_devolucao == 1) {
-        if ($editar_ocultar == 1) {
-            $tpl2->ICONES_TITULO = "$editar_ocultar_motivo";
-            $tpl2->block("BLOCK_OPERACAO_EXCLUIR_TITULO");
-            $tpl2->block("BLOCK_OPERACAO_EXCLUIR_DESABILITADO");
-        } else {
-            $tpl2->block("BLOCK_OPERACAO_EXCLUIR_HABILITADO");
-            $tpl2->block("BLOCK_OPERACAO_EDITAR_TITULOPADRAO");
-        }
-    } else {
-        $tpl2->block("BLOCK_OPERACAO_EXCLUIR_DESABILITADO");
-        $tpl2->block("BLOCK_OPERACAO_EDITAR_TITULOPADRAO");
-    }
+    $tpl2->block("BLOCK_OPERACAO_EXCLUIR_HABILITADO");
+    $tpl2->block("BLOCK_OPERACAO_EDITAR_TITULOPADRAO");
     $tpl2->block("BLOCK_OPERACAO_EXCLUIR");
     $tpl2->block("BLOCK_OPERACAO");
     $tpl2->block("BLOCK_CONTEUDO");
     $tpl2->block("BLOCK_COLUNA_OPERACAO");
     $tpl2->block("BLOCK_COLUNA");
 
-    //Cor de fundo da linha
-    if ($status == 2) {
-        if ($usuario_codigo == $fornecedor) {
-            $tpl2->LINHA_CLASSE = "tab_linhas tab_linhas_vermelho negrito";
-            $tpl2->block("BLOCK_LINHA_DINAMICA");
-        } else {
-            $dataatual = date("Y-m-d");
-            $horaatual = date("H:i:s");
-            $tempo1 = $data . "_" . $hora;
-            $tempo2 = $dataatual . "_" . $horaatual;
-            $total_segundos = diferenca_entre_datahora($tempo1, $tempo2);
-            if ($total_segundos > 5400) {
-                $tpl2->LINHA_CLASSE = "tab_linhas tab_linhas_vermelho negrito";
-                $tpl2->block("BLOCK_LINHA_DINAMICA");
-            } else {
-                $tpl2->LINHA_CLASSE = "tab_linhas tab_linhas_amarelo negrito";
-                $tpl2->block("BLOCK_LINHA_DINAMICA");
-            }
-        }
-    } else {
-        $tpl2->block("BLOCK_LINHA_PADRAO");
-    }
-
-
-
+    $tpl2->block("BLOCK_LINHA_PADRAO");
     $tpl2->block("BLOCK_LINHA");
 }
 

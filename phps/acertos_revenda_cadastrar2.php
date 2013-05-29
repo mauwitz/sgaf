@@ -28,9 +28,19 @@ $qtdprodutos = $_POST["qtdprodutos"];
 $qtdfornecedores = $_POST["qtdfornecedores"];
 $qtdlotes = $_POST["qtdlotes"];
 
-print_r($_REQUEST);
 include "controller/classes.php";
 $obj = new banco();
+
+
+//TÍTULO PRINCIPAL
+$tpl_titulo = new Template("templates/titulos.html");
+$tpl_titulo->TITULO = "FECHAMENTO DE REVENDAS";
+$tpl_titulo->SUBTITULO = "CADASTRO DE FECHAMENTOS DE REVENDAS";
+$tpl_titulo->ICONES_CAMINHO = "$icones";
+$tpl_titulo->NOME_ARQUIVO_ICONE = "revenda.png";
+$tpl_titulo->show();
+
+
 
 $sql="
 SELECT saipro_produto
@@ -76,7 +86,8 @@ INSERT INTO
         fch_qtdvendas,        
         fch_qtdprodutos,        
         fch_qtdfornecedores,        
-        fch_qtdlotes
+        fch_qtdlotes,
+        fch_quiosque
     )
 VALUES (
     '$datacadastro',
@@ -94,7 +105,8 @@ VALUES (
     '$qtdvendas',
     '$qtdprodutos',
     '$qtdfornecedores',
-    '$qtdlotes'
+    '$qtdlotes',
+    '$usuario_quiosque'
     )
 ";
 $obj->conectar();
@@ -120,8 +132,7 @@ while ($dados2 = mysql_fetch_assoc($query2)) {
     
     $taxa = $dados2["quitax_taxa"];
     $taxaref = $dados2["quitax_valor"];
-    $taxavalor = $totallucro * $taxaref / 100;
-    echo "$taxavalor = $lucro_total * $taxaref / 100";
+    $taxavalor = $totallucro * $taxaref / 100;    
     $sql5 = "
     INSERT INTO fechamentos_taxas (
         fchtax_fechamento,
