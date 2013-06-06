@@ -28,7 +28,7 @@ $linhas = mysql_num_rows($query);
 $dados=  mysql_fetch_assoc($query);
 $valuni= number_format($dados["entpro_valorunitario"],2);
 $valunicusto= number_format($dados["entpro_valunicusto"],2);
-$validade = converte_data($dados["entpro_validade"]);        
+$validade = $dados["entpro_validade"];        
 
 //Se estiver na lista ent�o n�o podemos ter um valor unit�rio diferente, para isso deve-se fazer uma nova entrada
 if ($linhas > 0) {

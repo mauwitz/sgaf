@@ -24,6 +24,11 @@ while ($array = mysql_fetch_array($query)) {
     $tipo = $array['pro_tipocontagem'];
     $categoria = $array['pro_categoria'];
     $descricao = $array['pro_descricao'];
+    $marca = $array['pro_marca'];
+    $recipiente = $array['pro_recipiente'];
+    $volume = $array['pro_volume'];
+    $composicao = $array['pro_composicao'];
+    $codigounico = $array['pro_codigounico'];
 }
 ?>
 <script type="text/javascript" src="js/capitular.js"></script>
@@ -66,6 +71,37 @@ if ($linhas == 0) {
             <td align="left" width=""><input  onkeypress=""  id="capitalizar" type="text" name="nome" autofocus size="45" class="campo1" required value="<?php echo "$nome"; ?>" <?php if ($ver == 1) echo" disabled "; ?> ></td>
         </tr>
         <tr>
+            <td align="right" width="200px"><b>Marca: <label class="obrigatorio"></label></b></td>
+            <td align="left" width=""><input  onkeypress=""  id="capitalizar" type="text" name="marca"  size="30" class="campo1"  value="<?php echo "$marca"; ?>" <?php if ($ver == 1) echo" disabled "; ?> ></td>
+        </tr>
+        <tr>
+            <td align="right" width="200px"><b>Volume: <label class="obrigatorio"></label></b></td>
+            <td align="left" width=""><input  onkeypress=""  id="capitalizar" type="text" name="volume"  size="15" class="campo1"  value="<?php echo "$volume"; ?>" <?php if ($ver == 1) echo" disabled "; ?> placeholder=""><span class="dicacampo">Ex: 150g ou 200ml</span></td>
+        </tr>
+        <tr>
+            <td align="right" width="200px"><b>Recipiente / Embalagem: <label class="obrigatorio"></label></b></td>
+            <td align="left" width="">
+                <select name="recipiente" id="tipo" class="campo1"  onchange="" 
+                <?php              
+                if ($ver == 1)
+                    echo " disabled ";
+                ?> >
+                    <option value=""> - </option>		
+                    <?php
+                    $sql1 = "SELECT * FROM produtos_recipientes ORDER BY prorec_nome";
+                    $query1 = mysql_query($sql1);
+                    while ($array1 = mysql_fetch_array($query1)) {
+                        ?><option value="<?php echo"$array1[0]"; ?>" <?php
+                    if ($array1[0] == $recipiente) {
+                        echo "selected ";
+                    }
+                        ?> ><?php echo"$array1[1]"; ?></option><?php
+                        }
+                    ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td align="right" width="200px"><b>Tipo de Contagem: <label class="obrigatorio"></label></b></td>
             <td align="left" width="">
                 <select name="tipo" id="tipo" class="campo1" required="required" onchange="sigla()" 
@@ -80,7 +116,7 @@ if ($linhas == 0) {
                 if (($linhas8 > 0) || ($ver == 1))
                     echo " disabled ";
                 ?> >
-                    <option value=""></option>		
+                    <option value="">Selecione</option>		
                     <?php
                     $sql1 = "SELECT * FROM produtos_tipo ";
                     $query1 = mysql_query($sql1);
@@ -93,13 +129,14 @@ if ($linhas == 0) {
                         }
                     ?>
                 </select>
+                <input type="hidden" name="tipo2" value="<?php echo $tipo; ?>"> 
             </td>
         </tr>
         <tr>
             <td align="right" width="200px"><b>Categoria: <label class="obrigatorio"></label></b></td>
             <td align="left" width="">
                 <select name="categoria" class="campo1" required="required" <?php if ($ver == 1) echo" disabled "; ?> >
-                    <option value=""></option>		
+                    <option value="">Selecione</option>		
                     <?php
                     $sql1 = "SELECT * FROM produtos_categorias WHERE cat_cooperativa=$usuario_cooperativa ORDER BY cat_nome";
                     $query1 = mysql_query($sql1);
@@ -113,6 +150,20 @@ if ($linhas == 0) {
                     ?>
                 </select>
             </td>
+        </tr>
+        <tr>
+            <td align="right" width="200px">
+                <b>Código Único (barras): <label class="obrigatorio"></label>
+                </b>
+            </td>
+            <td align="left" width="">
+                <input  onkeypress=""  id="capitalizar" type="text" name="codigounico" maxlength="13" size="15" class="campo1"  value="<?php echo "$codigounico"; ?>" <?php if ($ver == 1) echo" disabled "; ?> placeholder="">
+                <span class="dicacampo">Ex: 150g ou 200ml</span>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="200px"><b>Composição / Ingredientes:</b></td>
+            <td align="left" width=""><textarea class="textarea1" cols="55" name="composicao" <?php if ($ver == 1) echo" disabled "; ?> ><?php echo "$composicao"; ?></textarea></td>
         </tr>
 
         <tr>

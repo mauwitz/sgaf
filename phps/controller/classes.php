@@ -5,6 +5,7 @@ class banco {
     private $host = 'localhost';
     private $user = 'root';
     private $pass = 'mautito';
+    private $banco = 'sgaf';
 
     function conectar() {
         $con = mysql_connect($this->host, $this->user, $this->pass) or die($this->erro(mysql_error()));
@@ -27,6 +28,7 @@ class banco {
     function query($sql) {
         $this->conectar();
         $this->acentos();
+        $this->selecionarDB($this->banco);
         $qry = mysql_query($sql) or 
         die(
             $this->erro("
@@ -41,6 +43,7 @@ class banco {
     
     function query_semconexao($sql) {
         $this->acentos();
+        $this->selecionarDB($this->banco);
         $qry = mysql_query($sql) or 
         die(
             $this->erro("
@@ -54,12 +57,14 @@ class banco {
 
     function ultimo_registro() {
         $this->acentos();
+        $this->selecionarDB($this->banco);
         return mysql_insert_id();
     }
 
     function dados($sql) {
         $this->conectar();
         $this->acentos();
+        $this->selecionarDB($this->banco);
         $dados = mysql_fetch_array($this->query($sql));
         $this->desconecta();
         return $dados;

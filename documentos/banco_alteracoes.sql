@@ -142,18 +142,52 @@ ADD INDEX (  saipro_fechado );
 # ------foi executado na base quente até aqui -----
 
 # Alteração na entidade fechamentos
-ALTER TABLE  `fechamentos` ADD  `fch_quiosque` INT NOT NULL ,
-ADD INDEX (  `fch_quiosque` );
+ALTER TABLE  fechamentos ADD  fch_quiosque INT NOT NULL ,
+ADD INDEX (  fch_quiosque );
 
-ALTER TABLE `fechamentos`
-  DROP `fch_horaini`,
-  DROP `fch_horafim`;
+ALTER TABLE fechamentos
+  DROP fch_horaini,
+  DROP fch_horafim;
 
 # alterado de date para datetime o atributo fch_dataini e fch_datafim
 # ATENCAO
 
 
 ALTER TABLE  saidas ADD  sai_datahoracadastro DATETIME NOT NULL;
+
+
+ALTER TABLE  produtos ADD  pro_volume VARCHAR( 70 ) NULL ,
+ADD  pro_recipiente VARCHAR( 70 ) NULL ,
+ADD  pro_marca VARCHAR( 70 ) NULL ,
+ADD  pro_composicao TEXT NULL
+
+
+
+CREATE TABLE IF NOT EXISTS produtos_recipientes (
+  prorec_codigo tinyint(4) NOT NULL AUTO_INCREMENT,
+  prorec_nome varchar(70) NOT NULL,
+  prorec_sigla varchar(10) DEFAULT NULL,
+  PRIMARY KEY (prorec_codigo)
+); 
+INSERT INTO produtos_recipientes (prorec_codigo, prorec_nome, prorec_sigla) VALUES
+(1, 'Pote', NULL),
+(2, 'Caixa', NULL),
+(3, 'Kit', NULL),
+(4, 'Pacote', NULL),
+(5, 'Saca', NULL),
+(6, 'Peti', NULL),
+(7, 'Fardo', NULL);
+
+
+ALTER TABLE  produtos ADD  pro_codigounico BIGINT( 12 ) NULL
+ALTER TABLE  produtos CHANGE  pro_codigounico  pro_codigounico BIGINT( 13 ) NULL DEFAULT NULL
+
+ALTER TABLE  `produtos` CHANGE  `pro_marca`  `pro_marca` VARCHAR( 70 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+
+Novo campo no banco 'qui_disponivelnobusca'
+
+
+
 
 # -----------------------------------------------------
 # Versão 1.3

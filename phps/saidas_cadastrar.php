@@ -100,7 +100,6 @@ if ($retirar_produto == '1') {
         $qtdnoestoque = $_POST["qtdnoestoque"];
     }
 }
-
 //Verifica se a saida existe
 //(� necess�rio por que se o usu�rio abrir uma nova janela na tela saidas.php o sistema exclui
 //as saidas incompletas e vazias do usu�rio logado e portanto pode excluir a saida que est� 
@@ -474,7 +473,7 @@ if ($passo == 2) {
 
     //Etiqueta
     $tpl1->CAMPO_QTD_CARACTERES = "14";
-    $tpl1->TITULO = "Código da Etiqueta";
+    $tpl1->TITULO = "Etiqueta";
     $tpl1->ASTERISCO = "";
     $tpl1->CAMPO_TIPO = "text";
     $tpl1->CAMPO_NOME = "etiqueta";
@@ -484,6 +483,24 @@ if ($passo == 2) {
     $tpl1->CAMPO_DESABILITADO = "";
     $tpl1->CAMPO_OBRIGATORIO = " ";
     $tpl1->CAMPO_ONKEYUP = "valida_etiqueta(this)";
+    $tpl1->CAMPO_ONKEYDOWN = "";
+    $tpl1->CAMPO_ONFOCUS = "";
+    $tpl1->block("BLOCK_TITULO");
+    $tpl1->block("BLOCK_CAMPO");
+    $tpl1->block("BLOCK_ITEM");
+
+    //Etiqueta Produto Industrializado
+    $tpl1->CAMPO_QTD_CARACTERES = "13";
+    $tpl1->TITULO = "Etiqueta Código Único";
+    $tpl1->ASTERISCO = "";
+    $tpl1->CAMPO_TIPO = "text";
+    $tpl1->CAMPO_NOME = "etiqueta2";
+    $tpl1->CAMPO_TAMANHO = "15";
+    $tpl1->CAMPO_FOCO = "  ";
+    $tpl1->CAMPO_VALOR = "";
+    $tpl1->CAMPO_DESABILITADO = "";
+    $tpl1->CAMPO_OBRIGATORIO = " ";
+    $tpl1->CAMPO_ONKEYUP = "valida_etiqueta2(this)";
     $tpl1->CAMPO_ONKEYDOWN = "";
     $tpl1->CAMPO_ONFOCUS = "";
     $tpl1->block("BLOCK_TITULO");
@@ -507,7 +524,7 @@ if ($passo == 2) {
     $tpl1->ASTERISCO = "";
     $tpl1->block("BLOCK_TITULO");
     $tpl1->SELECT_NOME = "fornecedor";
-    $tpl1->SELECT_OBRIGATORIO = " required ";
+    $tpl1->SELECT_OBRIGATORIO = "  ";
     $tpl1->SELECT_FOCO = "  ";
     $tpl1->SELECT_DESABILITADO = "  ";
     $tpl1->block("BLOCK_SELECT");
@@ -521,6 +538,7 @@ if ($passo == 2) {
     $tpl1->SELECT_OBRIGATORIO = " required ";
     $tpl1->SELECT_FOCO = "  ";
     $tpl1->SELECT_DESABILITADO = "  ";
+    $tpl1->SELECT_AOTROCAR = "popula_lote_oculto(this.value);";
     $tpl1->SPAN2_NOME = "prateleira";
     $tpl1->SPAN2_VALOR = "";
     $tpl1->block("BLOCK_SPAN2");

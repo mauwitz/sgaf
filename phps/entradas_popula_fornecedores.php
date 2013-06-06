@@ -22,8 +22,9 @@ echo $sql = "
     JOIN fornecedores_tiponegociacao ON (fortipneg_pessoa=pes_codigo)
     JOIN mestre_pessoas_tipo on (mespestip_pessoa=pes_codigo)
     WHERE pes_cooperativa=$usuario_cooperativa
-    AND mespestip_tipo=5    
+    AND mespestip_tipo=5        
     $sql_filtro
+    ORDER BY pes_nome
 ";
 $query = mysql_query($sql);
 if (!$query)

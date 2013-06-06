@@ -17,12 +17,7 @@
 <table width="" class="tabelafiltro">
     <tr>             
         <td><b>&nbsp;Produtos:</b><br>
-            <select name="filtroproduto" class="campofiltro">
-                <option value="">Todos</option> 
-                <!-- BEGIN BLOCK_FILTRO_PRODUTO  -->
-                <option value="{PRODUTO_CODIGO}" {PRODUTO_SELECIONADO}>{PRODUTO_NOME}</option>
-                <!-- END BLOCK_FILTRO_PRODUTO  -->
-            </select>
+            <input type="text" size="35" name="filtroprodutonome" value="{PRODUTO_NOME}" class="campopadrao">
         </td>
         <td width="15px"></td>
         <td><b>&nbsp;Categoria:</b><br>

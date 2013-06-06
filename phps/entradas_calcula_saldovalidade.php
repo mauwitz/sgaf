@@ -3,16 +3,7 @@
 include "controle/conexao.php";
 include "controle/conexao_tipo.php";
 require "login_verifica.php";
-$tipopessoa = $_POST["tipopessoa"];
-$tiponegociacao = 1;
-
-if ($tipopessoa==1) { //pessoa física
-    $sql_filtro=$sql_filtro." AND pes_tipopessoa=1 ";
-} else if ($tipopessoa==2) { //pessoa jurídica
-    $sql_filtro=$sql_filtro." AND pes_tipopessoa=2 ";
-} else { //Todos tipos de pessoa
-    
-}
+$validade = $_POST["validade"];
 
 $sql = "
     SELECT DISTINCT pes_codigo,pes_nome        

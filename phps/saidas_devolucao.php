@@ -253,12 +253,12 @@ if (!empty($filtro_fornecedor))
 
 
 $sql = "
-    SELECT sai_codigo,sai_datacadastro,sai_horacadastro,saimot_nome,pes_nome,sai_totalbruto,sai_descricao,sai_status,pes_codigo
+    SELECT DISTINCT sai_codigo,sai_datacadastro,sai_horacadastro,saimot_nome,pes_nome,sai_totalbruto,sai_descricao,sai_status,pes_codigo
     FROM saidas
     JOIN saidas_motivo on (sai_saidajustificada=saimot_codigo)
     JOIN pessoas on (sai_vendedor=pes_codigo)
-    JOIN saidas_produtos on (saipro_saida=sai_codigo)
-    JOIN entradas on (ent_codigo=saipro_lote)
+    left JOIN saidas_produtos on (saipro_saida=sai_codigo)
+    left JOIN entradas on (ent_codigo=saipro_lote)
     WHERE sai_tipo=3
     $sql_filtro
     ORDER BY sai_codigo DESC

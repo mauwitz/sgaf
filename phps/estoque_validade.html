@@ -15,14 +15,9 @@
 <!-- BEGIN BLOCK_FILTRO  -->
     <table width="" class="tabelafiltro">
         <tr>             
-            <td><b>&nbsp;Produtos:</b><br>
-                <select name="filtroproduto" class="campofiltro">
-                    <option value="">Todos</option> 
-                    <!-- BEGIN BLOCK_FILTRO_PRODUTO  -->
-                    <option value="{PRODUTO_CODIGO}" {PRODUTO_SELECIONADO}>{PRODUTO_NOME}</option>
-                    <!-- END BLOCK_FILTRO_PRODUTO  -->
-                </select>
-            </td>
+        <td><b>&nbsp;Produtos:</b><br>
+            <input type="text" size="35" name="filtroprodutonome" value="{PRODUTO_NOME}" class="campopadrao">
+        </td>
             <td width="15px"></td>           
             <td><b>&nbsp;Fornecedor:</b><br>
                 <select name="filtrofornecedor" class="campofiltro">
@@ -83,7 +78,7 @@
         <input disabled size="5" type="text" name="paginas" class="campofiltro" value="{PAGINAS}">
     </td>
     <td align="left">
-        <input onclick="paginacao_avancar()"  type="image" width="25px"   src="{PASTA_ICONES}direita.png"  title="Próxima" alt="Próxima" />
+        <input onclick="paginacao_avancar()"  type="image" width="25px"   src="{PASTA_ICONES}direita.png"  title="Prï¿½xima" alt="Prï¿½xima" />
     </td>
 </tr>
 </table>

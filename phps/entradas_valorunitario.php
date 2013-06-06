@@ -69,7 +69,7 @@ if ($entrada_ultima == "") {
     $valuni = money_format('%i', $valuni); 
     $valunicusto = $dados['entpro_valunicusto'];
     $valunicusto = money_format('%i', $valunicusto);
-    $validade = converte_data($dados["entpro_validade"]);
+    $validade = $dados["entpro_validade"];
     echo "$valuni|$validade|$valunicusto";
     
 }

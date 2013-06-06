@@ -29,6 +29,7 @@ $tipopagina = "produtos";
 $filtrocodigo = $_POST['filtrocodigo'];
 $filtronome = $_POST['filtronome'];
 $filtrocategoria = $_POST['filtrocategoria'];
+$filtromarca = $_POST['filtromarca'];
 ?>
 <form action="produtos.php" name="form1" method="post">
     <table summary="" class="tabelafiltro" border="0">
@@ -37,6 +38,8 @@ $filtrocategoria = $_POST['filtrocategoria'];
                 <input size="25" type="number" name="filtrocodigo" class="campofiltro" value="<?php echo "$filtrocodigo"; ?>"></td>
             <td width="15px"></td>
             <td><b>&nbsp;Nome:</b><br><input size="25" type="text" name="filtronome" class="campofiltro" value="<?php echo "$filtronome"; ?>"></td>
+            <td width="15px"></td>
+            <td><b>&nbsp;Marca:</b><br><input size="15" type="text" name="filtromarca" class="campofiltro" value="<?php echo "$filtromarca"; ?>"></td>
             <td width="15px"></td>
             <td><b>&nbsp;Categoria:</b><br>
                 <select name="filtrocategoria" class="campofiltro" >
@@ -84,18 +87,17 @@ $filtrocategoria = $_POST['filtrocategoria'];
         $sql_filtro = $sql_filtro . " and pro_nome like '%$filtronome%'";
     if ($filtrocategoria != "")
         $sql_filtro = $sql_filtro . " and pro_categoria = $filtrocategoria";
+    if ($filtromarca != "")
+        $sql_filtro = $sql_filtro . " and pro_marca like '%$filtromarca%'";
 
 
     $sql = "
-SELECT
-	*
-FROM
-	produtos
-WHERE	
-	pro_cooperativa=$usuario_cooperativa
-        $sql_filtro
-ORDER BY
-	pro_nome
+SELECT *
+FROM produtos
+left join produtos_recipientes on (pro_recipiente=prorec_codigo)
+WHERE pro_cooperativa=$usuario_cooperativa
+$sql_filtro
+ORDER BY pro_nome
 ";
 
 //Pagina��o
@@ -122,12 +124,15 @@ ORDER BY
 
     <table border="1" class="tabela1" cellpadding="4" width="100%">
         <tr valign="middle" class="tabelacabecalho1">
-            <td width="35px">CODIGO</td>
+            <td width="30px">COD.</td>
             <td width="" colspan="2">DATA</td>
-            <td width="">NOME</td>
-            <td colspan="2" align="center">TIPO</td>
+            <td width="100px">NOME</td>
+            <td colspan="" align="center">MARCA</td>
+            <td colspan="" align="center">REC.</td>
+            <td colspan="" align="center">VOL.</td>
+            <td width="10px" colspan="" align="center">TIPO</td>
             <td width="" align="center">CATEGORIA</td>	
-            <td width="" align="center">TIPO NEG.</td>	
+            <td width="10px" align="center">TIP. NEG.</td>	
             <?php
             $oper = 0;
             $oper_tamanho = 0;
@@ -149,10 +154,13 @@ ORDER BY
 
         <?php
         while ($array = mysql_fetch_array($query)) {
-            $codigo = number_format($array['pro_codigo'], 0, ',', '.');
+            $codigo = $array['pro_codigo'];
             $nome = $array['pro_nome'];
             $tipo = $array['pro_tipocontagem'];
             $categoria = $array['pro_categoria'];
+            $recipiente = $array['prorec_nome'];
+            $volume = $array['pro_volume'];
+            $marca = $array['pro_marca'];
             $data = converte_data($array['pro_datacriacao']);
             $hora = converte_hora($array['pro_horacriacao']);
             ?>
@@ -164,16 +172,16 @@ ORDER BY
 
 
                 <td><?php echo "$nome"; ?></td>
-                <td align="right" width="150px"><?php
+                <td><?php echo "$marca"; ?></td>
+                <td><?php echo "$recipiente"; ?></td>
+                <td><?php echo "$volume"; ?></td>
+                <?php
                 $sql2 = "SELECT * FROM produtos_tipo WHERE protip_codigo=$tipo";
                 $query2 = mysql_query($sql2);
-                while ($array2 = mysql_fetch_array($query2)) {
-                    $nometipo = $array2['protip_nome'];
-                    $siglatipo = $array2['protip_sigla'];
-                    echo "$nometipo";
-                }
+                $array2 = mysql_fetch_array($query2);
+                $nometipo = $array2['protip_nome'];
+                $siglatipo = $array2['protip_sigla'];               
                 ?>
-                </td>
                 <td width="35px"><?php echo " $siglatipo"; ?>
                 </td>            
                 <td><?php

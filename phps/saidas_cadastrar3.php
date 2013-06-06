@@ -8,16 +8,18 @@ if ($permissao_saidas_cadastrar <> 1) {
 $tipopagina = "saidas";
 include "includes.php";
 
-$tiposai=$_GET["tiposai"];
-$passo = $_POST["passo"];
-$saida = $_POST["saida"];
-$valbru = $_POST["valbru2"];
-$descper = $_POST["descper2"];
-$descval = $_POST["descval2"];
-$total = $_POST["total2"];
-$dinheiro = $_POST["dinheiro2"];
-$troco = $_POST["troco2"];
-$troco_devolvido = $_POST["troco_devolvido"];
+$tiposai=$_REQUEST["tiposai"];
+$passo = $_REQUEST["passo"];
+$saida = $_REQUEST["saida"];
+$valbru = $_REQUEST["valbru2"];
+$descper = $_REQUEST["descper2"];
+$descval = $_REQUEST["descval2"];
+$total = $_REQUEST["total2"];
+$dinheiro = $_REQUEST["dinheiro2"];
+$troco = $_REQUEST["troco2"];
+$troco_devolvido = $_REQUEST["troco_devolvido"];
+
+//print_r($_REQUEST);
 
 
 //Elimina os cifões de dinheiro e troca as , por .

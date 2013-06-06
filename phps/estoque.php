@@ -14,9 +14,9 @@ $tpl->ICONES_CAMINHO = "$icones";
 
 
 //Inicio do FILTRO
-$filtro_produto = $_POST["filtroproduto"];
-if (!empty($filtro_produto)) {
-    $sql_filtro= $sql_filtro." and etq_produto=$filtro_produto";
+$filtro_produto_nome = $_POST["filtroprodutonome"];
+if (!empty($filtro_produto_nome)) {
+    $sql_filtro= $sql_filtro." and pro_nome like '%$filtro_produto_nome%'";
 }
 $filtro_categoria = $_POST["filtrocategoria"];
 if (!empty($filtro_categoria)) {
@@ -28,38 +28,14 @@ if (!empty($filtro_tiponegociacao)) {
     $sql_filtro= $sql_filtro." and etq_produto not in (
         SELECT mesprotip_produto 
         FROM  mestre_produtos_tipo
+        JOIN produtos on (etq_produto=pro_codigo)
         WHERE mesprotip_tipo=$filtro_tiponegociacao
     )"; 
    
 }
 
 //Filtro produto
-$sql_produto = "
-    SELECT DISTINCT
-        etq_produto,pro_codigo,pro_nome
-    FROM
-        estoque
-        join produtos on (etq_produto=pro_codigo)  
-    WHERE
-        etq_quiosque=$usuario_quiosque 
-    ORDER BY 
-        pro_nome
-";
-$query_produto = mysql_query($sql_produto);
-if (!$query_produto) {
-    DIE("Erro1 SQL:" . mysql_error());
-}
-while ($dados_produto = mysql_fetch_array($query_produto)) {
-    $produto_codigo = $dados_produto['pro_codigo'];
-    $tpl->PRODUTO_CODIGO = $produto_codigo;
-    $tpl->PRODUTO_NOME = $dados_produto['pro_nome'];
-    if ($produto_codigo == $filtro_produto) {
-        $tpl->PRODUTO_SELECIONADO = " selected ";
-    } else {
-        $tpl->PRODUTO_SELECIONADO = " ";
-    }
-    $tpl->block("BLOCK_FILTRO_PRODUTO");
-}
+$tpl->PRODUTO_NOME = $filtro_produto_nome;
 
 
 //Filtro categoria
@@ -155,7 +131,7 @@ ORDER BY
 //Pagina��o
 $query = mysql_query($sql);
 if (!$query)
-    die("Erro SQL Principal Pagina��o:" . mysql_error());
+    die("Erro SQL Principal Paginação:" . mysql_error());
 $linhas = mysql_num_rows($query);
 while ($dados = mysql_fetch_assoc($query)) {
     $valor_total_geral = $valor_total_geral + $dados["valortot"];

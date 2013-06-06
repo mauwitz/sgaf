@@ -12,10 +12,21 @@ include "includes.php";
 $codigo = $_GET['codigo'];
 $nome = ucwords(strtolower($_POST['nome']));
 $nome2 = ucwords(strtolower($_POST['nome2']));
-$tipo = $_POST['tipo'];
+$tipo2 = $_POST['tipo2'];
+if ($tipo2 != "")
+    $tipo = $tipo2;
+else
+    $tipo = $_POST['tipo'];
+
+$marca = $_POST['marca'];
+$recipiente = $_POST['recipiente'];
+$volume = $_POST['volume'];
+$composicao = $_POST['composicao'];
+
 $categoria = $_POST['categoria'];
 $descricao = $_POST['descricao'];
 $tiponegociacao = $_POST['box'];
+$codigounico = $_POST['codigounico'];
 $data = date("Y/m/d");
 $hora = date("h:i:s");
 
@@ -30,7 +41,7 @@ $tpl_titulo->show();
 
 //Verifica se foi selecionado pelo menos um tipo de negociacao
 if (empty($tiponegociacao)) {
-$tpl_notificacao = new Template("templates/notificacao.html");
+    $tpl_notificacao = new Template("templates/notificacao.html");
     $tpl_notificacao->ICONES = $icones;
     $tpl_notificacao->MOTIVO_COMPLEMENTO = "É necessário selecionar pelo menos um tipo de negociação!";
     //$tpl_notificacao->DESTINO = "produtos.php";
@@ -61,8 +72,8 @@ if ($codigo == "") { //caso seja um cadastro novo fazer isso
         $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
         $tpl_notificacao->show();
     } else {
-        $sql = "INSERT INTO produtos (pro_nome,pro_tipocontagem,pro_categoria,pro_descricao,pro_datacriacao,pro_horacriacao,pro_cooperativa)
-	VALUES ('$nome','$tipo','$categoria','$descricao','$data','$hora',$usuario_cooperativa);";
+        $sql = "INSERT INTO produtos (pro_nome,pro_tipocontagem,pro_categoria,pro_descricao,pro_datacriacao,pro_horacriacao,pro_cooperativa,pro_volume,pro_marca,pro_recipiente,pro_composicao,pro_codigounico)
+	VALUES ('$nome','$tipo','$categoria','$descricao','$data','$hora',$usuario_cooperativa,'$volume','$marca','$recipiente','$composicao','$codigounico');";
         $query = mysql_query($sql);
         if (!$query)
             die("Erro22: " . mysql_error());
@@ -122,7 +133,12 @@ if ($codigo == "") { //caso seja um cadastro novo fazer isso
 	pro_descricao='$descricao',
 	pro_dataedicao='$data',
 	pro_horaedicao='$hora',
-	pro_cooperativa='$usuario_cooperativa'
+	pro_cooperativa='$usuario_cooperativa',
+	pro_volume='$volume',
+	pro_marca='$marca',
+	pro_recipiente='$recipiente',
+	pro_composicao='$composicao',
+	pro_codigounico='$codigounico'
 	WHERE pro_codigo = '$codigo'
     ";
         if (!mysql_query($sql))

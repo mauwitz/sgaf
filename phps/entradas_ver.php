@@ -135,12 +135,12 @@ if (!$query)
     die("Erro SQL" . mysql_error());
 IF ($tiponegociacao == 2) {
     $tpl->block("BLOCK_CUSTO_CABECALHO");
-    $tpl->block("BLOCK_LUCRO_CABECALHO");
+    //$tpl->block("BLOCK_LUCRO_CABECALHO");
 }
 $tpl->block("BLOCK_VENDA_CABECALHO");
 
 while ($dados = mysql_fetch_array($query)) {
-
+    $validade=$dados[5];
     $tpl->ENTRADAS_NUMERO = $dados[9];
     $tpl->ENTRADAS_PRODUTO = $dados[3];
     $tpl->ENTRADAS_PRODUTO_NOME = $dados[0];
@@ -156,15 +156,16 @@ while ($dados = mysql_fetch_array($query)) {
         $tpl->ENTRADAS_VALORUNI_CUSTO = "R$ " . number_format($dados['entpro_valunicusto'], 2, ',', '.');
         $tpl->ENTRADAS_VALOR_TOTAL_CUSTO = "R$ " . number_format($dados['entpro_quantidade'] * $dados['entpro_valunicusto'], 2, ',', '.');
         $lucro = ($dados['entpro_quantidade'] * $dados['entpro_valorunitario']) - ($dados['entpro_quantidade'] * $dados['entpro_valunicusto']);
-        $tpl->ENTRADAS_VALOR_LUCRO = "R$ " . number_format($lucro, 2, ',', '.');
+        //$tpl->ENTRADAS_VALOR_LUCRO = "R$ " . number_format($lucro, 2, ',', '.');
         $tpl->block("BLOCK_CUSTO");
-        $tpl->block("BLOCK_LUCRO");
+        //$tpl->block("BLOCK_LUCRO");
     }
-    $tpl->block("BLOCK_VENDA");
     $tpl->ENTRADAS_VALORUNI = "R$ " . number_format($dados[4], 2, ',', '.');
-    $tpl->ENTRADAS_VALOR_TOTAL = "R$ " . number_format($dados['2'] * $dados['4'], 2, ',', '.');
+    //$tpl->ENTRADAS_VALOR_TOTAL = "R$ " . number_format($dados['2'] * $dados['4'], 2, ',', '.');
+    $tpl->block("BLOCK_VENDA");
     $tpl->PRODUTO = $dados[3];
     $numero = $dados[9];
+    $tpl->ENTRADAS_VALIDADE = converte_data($validade);
     $tpl->IMPRIMIR_LINK = "entradas_etiquetas.php?lote=$entrada&numero=$numero";
     $tpl->IMPRIMIR = $icones . "etiquetas.png";
 
@@ -174,7 +175,7 @@ while ($dados = mysql_fetch_array($query)) {
 }
 if ($tiponegociacao == 2) {
     $tpl->block("BLOCK_CUSTO_RODAPE");
-    $tpl->block("BLOCK_LUCRO_RODAPE");
+    //$tpl->block("BLOCK_LUCRO_RODAPE");
 }
 $tpl->block("BLOCK_VENDA_RODAPE");
 //Calcula o valor total geral da entrada
@@ -183,7 +184,7 @@ $query8 = mysql_query($sql8);
 while ($dados8 = mysql_fetch_array($query8)) {
     $tot8 = "R$ " . number_format($dados8[0], 2, ',', '.');
 }
-$tpl->TOTAL_ENTRADA = "$tot8";
+//$tpl->TOTAL_ENTRADA = "$tot8";
 $tpl->block("BLOCK_LISTA_NADA_OPERACAO");
 //Calcula o valor total de custo geral da entrada
 $sql9 = "SELECT round(sum(entpro_valunicusto*entpro_quantidade),2) FROM entradas_produtos WHERE entpro_entrada=$entrada";
@@ -198,13 +199,13 @@ while ($dados10 = mysql_fetch_array($query10)) {
     $tot10 = "R$ " . number_format($dados10[0], 2, ',', '.');
 }
 $tpl->TOTAL_CUSTO = "$tot9";
-$tpl->TOTAL_ENTRADA = "$tot8";
-$tpl->TOTAL_LUCRO = "$tot10";
+//$tpl->TOTAL_LUCRO = "$tot10";
+//$tpl->TOTAL_ENTRADA = "$tot8";
 
 $tpl->block("BLOCK_BOTAO_VOLTAR");
 $tpl->block("BLOCK_BOTAO_IMPRIMIR");
-if ($tiponegociacao == 2)
-    $tpl->block("BLOCK_BOTAO_IMPRIMIR_CUSTO");
+/*if ($tiponegociacao == 2)
+    $tpl->block("BLOCK_BOTAO_IMPRIMIR_CUSTO");*/
 $tpl->block("BLOCK_PASSO3");
 
 

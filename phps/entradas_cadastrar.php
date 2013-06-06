@@ -29,6 +29,7 @@ if ($tipopessoa == "") { //caso o campo fornecedor fique desabilitado!
     $tipopessoa = $_POST['tipopessoa2'];
 }
 $produto = $_POST['produto'];
+$marca = $_POST['marca'];
 $item_numero = $_POST['item_numero'];
 
 
@@ -102,6 +103,8 @@ if (($operacao == 3) || ($operacao == 2)) {
 $tpl->FORNECEDOR = $fornecedor;
 $tpl->TIPOPESSOA = $tipopessoa;
 $tpl->TIPONEGOCIACAO = $tiponegociacao;
+IF ($tiponegociacao == 2)
+    $tpl->block(BLOCK_PERCENT);
 
 //Caso seja uma opera��o de Editar ent�o ir para o passo2
 if ($operacao == 2) {
@@ -305,6 +308,41 @@ if ($passo != "") {
         $tpl->ENTRADA = $entrada;
     }
 
+    //Marca
+    $sql = "
+        SELECT DISTINCT TRIM(pro_marca)
+        FROM produtos 
+        JOIN mestre_produtos_tipo ON (mesprotip_produto=pro_codigo)
+        WHERE pro_cooperativa='$usuario_cooperativa' 
+        AND mesprotip_tipo=$tiponegociacao
+        ORDER BY TRIM(pro_marca)
+    ";
+    $query = mysql_query($sql);
+    if ($query) {
+        while ($dados = mysql_fetch_array($query)) {
+            $tpl->SELECT_MARCA_OBRIGATORIO = " required ";
+            $tpl->SELECT_MARCA_DESABILITADO = "";
+            $marca_banco = $dados[0];
+            $marca_banco_valor = $dados[0];
+            $marca_banco = trim($marca_banco);
+            if ($marca_banco == "") {                
+                $marca_banco_valor = "";
+                $marca_banco = "Sem marca";
+            }
+            $tpl->OPTION_MARCA_VALOR = $marca_banco_valor;
+            $tpl->OPTION_MARCA_TEXTO = $marca_banco;
+            if (($marca == $marca_banco) && ($produtomanter == 'on'))
+                $tpl->OPTION_MARCA_SELECIONADO = " selected ";
+            else
+                $tpl->OPTION_MARCA_SELECIONADO = "";
+            $tpl->block("BLOCK_OPTIONS_MARCA");
+        }
+    } else {
+        echo mysql_error();
+    }
+
+
+
     //Options do Select dos PRODUTOS
     $sql = "
         SELECT pro_codigo,pro_nome 
@@ -330,6 +368,10 @@ if ($passo != "") {
     } else {
         echo mysql_error();
     }
+
+
+
+
     $tpl->block("BLOCK_BOTAO_PASSO2");
     if ($tiponegociacao == 2)
         $tpl->block("BLOCK_CAMPO_VALCUSTO");
@@ -443,7 +485,7 @@ if ($passo != "") {
             if ($operacao != 2) {
 
                 //Faz a inser��o do produto na entrada (inserir item de entrada)
-                $validade = desconverte_data($validade);
+                //$validade = desconverte_data($validade);
                 $total = number_format($valuni * $qtd, 2, '.', '');
                 $totalcusto = number_format($valunicusto * $qtd, 2, '.', '');
                 $sql = "
@@ -493,7 +535,7 @@ if ($passo != "") {
     $tpl->ENTRADA = $entrada;
     IF ($tiponegociacao == 2) {
         $tpl->block("BLOCK_CUSTO_CABECALHO");
-        $tpl->block("BLOCK_LUCRO_CABECALHO");
+        //$tpl->block("BLOCK_LUCRO_CABECALHO");
     }
     $tpl->block("BLOCK_VENDA_CABECALHO");
 
@@ -517,20 +559,21 @@ if ($passo != "") {
                 else
                     $tpl->ENTRADAS_QTD = number_format($dados[2], 0, ',', '.');
                 $tpl->ENTRADAS_VALORUNI = "R$ " . number_format($dados[4], 2, ',', '.');
-                $tpl->ENTRADAS_VALOR_TOTAL = "R$ " . number_format($dados[2] * $dados[4], 2, ',', '.');
+                //$tpl->ENTRADAS_VALOR_TOTAL = "R$ " . number_format($dados[2] * $dados[4], 2, ',', '.');
                 if ($tiponegociacao == 2) {
                     $tpl->ENTRADAS_VALORUNI_CUSTO = "R$ " . number_format($dados[9], 2, ',', '.');
                     $tpl->ENTRADAS_VALOR_TOTAL_CUSTO = "R$ " . number_format($dados[2] * $dados[9], 2, ',', '.');
                     $lucro = ($dados[2] * $dados[4]) - ($dados[2] * $dados[9]);
                     $tpl->ENTRADAS_VALOR_LUCRO = "R$ " . number_format($lucro, 2, ',', '.');
                     $tpl->block("BLOCK_CUSTO");
-                    $tpl->block("BLOCK_LUCRO");
+                    //$tpl->block("BLOCK_LUCRO");
                 }
                 $tpl->block("BLOCK_VENDA");
                 $tpl->PRODUTO = $dados[3];
                 $numero = $dados['entpro_numero'];
                 $tpl->IMPRIMIR_LINK = "entradas_etiquetas.php?lote=$entrada&numero=$numero";
                 $tpl->IMPRIMIR = $icones . "etiquetas.png";
+                $tpl->ENTRADAS_VALIDADE=  converte_data($dados[5]);
                 $tpl->block("BLOCK_LISTA_OPERACAO_EXCLUIR");
                 $tpl->block("BLOCK_LISTA_OPERACAO_ETIQUETAS");
                 $tpl->block("BLOCK_LISTA_OPERACAO");
@@ -559,15 +602,16 @@ if ($passo != "") {
             $tpl->block("BLOCK_LISTA_NADA_OPERACAO");
             $tpl->block("BLOCK_LISTA_NADA_OPERACAO");
             $tpl->TOTAL_CUSTO = "$tot9";
-            $tpl->TOTAL_ENTRADA = "$tot8";
+            //$tpl->TOTAL_ENTRADA = "$tot8";
             $tpl->TOTAL_LUCRO = "$tot10";
         }
         if ($tiponegociacao == 2) {
             $tpl->block("BLOCK_CUSTO_RODAPE");
-            $tpl->block("BLOCK_LUCRO_RODAPE");
+            //$tpl->block("BLOCK_LUCRO_RODAPE");
         }
         $tpl->block("BLOCK_VENDA_RODAPE");
         $tpl->block("BLOCK_PASSO2");
+        $tpl->VALIDADE_MIN = date("Y-m-d");        
         $tpl->OPERACAO = $operacao;
         $tpl->INTERROMPER = "CANCELAR";
         $tpl->ENTRADA = $entrada;
