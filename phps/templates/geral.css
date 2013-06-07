@@ -22,10 +22,14 @@
     color: black;
 }
 .campopadrao:disabled {
-    background-color: transparent;
-    border: 1px transparent solid;
+    background-color: white;;
+    border: 0px solid;
+    height:20px;
+    width:160px;    
     color: black;
     border-bottom: 1px gray solid;    
+
+    
 }
 .campopadrao:required {    
     

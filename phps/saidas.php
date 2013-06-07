@@ -76,30 +76,13 @@ $tpl->block("BLOCK_FILTRO_COLUNA");
 
 
 //Filtro Produto
-$tpl->SELECT_TITULO = "Produto";
-$tpl->SELECT_NOME = "filtro_produto";
-$tpl->SELECT_OBRIGATORIO = "";
-$sql = "
-SELECT DISTINCT pro_codigo, pro_nome 
-FROM produtos 
-JOIN saidas_produtos on (saipro_produto=pro_codigo) 
-JOIN saidas on (saipro_saida=sai_codigo)
-WHERE pro_cooperativa=$usuario_cooperativa 
-and sai_tipo=1
-ORDER BY pro_nome";
-$query = mysql_query($sql);
-if (!$query)
-    die("Erro SQL2" . mysql_error());
-while ($dados = mysql_fetch_assoc($query)) {
-    $tpl->SELECT_OPTION_CODIGO = $dados["pro_codigo"];
-    $tpl->SELECT_OPTION_NOME = $dados["pro_nome"];
-    if ($filtro_produto == $dados["pro_codigo"])
-        $tpl->SELECT_OPTION_SELECIONADO = " selected ";
-    else
-        $tpl->SELECT_OPTION_SELECIONADO = " ";
-    $tpl->block("BLOCK_FILTRO_SELECT_OPTION");
-}
-$tpl->block("BLOCK_FILTRO_SELECT");
+$tpl->CAMPO_TITULO = "Produto";
+$tpl->CAMPO_TAMANHO = "25";
+$tpl->CAMPO_NOME = "filtro_produto";
+$tpl->CAMPO_VALOR = $filtro_produto;
+$tpl->CAMPO_QTD_CARACTERES = "";
+$tpl->CAMPO_ONKEYUP = "";
+$tpl->block("BLOCK_FILTRO_CAMPO");
 $tpl->block("BLOCK_FILTRO_ESPACO");
 $tpl->block("BLOCK_FILTRO_COLUNA");
 
@@ -132,7 +115,7 @@ $tpl->block("BLOCK_FILTRO_SELECT");
 $tpl->block("BLOCK_FILTRO_ESPACO");
 $tpl->block("BLOCK_FILTRO_COLUNA");
 
-//Filtro Numero da saida
+//Filtro Nº Lote
 $tpl->CAMPO_TITULO = "Nº Lote";
 $tpl->CAMPO_TAMANHO = "15";
 $tpl->CAMPO_NOME = "filtro_lote";
@@ -225,7 +208,7 @@ $tpl->block("BLOCK_LISTA_CABECALHO");
 if ($filtro_numero <> "")
     $sql_filtro_numero = " and sai_codigo = $filtro_numero ";
 if ($filtro_produto <> "")
-    $sql_filtro_produto = " and saipro_produto = $filtro_produto ";
+    $sql_filtro_produto = " and pro_nome like '%$filtro_produto %'";
 if ($filtro_lote <> "")
     $sql_filtro_lote = " and saipro_lote = $filtro_lote ";
 if ($filtro_consumidor <> "")
@@ -249,6 +232,8 @@ SELECT DISTINCT sai_codigo,sai_datacadastro,sai_horacadastro,sai_consumidor,sai_
 FROM saidas 
 JOIN saidas_tipo on (sai_tipo=saitip_codigo) 
 left join saidas_produtos on (saipro_saida=sai_codigo)
+LEFT JOIN produtos on (saipro_produto=pro_codigo)
+left join entradas on (saipro_lote=ent_codigo)
 WHERE sai_quiosque=$usuario_quiosque and
 sai_tipo=1 $sql_filtro 
 ORDER BY sai_status DESC, sai_codigo DESC

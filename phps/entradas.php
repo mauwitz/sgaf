@@ -79,21 +79,7 @@ include "includes.php";
                     </td>
                     <td width="15px"></td>
                     <td ><b>&nbsp;Produtos:</b><br>
-                        <select name="filtroproduto" class="campofiltro" >
-                            <option value="">Todos</option> 
-                            <?php
-                            $sql3 = "SELECT DISTINCT pro_codigo,pro_nome
-			FROM produtos
-                        join entradas_produtos on (entpro_produto=pro_codigo)
-			WHERE pro_cooperativa='$usuario_cooperativa' ORDER BY pro_nome";
-                            $query3 = mysql_query($sql3);
-                            while ($dados3 = mysql_fetch_array($query3)) {
-                                ?> <option value="<?php echo "$dados3[0]"; ?>" <?php
-                        if ($filtroproduto == $dados3[0]) {
-                            echo" selected ";
-                        }
-                                ?>><?php echo "$dados3[1]"; ?></option><?php } ?>
-                        </select>
+                        <input size="25" type="text" onkeyup="" name="filtroproduto" class="campofiltro" value="<?php echo "$filtroproduto"; ?>"></td>
                     </td>
                     <td width="15px"></td>                
                 <?php } ?>
@@ -129,8 +115,8 @@ include "includes.php";
         if ($filtrosupervisor != "")
             $sql_filtro = $sql_filtro . " and ent_supervisor=$filtrosupervisor";
         if ($filtroproduto != "") {
-            $sql_filtro = $sql_filtro . " and entpro_produto=$filtroproduto";
-            $sql_filtro_from = "join entradas_produtos on (entpro_entrada=ent_codigo)";
+            $sql_filtro = $sql_filtro . " and pro_nome like '%$filtroproduto%'";
+            $sql_filtro_from = "join entradas_produtos on (entpro_entrada=ent_codigo) join produtos on (entpro_produto=pro_codigo)";
         }
         
 

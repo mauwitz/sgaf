@@ -170,18 +170,18 @@ function mascara_percent() {
         <!--  BEGIN BLOCK_SELECT_ENTRADA -->
         <tr>
             <td align="right" width="200px"><b>Entrada:<label class="obrigatorio"></label></b></td>
-            <td><input type="text" size="8" required name="entrada_codigo" class="campo1" disabled value="{ENTRADA}"> </td>
+            <td><input type="text" size="8" required name="entrada_codigo" class="campopadrao" disabled value="{ENTRADA}"> </td>
         </tr>
         <!--  END BLOCK_SELECT_ENTRADA -->
 
         <!--  BEGIN BLOCK_DATAHORA -->
         <tr>
             <td align="right"><b>Data: <label class="obrigatorio"></label></b></td>
-            <td><input type="text" size="8" required name="data1" class="campo1" disabled value="{ENTRADAS_DATA}"> </td>
+            <td><input type="text" size="8" required name="data1" class="campopadrao" disabled value="{ENTRADAS_DATA}"> </td>
         </tr>    
         <tr>
             <td align="right"><b>Hora: <label class="obrigatorio"></label></b></td>
-            <td><input type="text" size="8" required name="hora1" class="campo1" disabled value="{ENTRADAS_HORA}"></td>
+            <td><input type="text" size="8" required name="hora1" class="campopadrao" disabled value="{ENTRADAS_HORA}"></td>
         </tr> 
         <!--  END BLOCK_DATAHORA --> 
 
@@ -190,7 +190,7 @@ function mascara_percent() {
         <tr>
             <td align="right" width="200px"><b>Tipo de Negociação: <label class="obrigatorio"></label></b></td>
             <td>
-                <select autofocus="1" name="tiponegociacao" onchange="popula_tipopessoa(this.value);" class="campo1" {SELECT_OBRIGATORIO} {SELECT_DESABILITADO} >
+                <select autofocus="1" name="tiponegociacao" onchange="popula_tipopessoa(this.value);" class="campopadrao" {SELECT_OBRIGATORIO} {SELECT_DESABILITADO} >
                     <option value="">Selecione</option>	
                     <!--  BEGIN BLOCK_OPTIONS_TIPONEGOCIACAO -->
                     <option value="{OPTION_VALOR}" {OPTION_SELECIONADO} >{OPTION_TEXTO}</option>
@@ -206,7 +206,7 @@ function mascara_percent() {
         <tr>
             <td align="right" width="200px"><b>Tipo de Pessoa: <label class="obrigatorio"></label></b></td>
             <td>
-                <select autofocus="" name="tipopessoa" class="campo1" {SELECT_TIPOPESSOA_OBRIGATORIO} {SELECT_TIPOPESSOA_DESABILITADO} onchange="popula_fornecedores(this.value);">
+                <select autofocus="" name="tipopessoa" class="campopadrao" {SELECT_TIPOPESSOA_OBRIGATORIO} {SELECT_TIPOPESSOA_DESABILITADO} onchange="popula_fornecedores(this.value);">
                     <!-- BEGIN BLOCK_OPTIONPADRAO -->
                     <option value="">Todos</option>	
                     <!-- END BLOCK_OPTIONPADRAO -->
@@ -225,7 +225,7 @@ function mascara_percent() {
         <tr>
             <td align="right" width="200px"><b>Fornecedor: <label class="obrigatorio"></label></b></td>
             <td>
-                <select autofocus="1" name="fornecedor" class="campo1" {SELECT_OBRIGATORIO} {SELECT_DESABILITADO} >
+                <select autofocus="1" name="fornecedor" class="campopadrao" {SELECT_OBRIGATORIO} {SELECT_DESABILITADO} >
                     <option value="">Selecione</option>	
                     <!--  BEGIN BLOCK_OPTIONS_FORNECEDOR -->
                     <option value="{OPTION_VALOR}" {OPTION_SELECIONADO} >{OPTION_TEXTO}</option>
@@ -239,7 +239,7 @@ function mascara_percent() {
         <tr>
             <td align="right" width="200px"><b>Supervisor: <label class="obrigatorio"></label></b></td>
             <td>
-                <select autofocus="1" name="fornecedor" class="campo1"  {SELECT_OBRIGATORIO} {SELECT_DESABILITADO} >
+                <select autofocus="1" name="fornecedor" class="campopadrao"  {SELECT_OBRIGATORIO} {SELECT_DESABILITADO} >
                     <option value="">Selecione</option>	
                     <!--  BEGIN BLOCK_OPTIONS_SUPERVISOR -->
                     <option value="{OPTION_VALOR}" {OPTION_SELECIONADO} >{OPTION_TEXTO}</option>
@@ -270,7 +270,7 @@ function mascara_percent() {
         <tr>
             <td align="right" width="200px"><b>Marca: <label class="obrigatorio"></label></b></td>
             <td>
-                <select name="marca" onchange="popula_produtos_pelamarca(this.value);" id="marca" class="campo1" {SELECT_MARCA_OBRIGATORIO} {SELECT_MARCA_DESABILITADO} >
+                <select name="marca" onchange="popula_produtos_pelamarca(this.value);" id="marca" class="campopadrao" {SELECT_MARCA_OBRIGATORIO} {SELECT_MARCA_DESABILITADO} >
                     <option value="todas">Todas</option>	
                     <!--  BEGIN BLOCK_OPTIONS_MARCA -->
                     <option value="{OPTION_MARCA_VALOR}" {OPTION_MARCA_SELECIONADO} >{OPTION_MARCA_TEXTO}</option>
@@ -281,7 +281,7 @@ function mascara_percent() {
         <tr>
             <td align="right" width="200px"><b>Produto: <label class="obrigatorio"></label></b></td>
             <td>
-                <select autofocus="2" name="produto" onchange=" valida_produto()"   id="{SELECT2_NOME}" class="campo1" {SELECT2_OBRIGATORIO} {SELECT2_DESABILITADO} >
+                <select autofocus="2" name="produto" onchange=" valida_produto()"   id="{SELECT2_NOME}" class="campopadrao" {SELECT2_OBRIGATORIO} {SELECT2_DESABILITADO} >
                     <option value="">Selecione</option>	
                     <!--  BEGIN BLOCK_OPTIONS_PRODUTO -->
                     <option value="{OPTION2_VALOR}" {OPTION2_SELECIONADO} >{OPTION2_TEXTO}</option>
@@ -292,15 +292,15 @@ function mascara_percent() {
         </tr>
         <tr>
             <td align="right"><b>Quantidade: <label class="obrigatorio"></label></b></td>
-            <td><input type="text" size="8" required  name="qtd" id="qtd" onclick="this.select()"  onkeyup="mascara_pesoqtd()" class="campo1" autocomplete="off" >&nbsp;<span name="tipocontagem" class="dicacampo"></span></td>
+            <td><input type="text" size="8" required  name="qtd" id="qtd" onclick="this.select()"  onkeyup="mascara_pesoqtd()" class="campopadrao" autocomplete="off" >&nbsp;<span name="tipocontagem" class="dicacampo"></span></td>
         </tr>
         <!--  BEGIN BLOCK_CAMPO_VALCUSTO -->
         <tr>
             <td align="right"><b>Valor Unitário Custo: <label class="obrigatorio"></label></b></td>
             <td>
-                <input type="text" size="8" required  name="valunicusto" class="campo1" autocomplete="off" onclick="this.select()" onkeyup="" onblur="calcula_valor_percent();">&nbsp;
+                <input type="text" size="8" required  name="valunicusto" class="campopadrao" autocomplete="off" onclick="this.select()" onkeyup="" onblur="calcula_valor_percent();">&nbsp;
                 <span name="qtdtipcon" class="dicacampo" autocomplete="off" ></span>
-                <input id="percent2" name="percent2" type="text" value="" class="campo1" size="5" onblur="calcula_valor_venda();" onkeyup="mascara_percent();" onclick="this.select()" >
+                <input id="percent2" name="percent2" type="text" value="" class="campopadrao" size="5" onblur="calcula_valor_venda();" onkeyup="mascara_percent();" onclick="this.select()" >
                 <span name="" class="dicacampo" autocomplete="off" >%</span>            
             </td>
         </tr>
@@ -308,10 +308,10 @@ function mascara_percent() {
         <tr>
             <td align="right"><b>Valor Unitário Venda: <label class="obrigatorio"></label></b></td>
             <td>
-                <input type="text" size="8" required  name="valuni" class="campo1" autocomplete="off" onclick="this.select()" onkeyup="verifica_incluir();" onblur="calcula_valor_percent();">&nbsp;
+                <input type="text" size="8" required  name="valuni" class="campopadrao" autocomplete="off" onclick="this.select()" onkeyup="verifica_incluir();" onblur="calcula_valor_percent();">&nbsp;
                 <span name="qtdtipcon" class="dicacampo" autocomplete="off" ></span>
                 <!--  BEGIN BLOCK_PERCENT -->
-                <input id="percent" name="percent" type="text" value="" class="campo1" size="5" onblur="calcula_valor_unitario();" onkeyup="mascara_percent();"  onclick="this.select()" >
+                <input id="percent" name="percent" type="text" value="" class="campopadrao" size="5" onblur="calcula_valor_unitario();" onkeyup="mascara_percent();"  onclick="this.select()" >
                 <span name="" class="dicacampo" autocomplete="off" >%</span>
                 <!--  END BLOCK_PERCENT -->
             </td>
@@ -319,13 +319,13 @@ function mascara_percent() {
         <tr>
             <td align="right"><b>Validade: <label class="obrigatorio"></label></b></td>
             <td>
-                <input type="date" size="" maxlength="" max="{VALIDADE_MAX}" min="{VALIDADE_MIN}" name="validade" id="" class="campo1"  onclick="" onblur="calcula_saldovalidade(this.value);">
+                <input type="date" size="" maxlength="" max="{VALIDADE_MAX}" min="{VALIDADE_MIN}" name="validade" id="" class="campopadrao"  onclick="" onblur="calcula_saldovalidade(this.value);">
                 <span name="saldovalidade" id="saldovalidade" class="dicacampo" ></span>
             </td>
         </tr>
         <tr>
             <td align="right"><b>Local/Prateleira: <label class="obrigatorio"></label></b></td>
-            <td><input type="text" size="25" maxlength="" name="local" id="local" class="campo1"  onclick="this.select()" >
+            <td><input type="text" size="25" maxlength="" name="local" id="local" class="campopadrao"  onclick="this.select()" >
         </tr>
 
         <!--  BEGIN BLOCK_BOTAO_PASSO2 -->

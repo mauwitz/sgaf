@@ -68,20 +68,20 @@ if ($linhas == 0) {
     <table summary="" border="0" class="tabela1" cellpadding="4">
         <tr>
             <td align="right" width="200px"><b>Nome: <label class="obrigatorio"></label></b></td>
-            <td align="left" width=""><input  onkeypress=""  id="capitalizar" type="text" name="nome" autofocus size="45" class="campo1" required value="<?php echo "$nome"; ?>" <?php if ($ver == 1) echo" disabled "; ?> ></td>
+            <td align="left" width=""><input  onkeypress=""  id="capitalizar" type="text" name="nome" autofocus size="45" class="campopadrao" required value="<?php echo "$nome"; ?>" <?php if ($ver == 1) echo" disabled "; ?> ></td>
         </tr>
         <tr>
             <td align="right" width="200px"><b>Marca: <label class="obrigatorio"></label></b></td>
-            <td align="left" width=""><input  onkeypress=""  id="capitalizar" type="text" name="marca"  size="30" class="campo1"  value="<?php echo "$marca"; ?>" <?php if ($ver == 1) echo" disabled "; ?> ></td>
+            <td align="left" width=""><input  onkeypress=""  id="capitalizar" type="text" name="marca"  size="30" class="campopadrao"  value="<?php echo "$marca"; ?>" <?php if ($ver == 1) echo" disabled "; ?> ></td>
         </tr>
         <tr>
             <td align="right" width="200px"><b>Volume: <label class="obrigatorio"></label></b></td>
-            <td align="left" width=""><input  onkeypress=""  id="capitalizar" type="text" name="volume"  size="15" class="campo1"  value="<?php echo "$volume"; ?>" <?php if ($ver == 1) echo" disabled "; ?> placeholder=""><span class="dicacampo">Ex: 150g ou 200ml</span></td>
+            <td align="left" width=""><input  onkeypress=""  id="capitalizar" type="text" name="volume"  size="15" class="campopadrao"  value="<?php echo "$volume"; ?>" <?php if ($ver == 1) echo" disabled "; ?> placeholder=""><span class="dicacampo">Ex: 150g ou 200ml</span></td>
         </tr>
         <tr>
             <td align="right" width="200px"><b>Recipiente / Embalagem: <label class="obrigatorio"></label></b></td>
             <td align="left" width="">
-                <select name="recipiente" id="tipo" class="campo1"  onchange="" 
+                <select name="recipiente" id="tipo" class="campopadrao"  onchange="" 
                 <?php              
                 if ($ver == 1)
                     echo " disabled ";
@@ -104,7 +104,7 @@ if ($linhas == 0) {
         <tr>
             <td align="right" width="200px"><b>Tipo de Contagem: <label class="obrigatorio"></label></b></td>
             <td align="left" width="">
-                <select name="tipo" id="tipo" class="campo1" required="required" onchange="sigla()" 
+                <select name="tipo" id="tipo" class="campopadrao" required="required" onchange="sigla()" 
                 <?php
                 $sql8 = "
                 SELECT entpro_produto
@@ -135,7 +135,7 @@ if ($linhas == 0) {
         <tr>
             <td align="right" width="200px"><b>Categoria: <label class="obrigatorio"></label></b></td>
             <td align="left" width="">
-                <select name="categoria" class="campo1" required="required" <?php if ($ver == 1) echo" disabled "; ?> >
+                <select name="categoria" class="campopadrao" required="required" <?php if ($ver == 1) echo" disabled "; ?> >
                     <option value="">Selecione</option>		
                     <?php
                     $sql1 = "SELECT * FROM produtos_categorias WHERE cat_cooperativa=$usuario_cooperativa ORDER BY cat_nome";
@@ -157,7 +157,7 @@ if ($linhas == 0) {
                 </b>
             </td>
             <td align="left" width="">
-                <input  onkeypress=""  id="capitalizar" type="text" name="codigounico" maxlength="13" size="15" class="campo1"  value="<?php echo "$codigounico"; ?>" <?php if ($ver == 1) echo" disabled "; ?> placeholder="">
+                <input  onkeypress=""  id="capitalizar" type="text" name="codigounico" maxlength="13" size="15" class="campopadrao"  value="<?php echo "$codigounico"; ?>" <?php if ($ver == 1) echo" disabled "; ?> placeholder="">
                 <span class="dicacampo">Ex: 150g ou 200ml</span>
             </td>
         </tr>
