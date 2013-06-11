@@ -284,8 +284,10 @@ function calcula_saldovalidade(valor) {
     var validade = valor;
 
     var dias = diasentredatas(hoje, validade);
-    $("span[name=saldovalidade]").html(dias + " dias");
-
+    if (dias >= 0)
+        $("span[name=saldovalidade]").html(dias + " dias");
+    else
+        $("span[name=saldovalidade]").html("");
 }
 
 function diasentredatas(valor1, valor2) {
@@ -805,7 +807,7 @@ function popula_quiosque_tiponegociacao(valor) {
 }
 
 function valorareceber (valor) {
-    if (valor==0) {
+    if (valor==1) {
         document.form1.metodopag.disabled = true;
         $("tr[id=tr_metodopag]").hide();
         document.form1.dinheiro.disabled = true;
@@ -819,7 +821,7 @@ function valorareceber (valor) {
 }
 function metodopagamento(valor) {    
     var total = $("input[name=total]").val();
-    if (valor==1) {
+    if ((valor==1)||(valor==4)||(valor==5)) {
         $("input[name=dinheiro]").val("");
     } else if (valor==2) {
         $("input[name=dinheiro]").val(total);

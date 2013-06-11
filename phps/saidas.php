@@ -166,6 +166,11 @@ $tpl->CABECALHO_COLUNA_COLSPAN = "";
 $tpl->CABECALHO_COLUNA_NOME = "ITENS";
 $tpl->block("BLOCK_LISTA_CABECALHO");
 
+$tpl->CABECALHO_COLUNA_TAMANHO = "";
+$tpl->CABECALHO_COLUNA_COLSPAN = "";
+$tpl->CABECALHO_COLUNA_NOME = "TOTAL";
+$tpl->block("BLOCK_LISTA_CABECALHO");
+
 //$tpl->CABECALHO_COLUNA_TAMANHO = "";
 //$tpl->CABECALHO_COLUNA_COLSPAN = "";
 //$tpl->CABECALHO_COLUNA_NOME = "TOTAL BRUTO";
@@ -173,12 +178,12 @@ $tpl->block("BLOCK_LISTA_CABECALHO");
 
 $tpl->CABECALHO_COLUNA_TAMANHO = "";
 $tpl->CABECALHO_COLUNA_COLSPAN = "";
-$tpl->CABECALHO_COLUNA_NOME = "DESCONTO";
+$tpl->CABECALHO_COLUNA_NOME = "DESC.";
 $tpl->block("BLOCK_LISTA_CABECALHO");
 
-$tpl->CABECALHO_COLUNA_TAMANHO = "";
+$tpl->CABECALHO_COLUNA_TAMANHO = "40 px";
 $tpl->CABECALHO_COLUNA_COLSPAN = "";
-$tpl->CABECALHO_COLUNA_NOME = "TOTAL LIQ.";
+$tpl->CABECALHO_COLUNA_NOME = "MET. PAG.";
 $tpl->block("BLOCK_LISTA_CABECALHO");
 
 $tpl->CABECALHO_COLUNA_TAMANHO = "";
@@ -186,15 +191,15 @@ $tpl->CABECALHO_COLUNA_COLSPAN = "";
 $tpl->CABECALHO_COLUNA_NOME = "SIT.";
 $tpl->block("BLOCK_LISTA_CABECALHO");
 
-$oper=0;
-$oper_tamanho=0;
+$oper = 0;
+$oper_tamanho = 0;
 if ($permissao_saidas_ver == 1) {
-    $oper=$oper+1;
-    $oper_tamanho=$oper_tamanho+50;
+    $oper = $oper + 1;
+    $oper_tamanho = $oper_tamanho + 50;
 }
 if ($permissao_saidas_editar == 1) {
     $oper++;
-    $oper_tamanho=$oper_tamanho+50;   
+    $oper_tamanho = $oper_tamanho + 50;
 }
 
 
@@ -228,7 +233,7 @@ if ($usuario_grupo == 4) {
 
 //SQL Principal das linhas
 $sql = "
-SELECT DISTINCT sai_codigo,sai_datacadastro,sai_horacadastro,sai_consumidor,sai_tipo,sai_totalliquido,sai_totalbruto,sai_status,sai_vendedor
+SELECT DISTINCT sai_codigo,sai_datacadastro,sai_horacadastro,sai_consumidor,sai_tipo,sai_totalliquido,sai_totalbruto,sai_status,sai_vendedor,sai_metpag,sai_areceber
 FROM saidas 
 JOIN saidas_tipo on (sai_tipo=saitip_codigo) 
 left join saidas_produtos on (saipro_saida=sai_codigo)
@@ -266,8 +271,8 @@ if (!$query)
     die("Erro: " . mysql_error());
 $linhas = mysql_num_rows($query);
 if ($linhas == 0) {
-    $listanada=9;
-    $tpl->LISTANADA=$listanada+$oper;
+    $listanada = 9;
+    $tpl->LISTANADA = $listanada + $oper;
     $tpl->block("BLOCK_LISTA_NADA");
 } else {
     while ($dados = mysql_fetch_array($query)) {
@@ -281,6 +286,9 @@ if ($linhas == 0) {
         $valorliquido = $dados["sai_totalliquido"];
         $valorbruto = $dados["sai_totalbruto"];
         $status = $dados["sai_status"];
+        $metodopag = $dados["sai_metpag"];
+        $areceber = $dados["sai_areceber"];
+
 
         //Cor de fundo da linha
         if ($status == 2) {
@@ -371,31 +379,61 @@ if ($linhas == 0) {
         $tpl->LISTA_COLUNA_VALOR = "(" . mysql_num_rows($query3) . ")";
         $tpl->block("BLOCK_LISTA_COLUNA");
 
-//        //Coluna Valor Bruto
-//        $tpl->LISTA_COLUNA_ALINHAMENTO = "right";
-//        $tpl->LISTA_COLUNA_CLASSE = "";
-//        $tpl->LISTA_COLUNA_VALOR = "R$ " . number_format($valorbruto, 2, ',', '.');
-//        $tpl->block("BLOCK_LISTA_COLUNA");
-        //Coluna Valor com desconto
+
+        //Total
         $tpl->LISTA_COLUNA_ALINHAMENTO = "right";
-        $desconto = $valorbruto - $valorliquido;
-        if ($desconto > 0)
-            $tpl->LISTA_COLUNA_CLASSE = "tabelalinhavermelha";
-        else
-            $tpl->LISTA_COLUNA_CLASSE = "";
-        $tpl->LISTA_COLUNA_VALOR = "R$ " . number_format($desconto, 2, ',', '.');
-        $tpl->block("BLOCK_LISTA_COLUNA");
+        $tpl->LISTA_COLUNA_CLASSE = "";
+        $tpl->LISTA_COLUNA_VALOR = "R$ " . number_format($valorbruto, 2, ',', '.');
+        $tpl->block("BLOCK_LISTA_COLUNA");        
+        
 
         //Coluna Valor com desconto
         $tpl->LISTA_COLUNA_ALINHAMENTO = "right";
-        $tpl->LISTA_COLUNA_CLASSE = "negrito";
-        $tpl->LISTA_COLUNA_VALOR = "R$ " . number_format($valorliquido, 2, ',', '.');
+        $desconto = $valorbruto - $valorliquido;
+        if ($desconto == 0)
+            $tpl->LISTA_COLUNA_CLASSE = "";
+        else if ($desconto > 0)
+            $tpl->LISTA_COLUNA_CLASSE = "tabelalinhavermelha";
+        else
+            $tpl->LISTA_COLUNA_CLASSE = "tabelalinhaazul";
+        $tpl->LISTA_COLUNA_VALOR = "R$ " . number_format(abs($desconto), 2, ',', '.');
         $tpl->block("BLOCK_LISTA_COLUNA");
+
+        //Metodo de pagamento
+        if ($metodopag == 1) {
+            $tpl->ICONE_ARQUIVO = $icones . "dinheiro3.jpg";
+            $tpl->OPERACAO_NOME = "Dinheiro";
+            $tpl->block("BLOCK_LISTA_COLUNA_ICONE");
+        } else if ($metodopag == 2) {
+            $tpl->ICONE_ARQUIVO = $icones . "credit_card.png";
+            $tpl->OPERACAO_NOME = "Cartão Crédito";
+            $tpl->block("BLOCK_LISTA_COLUNA_ICONE");
+        } else if ($metodopag == 3) {
+            $tpl->OPERACAO_NOME = "Cartão Débito";
+            $tpl->ICONE_ARQUIVO = $icones . "credit_card.png";
+            $tpl->block("BLOCK_LISTA_COLUNA_ICONE");
+        } else {
+            if ($areceber == 1) {
+                $tpl->OPERACAO_NOME = "Caderninho (A Receber)";
+                $tpl->ICONE_ARQUIVO = $icones . "caderninho5.png";
+                $tpl->block("BLOCK_LISTA_COLUNA_ICONE");
+            } else {
+                $tpl->LISTA_COLUNA_ALINHAMENTO = "right";
+                $tpl->LISTA_COLUNA_CLASSE = "";
+                $tpl->LISTA_COLUNA_VALOR = "";
+                $tpl->block("BLOCK_LISTA_COLUNA");
+            }
+        }
+
+
+
+
+
 
         //Situa��o
         if ($status == 2) {
             if ($usuario_codigo == $vendedor) {
-                $tpl->ICONE_ARQUIVO = $icones . "bandeira3_vermelha.png";
+                $tpl->ICONE_ARQUIVO = $icones . "star_empty.png";
                 $tpl->OPERACAO_NOME = "Incompleta";
             } else {
                 $dataatual = date("Y-m-d");
@@ -404,17 +442,17 @@ if ($linhas == 0) {
                 $tempo2 = $dataatual . "_" . $horaatual;
                 $total_segundos = diferenca_entre_datahora($tempo1, $tempo2);
                 if ($total_segundos > 5400) {
-                    $tpl->ICONE_ARQUIVO = $icones . "bandeira3_vermelha.png";
+                    $tpl->ICONE_ARQUIVO = $icones . "star_empty.png";
                     $tpl->OPERACAO_NOME = "Incompleta";
                 } else {
-                    $tpl->ICONE_ARQUIVO = $icones . "bandeira3_laranja.png";
+                    $tpl->ICONE_ARQUIVO = $icones . "star_half_full.png";
                     $tpl->OPERACAO_NOME = "Esta venda está em andamento por outro vendedor!";
                     $editar_ocultar = 1;
                     $editar_ocultar_motivo = "";
                 }
             }
         } else {
-            $tpl->ICONE_ARQUIVO = $icones . "bandeira3_verde.png";
+            $tpl->ICONE_ARQUIVO = $icones . "star_full.png";
             $tpl->OPERACAO_NOME = "Concluída";
         }
         $tpl->block("BLOCK_LISTA_COLUNA_ICONE");
@@ -458,7 +496,7 @@ if ($linhas == 0) {
             } else if ($linhas23 > 0) {
                 $tpl->OPERACAO_NOME = "Você não pode editar esta saída porque algum produto desta venda já foi fechado/acertado!";
                 $tpl->ICONE_ARQUIVO = $icones . "editar_desabilitado.png";
-                $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_DESABILITADO");                
+                $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_DESABILITADO");
             } else {
                 //Se for um vendedor deve permitir a edição de apenas a ultima venda realizada por ele sob algumas condições
                 if ($usuario_grupo == 4) {
@@ -518,7 +556,7 @@ if ($linhas == 0) {
 
 if ($tipopagina == "saidas") {
     //Vendas
-    if (($permissao_saidas_cadastrar == 1)&&($usuario_quiosque!=0)) {
+    if (($permissao_saidas_cadastrar == 1) && ($usuario_quiosque != 0)) {
         if ($usuario_grupo == 4) {
             //Verifica se há vendas incompletas, se sim então impedir de fazer novas vendas
             $sql8 = "
@@ -544,7 +582,7 @@ if ($tipopagina == "saidas") {
                 $tpl->DICA_ARQUIVO = $icones . "recado.png";
                 $tpl->block("BLOCK_RODAPE_BOTOES_DICA");
             }
-        } else {            
+        } else {
             $tpl->CADASTRAR_NOME = "REALIZAR VENDA";
             $tpl->LINK_CADASTRO = "saidas_cadastrar.php?tiposaida=1";
             $tpl->block("BLOCK_RODAPE_BOTOES");

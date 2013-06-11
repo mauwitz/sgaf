@@ -186,7 +186,11 @@ ALTER TABLE  `produtos` CHANGE  `pro_marca`  `pro_marca` VARCHAR( 70 ) CHARACTER
 
 Novo campo no banco 'qui_disponivelnobusca'
 
+nova entidade 'metodos_pagamento'
 
+ALTER TABLE  `saidas` ADD  `sai_areceber` BOOLEAN NOT NULL ,
+ADD  `sai_metpag` TINYINT NOT NULL ,
+ADD INDEX (  `sai_metpag` )
 
 
 # -----------------------------------------------------

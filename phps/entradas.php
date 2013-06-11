@@ -144,7 +144,7 @@ $sql = "
         //Pagina��o
         $query = mysql_query($sql);
         if (!$query)
-            die("Erro SQL Principal Pagina��o:" . mysql_error());
+            die("Erro SQL Principal Paginação:" . mysql_error());
         $linhas = mysql_num_rows($query);
         $por_pagina = $usuario_paginacao;
         $paginaatual = $_POST["paginaatual"];
@@ -322,7 +322,7 @@ $sql = "
                         <?php
                         if ($status == 2) {
                             if ($usuario_codigo == $supervisor) {
-                                $imagem = "bandeira3_vermelha.png";
+                                $imagem = "star_empty.png";
                                 $titulo = "Incompleta";
                             } else {
                                 $dataatual = date("Y-m-d");
@@ -331,17 +331,17 @@ $sql = "
                                 $tempo2 = $dataatual . "_" . $horaatual;
                                 $total_segundos = diferenca_entre_datahora($tempo1, $tempo2);
                                 if ($total_segundos > 5400) {
-                                    $imagem = "bandeira3_vermelha.png";
+                                    $imagem = "star_empty.png";
                                     $titulo = "Incompleta";                                    
                                 } else {
-                                    $imagem = "bandeira3_laranja.png";
+                                    $imagem = "star_half_full.png";
                                     $titulo = "Esta entrada está em andamento por outro usuário! Este usuário tem 01:30 (uma hora e meia) para finalizá-la caso contrário ela passará a ser 'Incompleta' e você poderá finalizá-la!";
                                     $editar_ocultar = 1;
                                     $editar_ocultar_motivo = "Esta entrada está em andamento por outro usuário! Este usuário tem 01:30 (uma hora e meia) para finalizá-la caso contrário ela passará a ser 'Incompleta' e você poderá finalizá-la!";
                                 }
                             }
                         } else {
-                            $imagem = "bandeira3_verde.png";
+                            $imagem = "star_full.png";
                             $titulo = "Completo";
                         }
                         ?>    

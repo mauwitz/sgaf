@@ -66,7 +66,8 @@ $validade2 = $_POST['validade2'];
 if (($validade2 != "") && ($validade == "")) {
     $validade = $validade2;
 }
-//echo "validade: $validade validade2: $validade2--";
+//echo "validade: $validade validade2: $valid
+//ade2--";
 
 
 
@@ -573,7 +574,7 @@ if ($passo != "") {
                 $numero = $dados['entpro_numero'];
                 $tpl->IMPRIMIR_LINK = "entradas_etiquetas.php?lote=$entrada&numero=$numero";
                 $tpl->IMPRIMIR = $icones . "etiquetas.png";
-                $tpl->ENTRADAS_VALIDADE=  converte_data($dados[5]);
+                $tpl->ENTRADAS_VALIDADE= converte_data($dados[5]);
                 $tpl->block("BLOCK_LISTA_OPERACAO_EXCLUIR");
                 $tpl->block("BLOCK_LISTA_OPERACAO_ETIQUETAS");
                 $tpl->block("BLOCK_LISTA_OPERACAO");

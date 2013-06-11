@@ -147,7 +147,7 @@ if ($linhas != "") {
             if ($saldo == 0)
                 $tpl->VALIDADE = "hoje";
             else if ($saldo == 1)
-                $tpl->VALIDADE = "amanh�";
+                $tpl->VALIDADE = "amanhã";
             else
                 $tpl->VALIDADE = $saldo;
         }

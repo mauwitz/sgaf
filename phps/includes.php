@@ -35,7 +35,7 @@ $raiz = $_SERVER["DOCUMENT_ROOT"] ."/".$pastasistema;
             <?php
             include "controle/conexao.php";
             //include "controle/conexao_tipo.php";
-            include "funcoes.php";
+            require_once "funcoes.php";
             //include "conexao_tipo.php";
             include "cabecalho.php";
             include "menu.php";

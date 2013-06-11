@@ -24,15 +24,14 @@
 .campopadrao:disabled {
     background-color: white;;
     border: 0px solid;
-    height:20px;
-    width:160px;    
+    height:20px;    
     color: black;
     border-bottom: 1px gray solid;    
 
     
 }
 .campopadrao:required {    
-    
+    border: 1px solid #060;
 }
 .campopadrao:focus {    
     

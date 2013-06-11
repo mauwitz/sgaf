@@ -18,6 +18,8 @@ $total = $_REQUEST["total2"];
 $dinheiro = $_REQUEST["dinheiro2"];
 $troco = $_REQUEST["troco2"];
 $troco_devolvido = $_REQUEST["troco_devolvido"];
+$metodopag = $_REQUEST["metodopag2"];
+$areceber = $_REQUEST["areceber2"];
 
 //print_r($_REQUEST);
 
@@ -93,7 +95,9 @@ SET
     sai_descontoforcado='$forcadodesc',
     sai_acrescimoforcado='$forcadoacre',
     sai_totalliquido='$totalliq',
-    sai_status=1
+    sai_status=1,
+    sai_areceber=$areceber,
+    sai_metpag='$metodopag'
 WHERE
     sai_codigo=$saida
 ";

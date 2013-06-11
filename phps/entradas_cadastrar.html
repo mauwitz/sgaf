@@ -37,7 +37,8 @@ function mascara_percent() {
         $("input[name=qtd]").val("");
         $("input[name=qtd]").disabled = true;
         $("input[name=validade]").val("");
-        $("input[name=local]").val("");
+        $("input[name=validade]").disabled = true;
+        $("input[name=local]").val("");        
         $("span[name=tipocontagem]").html("");
         $("span[name=qtdtipcon]").html("");
 
@@ -50,6 +51,7 @@ function mascara_percent() {
             if (valor == "naoestanalista") {
                 document.forms["form1"].valuni.disabled = false;
                 document.forms["form1"].valunicusto.disabled = false;
+                document.forms["form1"].validade.disabled = false;
                 desabilita_campos();
                 //alert('n�o esta na lista');
                 $.post("entradas_valorunitario.php", {
@@ -73,7 +75,8 @@ function mascara_percent() {
                 var quebra = valor.split("|");
                 var valuni = quebra[0];
                 var validade = quebra[1];
-                if (validade == '0000-00-0000') {
+                //alert(validade);
+                if (validade == '0000-00-00') {
                     validade = "";
                 }
                 var valunicusto = quebra[2];
@@ -319,7 +322,7 @@ function mascara_percent() {
         <tr>
             <td align="right"><b>Validade: <label class="obrigatorio"></label></b></td>
             <td>
-                <input type="date" size="" maxlength="" max="{VALIDADE_MAX}" min="{VALIDADE_MIN}" name="validade" id="" class="campopadrao"  onclick="" onblur="calcula_saldovalidade(this.value);">
+                <input type="date" size="" maxlength="" max="{VALIDADE_MAX}" min="{VALIDADE_MIN}" name="validade" id="" class="campopadrao"  onclick="" onblur="calcula_saldovalidade(this.value);" disabled="true">
                 <span name="saldovalidade" id="saldovalidade" class="dicacampo" ></span>
             </td>
         </tr>

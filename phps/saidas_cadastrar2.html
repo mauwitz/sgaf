@@ -28,7 +28,7 @@ $(document).ready(function() {
             <td align="left" width="" class="fundo1">                
                 <input type="text" name="descper" id="descper" size="4" class="campopadrao" value="{DESCPER_VALOR}" onkeyup="desconto(this)" onfocus="desconto(this)" onclick="this.select()" onkeypress="" autocomplete="off" {DESCPER_DESABILITADO}>%
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="text" name="descval" id="descval" size="15" placeholder="R$ " class="campopadrao" value="{DESCVAL_VALOR}"  onkeyup="desconto2(this)"  onclick="this.select()" onfocus="" {DESCVAL_DESABILITADO}>
+                <input type="text" name="descval" id="descval" size="15" placeholder="" class="campopadrao" value="{DESCVAL_VALOR}"  onkeyup="desconto2(this)"  onclick="this.select()" onfocus="" {DESCVAL_DESABILITADO}>
             </td>             
         </tr>
         <tr class="">  
@@ -45,8 +45,9 @@ $(document).ready(function() {
             </td>            
             <td align="left" width="" class="fundo1">                
                 <select name="areceber" id="areceber" required class="campopadrao" onchange="valorareceber(this.value);"  {AREC_DESABILITADO}>
-                    <option value="1" selected="true">Não</option>
-                    <option value="0">Sim</option>
+                    <!-- BEGIN BLOCK_AREC_OPTION -->
+                    <option value="{AREC_OPTION_VALOR}" {AREC_OPTION_SELECIONADO}>{AREC_OPTION_TEXTO}</option>
+                    <!-- END BLOCK_AREC_OPTION -->
                 </select>                
             </td>  
         </tr>       
@@ -56,9 +57,9 @@ $(document).ready(function() {
             </td>            
             <td align="left" width="" class="fundo1">                
                 <select name="metodopag" id="metodopag" required class="campopadrao" onchange="metodopagamento(this.value);"  {METPAG_DESABILITADO}>
-                    <option value="1">Dinheiro</option>
-                    <option value="2">Cartão de Crédito</option>
-                    <option value="3">Cartão de Débito</option>
+                    <!-- BEGIN BLOCK_METPAG_OPTION -->
+                    <option value="{METPAG_OPTION_VALOR}" {METPAG_OPTION_SELECIONADO}>{METPAG_OPTION_TEXTO}</option>
+                    <!-- END BLOCK_METPAG_OPTION -->
                 </select>                
             </td>  
         </tr>       
@@ -85,7 +86,7 @@ $(document).ready(function() {
                 <b>Troco Devolvido:</b>                            
             </td>            
             <td align="left" width="">                
-                <input type="text" name="troco_devolvido" id="troco_devolvido" size="15" class="campopadrao" value="{TROCO_DEVOLVIDO_VALOR}" onkeyup="mascara_troco_devolvido()  "  onkeypress="" placeholder="R$" oninput="this.select()" autofocus="autofocus" {TROCO_DEVOLVIDO_DESABILIDADO}>                                                                 
+                <input type="text" name="troco_devolvido" id="troco_devolvido" size="15" class="campopadrao" value="{TROCO_DEVOLVIDO_VALOR}" onkeyup="mascara_troco_devolvido()  "  onkeypress="" placeholder="" onfocus="this.select();" autofocus="autofocus" {TROCO_DEVOLVIDO_DESABILIDADO}>                                                                 
             </td>  
         </tr>       
         <!-- END BLOCK_PASSO2 -->
@@ -101,8 +102,10 @@ $(document).ready(function() {
                 <input type="hidden" name="descval2" value="{DESCVAL_VALOR}">
                 <input type="hidden" name="dinheiro2" value="{DINHEIRO_VALOR}">
                 <input type="hidden" name="troco2" value="{TROCO_VALOR}">
-                <input type="hidden" name="troco_devolvido2" value="{TROCO_DEVOLVIDO_VALOR}">
+                <input type="hidden" name="troco_devolvido2" value="">
                 <input type="hidden" name="valbru2" value="{VALBRU_VALOR}">
+                <input type="hidden" name="metodopag2" value="{METPAG_VALOR}">
+                <input type="hidden" name="areceber2" value="{AREC_VALOR}">
                 <!-- END BLOCK_OCULTOS2 -->
                 
                 <input type="submit" value="CONTINUAR" class="botao fonte3">
