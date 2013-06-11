@@ -203,5 +203,8 @@ ADD  sai_metpag TINYINT NOT NULL ,
 ADD INDEX (  sai_metpag );
 
 
+
+
+
 # -----------------------------------------------------
 # Versão 1.3
