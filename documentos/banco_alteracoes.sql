@@ -182,15 +182,25 @@ INSERT INTO produtos_recipientes (prorec_codigo, prorec_nome, prorec_sigla) VALU
 ALTER TABLE  produtos ADD  pro_codigounico BIGINT( 12 ) NULL
 ALTER TABLE  produtos CHANGE  pro_codigounico  pro_codigounico BIGINT( 13 ) NULL DEFAULT NULL
 
-ALTER TABLE  `produtos` CHANGE  `pro_marca`  `pro_marca` VARCHAR( 70 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+ALTER TABLE  produtos CHANGE  pro_marca  pro_marca VARCHAR( 70 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 
 Novo campo no banco 'qui_disponivelnobusca'
 
-nova entidade 'metodos_pagamento'
+CREATE TABLE IF NOT EXISTS metodos_pagamento (
+  metpag_codigo tinyint(4) NOT NULL AUTO_INCREMENT,
+  metpag_nome varchar(45) NOT NULL,
+  PRIMARY KEY (metpag_codigo)
+);
+INSERT INTO metodos_pagamento (metpag_codigo, metpag_nome) VALUES
+(1, 'Dinheiro'),
+(2, 'Cartão Crédito'),
+(3, 'Cartão Débito'),
+(4, 'Cheque'),
+(5, 'Outro');
 
-ALTER TABLE  `saidas` ADD  `sai_areceber` BOOLEAN NOT NULL ,
-ADD  `sai_metpag` TINYINT NOT NULL ,
-ADD INDEX (  `sai_metpag` )
+ALTER TABLE  saidas ADD  sai_areceber BOOLEAN NOT NULL ,
+ADD  sai_metpag TINYINT NOT NULL ,
+ADD INDEX (  sai_metpag );
 
 
 # -----------------------------------------------------

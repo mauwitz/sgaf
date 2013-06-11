@@ -13,25 +13,45 @@ include "includes.php";
 
 $saida = $_POST["saida"];
 $passo = $_POST["passo"];
-$descper = $_POST["descper"];
-$descval = $_POST["descval"];
-$total = $_POST["total2"];
-$total2 = dinheiro_para_numero($total);
-$dinheiro = $_POST["dinheiro"];
-$dinheiro2 = dinheiro_para_numero($dinheiro);
-$troco = $dinheiro2 - $total2;
-$troco = number_format($troco, 2, ',', '.');
+$descper = number_format($_POST["descper"],2,'.','');
+$descval = number_format(dinheiro_para_numero($_POST["descval"]),2,'.','');
+$total = dinheiro_para_numero($_POST["total2"]);
+$total = number_format($total,2,'.','');
+
+$dinheiro = number_format(dinheiro_para_numero($_POST["dinheiro"]),2,'.','');
+$troco = number_format($dinheiro - $total,2,'.','');
 $areceber = $_REQUEST["areceber"];
 $metodopag = $_REQUEST["metodopag"];
 
 //print_r($_REQUEST);
 
-if (($dinheiro2 <= $total2) && ($passo == 2)) {
+
+//Valor bruto
+$sql = "SELECT * FROM saidas JOIN saidas_produtos ON (saipro_saida=sai_codigo) WHERE sai_codigo=$saida";
+$query = mysql_query($sql);
+if (!$query) {
+    die("Erro de SQL: " . mysql_error());
+}
+$valbru = 0;
+while ($dados = mysql_fetch_assoc($query)) {
+    $total_item = $dados["saipro_valortotal"];
+    $valbru = $valbru + $total_item;
+}
+/*
+echo "<br>valbru=$valbru<br>";
+echo "descper=$descper<br>";
+echo "descval=$descval<br>";
+echo "total=$total<br>";
+echo "dinheiro=$dinheiro<br>";
+echo "troco=$troco<br>";
+*/
+
+if (($dinheiro <= $total) && ($passo == 2)) {
 
     echo "
         <script language='javaScript'>
-            window.location.href='saidas_cadastrar3.php?troco_devolvido=0&passo=2&saida=$saida&total2=$total2&descper2=$descper&descval2=$descval&dinheiro2=$dinheiro2&troco2=$troco&troco_devolvido2=$troco_devolvido&valbru2=$total&areceber2=$areceber&metodopag2=$metodopag'
-        </script>";    
+            window.location.href='saidas_cadastrar3.php?troco_devolvido=0&passo=2&saida=$saida&total2=$total&descper2=$descper&descval2=$descval&dinheiro2=$dinheiro&troco2=$troco&troco_devolvido=$troco_devolvido&valbru2=$valbru&areceber2=$areceber&metodopag2=$metodopag'
+        </script>";   
 }
 
 
@@ -46,18 +66,9 @@ $tpl_titulo->show();
 //Inicio do Template Principal
 $tpl = new Template("saidas_cadastrar2.html");
 
-//Valor bruto
-$sql = "SELECT * FROM saidas JOIN saidas_produtos ON (saipro_saida=sai_codigo) WHERE sai_codigo=$saida";
-$query = mysql_query($sql);
-if (!$query) {
-    die("Erro de SQL: " . mysql_error());
-}
-$valbru = 0;
-while ($dados = mysql_fetch_assoc($query)) {
-    $total_item = $dados["saipro_valortotal"];
-    $valbru = $valbru + $total_item;
-}
+
 $tpl->VALBRU_VALOR = "R$ " . number_format($valbru, 2, ',', '.');
+$tpl->VALBRU2_VALOR = $valbru;
 
 
 //A receber
@@ -98,9 +109,12 @@ switch ($passo) {
     case '1':
         $tpl->LINK = "saidas_cadastrar2.php";
         $tpl->DESCPER_VALOR = "0,00";
+        $tpl->DESCPER2_VALOR = "0";
         $tpl->DESCVAL_VALOR = "R$ 0,00";
+        $tpl->DESCVAL2_VALOR = "0";
         $tpl->TOTAL_VALOR = "R$ " . number_format($valbru, 2, ',', '.');
-        //$tpl->DINHEIRO_VALOR = "R$ " . number_format($valbru, 2, ',', '.');
+        $tpl->TOTAL2_VALOR = number_format($valbru, 2, '.', '');
+        
         $tpl->DINHEIRO_VALOR = "";
         $passo = 2;
         break;
@@ -110,25 +124,27 @@ switch ($passo) {
         $tpl->block("BLOCK_OCULTOS2");
 
 
-        $tpl->DESCPER_VALOR = $descper;
+        $tpl->DESCPER_VALOR = number_format($descper,2,',','');
+        $tpl->DESCPER2_VALOR = $descper;
         $tpl->DESCPER_DESABILITADO = "disabled";
-        $tpl->DESCVAL_VALOR = $descval;
+        $tpl->DESCVAL_VALOR = "R$ ".number_format($descval,2,',','.');
+        $tpl->DESCVAL2_VALOR = $descval;
         $tpl->DESCVAL_DESABILITADO = "disabled";
-        $tpl->TOTAL_VALOR = "R$ " . number_format($total2, 2, ',', '.');
-        $tpl->DINHEIRO_VALOR = "R$ " . number_format($dinheiro2, 2, ',', '.');
+        $tpl->TOTAL_VALOR = "R$ " . number_format($total, 2, ',', '.');
+        $tpl->TOTAL2_VALOR = $total;
+        $tpl->DINHEIRO_VALOR = "R$ " . number_format($dinheiro, 2, ',', '.');
+        $tpl->DINHEIRO2_VALOR = $dinheiro;
         $tpl->DINHEIRO_DESABILITADO = "disabled";
 
         $tpl->AREC_DESABILITADO = "disabled";
         $tpl->METPAG_DESABILITADO = "disabled";
-        //echo "DescPer: $descper <br>DescVal=$descval <br>Dinheiro=$dinheiro <br>Total:$total<br>Troco:$troco";
+        
         //Calcula o troco
-        $tpl->TROCO_VALOR = "R$ $troco";
+        $tpl->TROCO_VALOR = "R$ ".  number_format($troco,2,',','.');
+        $tpl->TROCO2_VALOR = $troco;
         $tpl->METPAG_VALOR = "$metodopag";
         $tpl->AREC_VALOR = "$areceber";
 
-        if ($dinheiro <= $total) {
-            //$tpl->block("BLOCK_ENVIAR_FORMULARIO");
-        }
 
 
         break;

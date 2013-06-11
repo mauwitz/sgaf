@@ -389,7 +389,7 @@ if ($linhas == 0) {
 
         //Coluna Valor com desconto
         $tpl->LISTA_COLUNA_ALINHAMENTO = "right";
-        $desconto = $valorbruto - $valorliquido;
+        $desconto = $valorbruto - $desc;
         if ($desconto == 0)
             $tpl->LISTA_COLUNA_CLASSE = "";
         else if ($desconto > 0)
@@ -405,7 +405,7 @@ if ($linhas == 0) {
             $tpl->OPERACAO_NOME = "Dinheiro";
             $tpl->block("BLOCK_LISTA_COLUNA_ICONE");
         } else if ($metodopag == 2) {
-            $tpl->ICONE_ARQUIVO = $icones . "credit_card.png";
+            $tpl->ICONE_ARQUIVO = $icones . "credit_card2.png";
             $tpl->OPERACAO_NOME = "Cartão Crédito";
             $tpl->block("BLOCK_LISTA_COLUNA_ICONE");
         } else if ($metodopag == 3) {
@@ -430,7 +430,7 @@ if ($linhas == 0) {
 
 
 
-        //Situa��o
+        //Situação
         if ($status == 2) {
             if ($usuario_codigo == $vendedor) {
                 $tpl->ICONE_ARQUIVO = $icones . "star_empty.png";
@@ -457,7 +457,7 @@ if ($linhas == 0) {
         }
         $tpl->block("BLOCK_LISTA_COLUNA_ICONE");
 
-        //Coluna Opera�ões    
+        //Coluna Operações    
         $tpl->CODIGO = $numero;
 
         if ($permissao_saidas_ver == 1) {

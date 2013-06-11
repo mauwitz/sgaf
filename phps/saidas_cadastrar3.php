@@ -15,30 +15,27 @@ $valbru = $_REQUEST["valbru2"];
 $descper = $_REQUEST["descper2"];
 $descval = $_REQUEST["descval2"];
 $total = $_REQUEST["total2"];
-$dinheiro = $_REQUEST["dinheiro2"];
-$troco = $_REQUEST["troco2"];
-$troco_devolvido = $_REQUEST["troco_devolvido"];
 $metodopag = $_REQUEST["metodopag2"];
 $areceber = $_REQUEST["areceber2"];
+$dinheiro = $_REQUEST["dinheiro2"];
+if ($areceber==1)
+    $troco = 0;
+else
+    $troco = $_REQUEST["troco2"];
+$troco_devolvido = number_format(dinheiro_para_numero($_REQUEST["troco_devolvido"]),2,'.','');
 
 //print_r($_REQUEST);
 
 
-//Elimina os cifões de dinheiro e troca as , por .
-$valbru = dinheiro_para_numero($valbru);
-$descper = dinheiro_para_numero($descper);
-$descval = dinheiro_para_numero($descval);
-$total = dinheiro_para_numero($total);
-$dinheiro = dinheiro_para_numero($dinheiro);
-$troco = dinheiro_para_numero($troco);
-$troco_devolvido = dinheiro_para_numero($troco_devolvido);
-
-
 
 //Calcula o valor do desconto ou acr�scimo for�ado
-if ($troco_devolvido<0) {
+if ($troco_devolvido=="")
     $troco_devolvido=0;
-}
+if ($troco=="")
+    $troco=0;
+if ($total=="")
+    $total=0;
+
 $forcado=$troco-$troco_devolvido;
 if ($forcado>0) {
     $forcadodesc=0;
@@ -48,7 +45,24 @@ if ($forcado>0) {
     $forcadoacre=0;
 }
 //Calcula o valor liquido total da Sa�da
-$totalliq=$total+$forcadoacre-$forcadodesc;
+$totalliq=$total+$forcado;
+
+
+/*
+echo "<br>valbru=$valbru<br>";
+echo "descper=$descper<br>";
+echo "descval=$descval<br>";
+echo "total=$total<br>";
+echo "dinheiro=$dinheiro<br>";
+echo "troco=$troco<br>";
+
+echo "trocodevolvido=$troco_devolvido<br>";
+echo "forcado=$forcado<br>";
+echo "totalliq=$totalliq<br>";
+*/
+
+
+
 
 
 //Template de Título e Sub-título

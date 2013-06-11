@@ -27,10 +27,12 @@ function converte_hora($hora) {
 }
 
 function dinheiro_para_numero($dinheiro) {
-    $dinheiro = explode(" ", $dinheiro);
-    $dinheiro = $dinheiro[1];
-    $dinheiro = str_replace('.', '', $dinheiro);
-    $dinheiro = str_replace(',', '.', $dinheiro);
+    $dinheiro2 = explode(" ", $dinheiro);
+    if ($dinheiro2[1] != "") {
+        $dinheiro = $dinheiro2[1];
+        $dinheiro = str_replace('.', '', $dinheiro);
+        $dinheiro = str_replace(',', '.', $dinheiro);
+    }
     return $dinheiro;
 }
 
@@ -69,7 +71,7 @@ function diferenca_data($d1, $d2, $type = '', $sep = '-') {
 
 //Formado da data deve ser ..
 function diferenca_entre_datahora($tempo1, $tempo2) {
-    
+
     $t1 = explode("_", $tempo1);
     $t1_data = $t1[0];
     $t1_data = explode("-", $t1_data);
@@ -110,6 +112,7 @@ function limpa_cpf($valor) {
     $valor = str_replace('-', '', $valor);
     return $valor;
 }
+
 function limpa_cnpj($valor) {
     $valor = str_replace('.', '', $valor);
     $valor = str_replace('-', '', $valor);
