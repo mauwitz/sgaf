@@ -401,7 +401,7 @@ if ($linhas == 0) {
 
         //Metodo de pagamento
         if ($metodopag == 1) {
-            $tpl->ICONE_ARQUIVO = $icones . "dinheiro3.jpg";
+            $tpl->ICONE_ARQUIVO = $icones . "dinheiro2.png";
             $tpl->OPERACAO_NOME = "Dinheiro";
             $tpl->block("BLOCK_LISTA_COLUNA_ICONE");
         } else if ($metodopag == 2) {
