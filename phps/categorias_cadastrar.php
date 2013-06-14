@@ -36,7 +36,7 @@ while($array = mysql_fetch_array($query))
 <table summary="" border="0" class="tabela1" cellpadding="4">
 <tr>
 	<td align="right" width="200px"><b>Nome: <label class="obrigatorio">*</label></b></td>
-	<td align="left" width=""><input onkeypress="capitalize()"  id="capitalizar" type="text" name="nome" autofocus size="30" class="campo1" required value="<?php echo "$nome"; ?>" <?php if ($ver==1) echo" disabled ";?> ></td>
+	<td align="left" width=""><input onkeypress="capitalize()"  id="capitalizar" type="text" name="nome" autofocus size="30" class="campopadrao" required value="<?php echo "$nome"; ?>" <?php if ($ver==1) echo" disabled ";?> ></td>
 </tr>
 </tr>
 <tr>

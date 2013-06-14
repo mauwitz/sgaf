@@ -12,6 +12,7 @@ $raiz = $_SERVER["DOCUMENT_ROOT"] ."/".$pastasistema;
          
         <link rel="stylesheet" type="text/css" href="classes.css" />
         <link rel="stylesheet" type="text/css" href="templates/geral.css">
+        <link rel="stylesheet" href="CSS_checkbox_full/style.css"/>
         <script language="JavaScript" src="js/shortcut.js"></script>
         <script language="JavaScript" src="atalhos_teclado.js"></script>
         <script language="JavaScript" src="funcoes.js"></script>        

@@ -27,7 +27,7 @@ $filtroobs=$_POST['filtroobs'];
 <form action="categorias.php" name="form1" method="post">
 <table summary="" class="tabelafiltro" border="0">
 <tr>
-	<td width="245px"><b>&nbsp;Nome:</b><br><input size="25" type="text" name="filtronome" class="campofiltro" value="<?php echo "$filtronome";?>"></td>
+	<td width="245px"><b>&nbsp;Nome:</b><br><input size="25" type="text" name="filtronome" class="campopadrao" value="<?php echo "$filtronome";?>"></td>
 </tr>
 </table>
 <br>
@@ -132,9 +132,9 @@ if ($linhas=="0")
         <input onclick="paginacao_retroceder()" type="image" width="25px"   src="<?php echo $icones; ?>esquerda.png"  title="Anterior" alt="Anterior" />
     </td>
     <td width="170px">
-        <input size="5" type="text" name="paginaatual" class="campofiltro" value="<?php echo $paginaatual; ?>">
+        <input size="5" type="text" name="paginaatual" class="campopadrao" value="<?php echo $paginaatual; ?>">
         <span>/</span>
-        <input disabled size="5" type="text" name="paginas" class="campofiltro" value="<?php echo $paginas; ?>">
+        <input disabled size="5" type="text" name="paginas" class="campopadrao" value="<?php echo $paginas; ?>">
     </td>
     <td align="left">
         <input onclick="paginacao_avancar()"  type="image" width="25px"   src="<?php echo $icones; ?>direita.png"  title="Pr�xima" alt="Pr�xima" />

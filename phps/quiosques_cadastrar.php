@@ -144,7 +144,7 @@ $tpl1->SELECT_TAMANHO = "";
 $tpl1->SELECT_ONCHANGE = "popula_cidades();";
 $tpl1->block("BLOCK_SELECT_ONCHANGE");
 $tpl1->block("BLOCK_SELECT_OBRIGATORIO");
-$tpl1->block("BLOCK_SELECT_OPTION_PADRAO");
+$tpl1->block("BLOCK_SELECT_OPTION_PADRAO2");
 //Se a opera��o for editar ent�o mostrar os options, e o option em quest�o selecionado
 if ($codigo != "") {
     $sql = "SELECT * FROM estados WHERE est_pais=$pais ORDER BY est_nome";

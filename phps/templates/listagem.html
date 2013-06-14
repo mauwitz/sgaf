@@ -8,14 +8,14 @@
             
             <!-- BEGIN BLOCK_FILTRO_CAMPO -->
             <td><b>&nbsp;{CAMPO_TITULO}:</b><br>
-                <input size="{CAMPO_TAMANHO}" type="text" name="{CAMPO_NOME}" class="campofiltro" value="{CAMPO_VALOR}" maxlength="{CAMPO_QTD_CARACTERES}" onkeyup="{CAMPO_ONKEYUP}">
+                <input size="{CAMPO_TAMANHO}" type="text" name="{CAMPO_NOME}" class="campopadrao" value="{CAMPO_VALOR}" maxlength="{CAMPO_QTD_CARACTERES}" onkeyup="{CAMPO_ONKEYUP}">
             </td>
             <!-- END BLOCK_FILTRO_CAMPO -->
             
                
             <!-- BEGIN BLOCK_FILTRO_SELECT -->
             <td><b>&nbsp;{SELECT_TITULO}:</b><br>
-                <select name="{SELECT_NOME}" class="campofiltro" {SELECT_OBRIGATORIO}>
+                <select name="{SELECT_NOME}" class="campopadrao" {SELECT_OBRIGATORIO}>
                         <option value="">Todos</option> 
                     <!-- BEGIN BLOCK_FILTRO_SELECT_OPTION -->
                     <option value="{SELECT_OPTION_CODIGO}" {SELECT_OPTION_SELECIONADO} >{SELECT_OPTION_NOME}</option>
@@ -134,9 +134,9 @@
             <input onclick="paginacao_retroceder()" type="image" width="25px"   src="{PASTA_ICONES}esquerda.png"  title="Anterior" alt="Anterior" />
         </td>
         <td width="170px">
-            <input size="5" type="text" name="paginaatual" class="campofiltro" value="{PAGINAATUAL}">
+            <input size="5" type="text" name="paginaatual" class="campopadrao" value="{PAGINAATUAL}">
             <span>/</span>
-            <input disabled size="5" type="text" name="paginas" class="campofiltro" value="{PAGINAS}">
+            <input disabled size="5" type="text" name="paginas" class="campopadrao" value="{PAGINAS}">
         </td>
         <td align="left">
             <input onclick="paginacao_avancar()"  type="image" width="25px"   src="{PASTA_ICONES}direita.png"  title="Pr�xima" alt="Pr�xima" />

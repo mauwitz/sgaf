@@ -387,9 +387,9 @@ if ($linhas == 0) {
         $tpl->block("BLOCK_LISTA_COLUNA");        
         
 
-        //Coluna Valor com desconto
+        //Desconto
         $tpl->LISTA_COLUNA_ALINHAMENTO = "right";
-        $desconto = $valorbruto - $desc;
+        $desconto = $valorbruto - $valorliquido;
         if ($desconto == 0)
             $tpl->LISTA_COLUNA_CLASSE = "";
         else if ($desconto > 0)

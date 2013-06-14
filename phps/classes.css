@@ -178,7 +178,7 @@
 
 }
 
-.campo1
+.campopadrao
 {
     height: 18px;
     border-collapse:collapse; 
@@ -187,17 +187,17 @@
     border: 1px gray solid;
     color: black;
 }
-.campo1:disabled
+.campopadrao:disabled
 {
     background-color: transparent;
     border: 1px transparent solid;
     color: black;
     border-bottom: 1px gray solid; 
 }
-.campo1:required {    
+.campopadrao:required {    
     border: 1px darkolivegreen solid;    
 }
-.campo1:focus {    
+.campopadrao:focus {    
     
     border: 1px orange solid;    
 }
@@ -224,12 +224,9 @@
 .campo5:focus {    
     border: 2px darkolivegreen solid;    
 }
-.campoobrigatorio
-{    
-    background-color: #E0EEE0; 
-}
 
-.campofiltro
+
+.campopadrao
 {
     height: 18px;
     border-collapse:collapse; 
@@ -237,17 +234,17 @@
     font-size: 10pt;
     border: 1px gray solid;
 }
-.campofiltro:disabled
+.campopadrao:disabled
 {
     background-color: #E5E5E5;
     border: 1px white solid;
     color: gray;
     border: 1px #DCDCDC solid;
 }
-.campofiltro:required {    
+.campopadrao:required {    
     border: 1px darkolivegreen solid;    
 }
-.campofiltro:focus {    
+.campopadrao:focus {    
     
     border: 1px orange solid;    
 }
@@ -338,7 +335,7 @@
 }
 .fundo1
 {
-    background-color: #E4E4E4;
+    background-color: transparent;
 }
 .correto
 {

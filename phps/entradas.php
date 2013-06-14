@@ -40,12 +40,12 @@ include "includes.php";
     <form action="entradas.php" method="post" name="formfiltro">
         <table summary="" class="tabelafiltro" border="0">
             <tr>
-                <td><b>&nbsp;Nº:</b><br><input size="10" type="text" onkeyup="valida_filtro_entradas_numero()" name="filtronumero" class="campofiltro" value="<?php echo "$filtronumero"; ?>"></td>
+                <td><b>&nbsp;Nº:</b><br><input size="10" type="text" onkeyup="valida_filtro_entradas_numero()" name="filtronumero" class="campopadrao" value="<?php echo "$filtronumero"; ?>"></td>
                 <td width="15px"></td>
 
                 <?php if ($usuario_grupo != 5) { ?>                    
                     <td><b>&nbsp;Fornecedor:</b><br>
-                        <select name="filtrofornecedor" class="campofiltro">
+                        <select name="filtrofornecedor" class="campopadrao">
                             <option value="">Todos</option> 
                             <?php
                             $sql2 = "SELECT DISTINCT pes_codigo,pes_nome FROM mestre_pessoas_tipo join pessoas on (pes_codigo=mespestip_pessoa) join entradas on (ent_fornecedor=pes_codigo)
@@ -61,7 +61,7 @@ include "includes.php";
                     </td>
                     <td width="15px"></td>
                     <td ><b>&nbsp;Supervisor:</b><br>
-                        <select name="filtrosupervisor" class="campofiltro" >
+                        <select name="filtrosupervisor" class="campopadrao" >
                             <option value="">Todos</option> 
                             <?php
                             $sql3 = "SELECT DISTINCT pes_codigo,pes_nome
@@ -79,7 +79,7 @@ include "includes.php";
                     </td>
                     <td width="15px"></td>
                     <td ><b>&nbsp;Produtos:</b><br>
-                        <input size="25" type="text" onkeyup="" name="filtroproduto" class="campofiltro" value="<?php echo "$filtroproduto"; ?>"></td>
+                        <input size="25" type="text" onkeyup="" name="filtroproduto" class="campopadrao" value="<?php echo "$filtroproduto"; ?>"></td>
                     </td>
                     <td width="15px"></td>                
                 <?php } ?>
@@ -390,9 +390,9 @@ $sql = "
                     <input onclick="paginacao_retroceder()" type="image" width="25px"   src="<?php echo $icones; ?>esquerda.png"  title="Anterior" alt="Anterior" />
                 </td>
                 <td width="170px">
-                    <input size="5" type="text" name="paginaatual" class="campofiltro" value="<?php echo "$paginaatual"; ?>">
+                    <input size="5" type="text" name="paginaatual" class="campopadrao" value="<?php echo "$paginaatual"; ?>">
                     <span>/</span>
-                    <input disabled size="5" type="text" name="paginas" class="campofiltro" value="<?php echo "$paginas"; ?>">
+                    <input disabled size="5" type="text" name="paginas" class="campopadrao" value="<?php echo "$paginas"; ?>">
                 </td>
                 <td align="left">
                     <input onclick="paginacao_avancar()"  type="image" width="25px"   src="<?php echo $icones; ?>direita.png"  title="Pr�xima" alt="Pr�xima" />

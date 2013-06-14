@@ -56,7 +56,7 @@
                     type="text" 
                     name="{CAMPO_NOME}" 
                     id="{CAMPO_NOME}"
-                    class="campofiltro" 
+                    class="campopadrao" 
                     value="{CAMPO_VALOR}" 
                     maxlength="{CAMPO_QTD_CARACTERES}" 
                     onkeyup="{CAMPO_ONKEYUP}" 
@@ -74,7 +74,7 @@
                 <select
                     name="{SELECT_NOME}" 
                     size="{SELECT_TAMANHO}" 
-                    class="campofiltro"   
+                    class="campopadrao"   
 
                     <!-- BEGIN BLOCK_SELECT_FOCO -->
                     autofocus
@@ -307,9 +307,9 @@
             <input onclick="paginacao_retroceder()" type="image" width="25px"   src="{PASTA_ICONES}esquerda.png"  title="Anterior" alt="Anterior" />
         </td>
         <td width="170px">
-            <input size="5" type="text" name="paginaatual" class="campofiltro" value="{PAGINAATUAL}">
+            <input size="5" type="text" name="paginaatual" class="campopadrao" value="{PAGINAATUAL}">
             <span>/</span>
-            <input disabled size="5" type="text" name="paginas" class="campofiltro" value="{PAGINAS}">
+            <input disabled size="5" type="text" name="paginas" class="campopadrao" value="{PAGINAS}">
         </td>
         <td align="left">
             <input onclick="paginacao_avancar()"  type="image" width="25px"   src="{PASTA_ICONES}direita.png"  title="Pr�xima" alt="Pr�xima" />

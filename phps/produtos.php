@@ -35,14 +35,14 @@ $filtromarca = $_POST['filtromarca'];
     <table summary="" class="tabelafiltro" border="0">
         <tr>
             <td><b>&nbsp;Código:</b><br>
-                <input size="25" type="number" name="filtrocodigo" class="campofiltro" value="<?php echo "$filtrocodigo"; ?>"></td>
+                <input size="25" type="number" name="filtrocodigo" class="campopadrao" value="<?php echo "$filtrocodigo"; ?>"></td>
             <td width="15px"></td>
-            <td><b>&nbsp;Nome:</b><br><input size="25" type="text" name="filtronome" class="campofiltro" value="<?php echo "$filtronome"; ?>"></td>
+            <td><b>&nbsp;Nome:</b><br><input size="25" type="text" name="filtronome" class="campopadrao" value="<?php echo "$filtronome"; ?>"></td>
             <td width="15px"></td>
-            <td><b>&nbsp;Marca:</b><br><input size="15" type="text" name="filtromarca" class="campofiltro" value="<?php echo "$filtromarca"; ?>"></td>
+            <td><b>&nbsp;Marca:</b><br><input size="15" type="text" name="filtromarca" class="campopadrao" value="<?php echo "$filtromarca"; ?>"></td>
             <td width="15px"></td>
             <td><b>&nbsp;Categoria:</b><br>
-                <select name="filtrocategoria" class="campofiltro" >
+                <select name="filtrocategoria" class="campopadrao" >
                     <option value="" >Todos</option> 
                     <?php
                     $sql_categoria = "SELECT DISTINCT cat_codigo,cat_nome FROM produtos_categorias  join produtos on (pro_categoria=cat_codigo) WHERE cat_cooperativa=$usuario_cooperativa ORDER BY cat_nome";
@@ -249,9 +249,9 @@ ORDER BY pro_nome
                 <input onclick="paginacao_retroceder()" type="image" width="25px"   src="<?php echo $icones; ?>esquerda.png"  title="Anterior" alt="Anterior" />
             </td>
             <td width="170px">
-                <input size="5" type="text" name="paginaatual" class="campofiltro" value="<?php echo $paginaatual; ?>">
+                <input size="5" type="text" name="paginaatual" class="campopadrao" value="<?php echo $paginaatual; ?>">
                 <span>/</span>
-                <input disabled size="5" type="text" name="paginas" class="campofiltro" value="<?php echo $paginas; ?>">
+                <input disabled size="5" type="text" name="paginas" class="campopadrao" value="<?php echo $paginas; ?>">
             </td>
             <td align="left">
                 <input onclick="paginacao_avancar()"  type="image" width="25px"   src="<?php echo $icones; ?>direita.png"  title="Pr�xima" alt="Pr�xima" />

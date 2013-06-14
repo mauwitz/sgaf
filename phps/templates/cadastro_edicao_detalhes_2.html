@@ -70,7 +70,7 @@
                 <!-- END BLOCK_CAMPO_FOCO -->
                 
                 <!-- BEGIN BLOCK_CAMPO_OBRIGATORIO -->
-                class="campopadrao campoobrigatorio " 
+                class="campopadrao  " 
                 required 
                 <!-- END BLOCK_CAMPO_OBRIGATORIO -->                
                 
@@ -87,7 +87,7 @@
                 <!-- END BLOCK_CAMPO_PASSWORD -->                
                 
                 <!-- BEGIN BLOCK_CAMPO_PASSWORD_OBRIGATORIO -->
-                class="campopadrao password campoobrigatorio" 
+                class="campopadrao password " 
                 required 
                 <!-- END BLOCK_CAMPO_PASSWORD_OBRIGATORIO -->                
                 
@@ -120,13 +120,17 @@
                 <!-- END BLOCK_SELECT_NORMAL -->                
              
                 <!-- BEGIN BLOCK_SELECT_OBRIGATORIO -->
-                class="campopadrao campoobrigatorio"
+                class="campopadrao "
                 required 
                 <!-- END BLOCK_SELECT_OBRIGATORIO -->                
                 
                 <!-- BEGIN BLOCK_SELECT_DESABILITADO -->
                 disabled
                 <!-- END BLOCK_SELECT_DESABILITADO -->
+                
+                <!-- BEGIN BLOCK_SELECT_ESTILO -->
+                style="{SELECT_ESTILO}"
+                <!-- END BLOCK_SELECT_ESTILO -->
              >           
                 <!-- BEGIN BLOCK_SELECT_OPTION_PADRAO --> 
                 <option value="">Selecione</option>
@@ -134,6 +138,9 @@
                 <!-- BEGIN BLOCK_SELECT_OPTION_PADRAO2 --> 
                 <option value="">Todos</option>
                 <!-- END BLOCK_SELECT_OPTION_PADRAO2 --> 
+                <!-- BEGIN BLOCK_SELECT_OPTION_PADRAO3 --> 
+                <option value=""></option>
+                <!-- END BLOCK_SELECT_OPTION_PADRAO3 --> 
                 <!-- BEGIN BLOCK_SELECT_OPTION --> 
                 <option 
                     value="{OPTION_VALOR}" 
@@ -200,7 +207,7 @@
             <!-- END BLOCK_COMPLEMENTO -->  
             
             <!-- BEGIN BLOCK_TEXTO -->
-            <span class="">{TEXTO}</span>
+            <span class="" id="{TEXTO_ID}">{TEXTO}</span>
             <!-- END BLOCK_TEXTO -->              
             <!-- END BLOCK_CONTEUDO -->  
         </td>        

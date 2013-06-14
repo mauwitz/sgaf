@@ -829,3 +829,24 @@ function metodopagamento(valor) {
         $("input[name=dinheiro]").val(total);
     }
 }
+
+function quiosque_taxas_popula_taxa (valor) {
+    //alert(valor);
+    $.post("quiosque_taxas_popula_taxa.php", {
+        tiponegociacao: valor,
+        quiosque: $("input[name=quiosque2]").val()
+    }, function(valor2) {
+        //alert(valor2);
+        $("select[name=taxa]").html(valor2);
+    }); 
+    $.post("quiosque_taxas_popula_porcentagemmaxima.php", {
+        tiponegociacao: valor,
+        quiosque: $("input[name=quiosque2]").val(),
+        percent: $("input[name=percent]").val()
+    }, function(valor2) {
+        //alert(valor2);
+        $("span[id=permax]").html(valor2);
+    }); 
+    
+    
+}

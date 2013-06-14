@@ -36,7 +36,7 @@ if ($troco=="")
 if ($total=="")
     $total=0;
 
-$forcado=$troco-$troco_devolvido;
+$forcado=  number_format($troco-$troco_devolvido,2,'.','');
 if ($forcado>0) {
     $forcadodesc=0;
     $forcadoacre=$forcado;
@@ -46,7 +46,6 @@ if ($forcado>0) {
 }
 //Calcula o valor liquido total da Sa�da
 $totalliq=$total+$forcado;
-
 
 /*
 echo "<br>valbru=$valbru<br>";
