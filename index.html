@@ -54,6 +54,7 @@
             <title>SGAF</title>
 
             <link rel="stylesheet" type="text/css" href="phps/classes.css" />
+            <link rel="stylesheet" type="text/css" href="phps/templates/geral.css" />
 
     </head>
     <body>
@@ -100,7 +101,7 @@
                                 <tr height="40px" class="fundo1">
                                     <td align="right" width="100px">TIPO PESSOA:</td>
                                     <td align="left" width="100px">
-                                        <select name="tipo" class="campopadrao" onchange="troca_login(this.value);">
+                                        <select name="tipo" class="campopadrao campo_tamanho_5" onchange="troca_login(this.value);">
                                             <option value="1">Pessoa Física</option>
                                             <option value="2">Pessoa Jurídica</option>
                                         </select> 
@@ -109,13 +110,14 @@
                                 <tr height="40px" class="fundo1">
                                     <td align="right" width="100px">CPF/CNPJ:</td>
                                     <td align="left">
-                                        <input type="text" name="cpf" id="cpf" value="" class="campopadrao " required onKeyPress="return submitenter(this,event)" onblur="valida_cpf(this.value)" onclick="this.select();">
-                                        <input type="text" name="cnpj" id="cnpj" value="" class="campopadrao  some" required onKeyPress="return submitenter(this,event)" onblur="valida_cnpj(this.value)" onclick="this.select();">
+                                        <input type="text" name="cpf" id="cpf" value="" class="campopadrao  campo_tamanho_5" required onKeyPress="return submitenter(this,event)" onblur="valida_cpf(this.value)" onclick="this.select();">
+                                        <input type="text" name="cnpj" id="cnpj" value="" class="campopadrao  campo_tamanho_5
+                                               some" required onKeyPress="return submitenter(this,event)" onblur="valida_cnpj(this.value)" onclick="this.select();">
                                     </td>
                                 </tr>       
                                 <tr height="40px" class="fundo1">
                                     <td align="right" width="100px">SENHA:</td>
-                                    <td align="left"><input type="password" name="senha" value="" class="campopadrao " required onKeyPress="return submitenter(this,event)"></td>
+                                    <td align="left"><input type="password" name="senha" value="" class="campopadrao  campo_tamanho_5" required onKeyPress="return submitenter(this,event)"></td>
                                 </tr>       
                                 <tr height="50px">
                                     <td class="sembordadireita">&nbsp;</td>

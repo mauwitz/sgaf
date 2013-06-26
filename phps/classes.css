@@ -178,29 +178,6 @@
 
 }
 
-.campopadrao
-{
-    height: 18px;
-    border-collapse:collapse; 
-    background-color: white;
-    font-size: 10pt;
-    border: 1px gray solid;
-    color: black;
-}
-.campopadrao:disabled
-{
-    background-color: transparent;
-    border: 1px transparent solid;
-    color: black;
-    border-bottom: 1px gray solid; 
-}
-.campopadrao:required {    
-    border: 1px darkolivegreen solid;    
-}
-.campopadrao:focus {    
-    
-    border: 1px orange solid;    
-}
 
 .campo5
 {
@@ -226,28 +203,7 @@
 }
 
 
-.campopadrao
-{
-    height: 18px;
-    border-collapse:collapse; 
-    background-color: white;
-    font-size: 10pt;
-    border: 1px gray solid;
-}
-.campopadrao:disabled
-{
-    background-color: #E5E5E5;
-    border: 1px white solid;
-    color: gray;
-    border: 1px #DCDCDC solid;
-}
-.campopadrao:required {    
-    border: 1px darkolivegreen solid;    
-}
-.campopadrao:focus {    
-    
-    border: 1px orange solid;    
-}
+
 .textarea1
 {
     height: 80px;
