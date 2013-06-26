@@ -1436,7 +1436,7 @@
                         $tpl->CAMPO_TAMANHO = "";
                         //$tpl->block("BLOCK_CAMPO_MARCADO");
                         //$tpl->block("BLOCK_CAMPO_OBRIGATORIO");
-                        $tpl->block("BLOCK_CAMPO_PADRAO");
+                        //$tpl->block("BLOCK_CAMPO_PADRAO");
                         $tpl->block("BLOCK_CAMPO");
                         $tpl->block("BLOCK_CONTEUDO");
                         $tpl->TEXTO_NOME = "";
@@ -1566,7 +1566,7 @@
                         $tpl->CAMPO_TAMANHO = "";
                         //$tpl->block("BLOCK_CAMPO_MARCADO");
                         $tpl->block("BLOCK_CAMPO_OBRIGATORIO");
-                        $tpl->block("BLOCK_CAMPO_PADRAO");
+                        //$tpl->block("BLOCK_CAMPO_PADRAO");
 
                         $tpl->block("BLOCK_CAMPO");
                         $tpl->block("BLOCK_CONTEUDO");

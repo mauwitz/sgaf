@@ -8,11 +8,9 @@ $raiz = $_SERVER["DOCUMENT_ROOT"] ."/".$pastasistema;
 ?>
 <html>
     <head>
-        <title><?php $titulopagina ?></title>
-         
+        <title><?php $titulopagina ?></title>         
         <link rel="stylesheet" type="text/css" href="classes.css" />
-        <link rel="stylesheet" type="text/css" href="templates/geral.css">
-        <link rel="stylesheet" href="CSS_checkbox_full/style.css"/>
+        <link rel="stylesheet" type="text/css" href="templates/geral.css">        
         <script language="JavaScript" src="js/shortcut.js"></script>
         <script language="JavaScript" src="atalhos_teclado.js"></script>
         <script language="JavaScript" src="funcoes.js"></script>        
