@@ -103,7 +103,7 @@ $tpl_menu->IMAGEM_TITULO = "Negociações";
 $tpl_menu->TITULO = "Negociações";
 if ($permissao_acertos_ver == 1) {
     if ($usuario_quiosque != 0) {
-        $tpl_menu->IMAGEM_ARQUIVO = "acertos2.png";
+        $tpl_menu->IMAGEM_ARQUIVO = "acertos3.png";
         if ($quiosque_consignacao==1)
             $tpl_menu->LINK = "acertos.php";
         else

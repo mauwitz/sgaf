@@ -358,13 +358,16 @@ function mascara_percent() {
             <td width="" align="center">VALOR UNIT. CUSTO</td>          
             <td width="" align="center">VALOR TOT. CUSTO</td> 
             <!-- END BLOCK_CUSTO_CABECALHO -->
-            <!-- BEGIN BLOCK_VENDA_CABECALHO -->
+            <!-- BEGIN BLOCK_VENDA_VALUNI_CABECALHO -->
             <td width="" align="center">VALOR UNIT. VENDA</td>          
-            <!-- END BLOCK_VENDA_CABECALHO -->
-            <td width="" align="center">VALIDADE</td> 
+            <!-- END BLOCK_VENDA_VALUNI_CABECALHO -->
+            <!-- BEGIN BLOCK_VENDA_CABECALHO -->            
+            <td width="" align="center">VALOR TOT. VENDA</td>          
+            <!-- END BLOCK_VENDA_CABECALHO -->            
             <!-- BEGIN BLOCK_LUCRO_CABECALHO -->
             <td width="" align="center">LUCRO TOT. PREVISTO</td> 
             <!-- END BLOCK_LUCRO_CABECALHO -->
+            <td width="" align="center">VALIDADE</td> 
             <!--  BEGIN BLOCK_CABECALHO_OPERACAO -->
             <td width="70px" colspan="{OPER_COLSPAN}">OPER.</td>
             <!--  END BLOCK_CABECALHO_OPERACAO -->
@@ -381,8 +384,11 @@ function mascara_percent() {
             <td align="right">{ENTRADAS_VALORUNI_CUSTO}</td>
             <td align="right">{ENTRADAS_VALOR_TOTAL_CUSTO}</td>
             <!-- END BLOCK_CUSTO -->
+            <!-- BEGIN BLOCK_VENDA_VALUNI -->
+            <td align="right">{ENTRADAS_VALORUNI}</td>    
+            <!-- END BLOCK_VENDA_VALUNI -->
             <!-- BEGIN BLOCK_VENDA -->
-            <td align="right">{ENTRADAS_VALORUNI}</td>                        
+            <td align="right">{ENTRADAS_VENDA_TOTAL}</td>                        
             <!-- END BLOCK_VENDA -->
             <td align="right">{ENTRADAS_VALIDADE}</td>
             <!-- BEGIN BLOCK_LUCRO -->
@@ -424,13 +430,16 @@ function mascara_percent() {
             <td> </td>
             <td align="right">{TOTAL_CUSTO}</td>
             <!-- END BLOCK_CUSTO_RODAPE -->
+            <!-- BEGIN BLOCK_VENDA_VALUNI_RODAPE -->
+            <td> </td>            
+            <!-- END BLOCK_VENDA_VALUNI_RODAPE -->
             <!-- BEGIN BLOCK_VENDA_RODAPE -->
-            <td align="right"></td>
+            <td align="right">{TOTAL_VENDA}</td>
             <!-- END BLOCK_VENDA_RODAPE -->
-            <td> </td>
             <!-- BEGIN BLOCK_LUCRO_RODAPE -->
             <td align="right">{TOTAL_LUCRO}</td>
             <!-- END BLOCK_LUCRO_RODAPE -->
+            <td> </td>
             <!--  BEGIN BLOCK_LISTA_NADA_OPERACAO -->            
             <td> </td>
             <!--  END BLOCK_LISTA_NADA_OPERACAO -->
