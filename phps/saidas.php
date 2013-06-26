@@ -389,7 +389,7 @@ if ($linhas == 0) {
 
         //Desconto
         $tpl->LISTA_COLUNA_ALINHAMENTO = "right";
-        $desconto = $valorbruto - $valorliquido;
+        $desconto = number_format($valorbruto - $valorliquido,2);
         if ($desconto == 0)
             $tpl->LISTA_COLUNA_CLASSE = "";
         else if ($desconto > 0)

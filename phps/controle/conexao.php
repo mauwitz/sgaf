@@ -1,7 +1,7 @@
 <?php 
    
    $hostname = "localhost";
-   $db = "sgaf";
+   $db = "cooesperanca";
    $user = "root";
    $pass = 'mautito';
    

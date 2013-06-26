@@ -12,6 +12,7 @@ $tiposai=$_REQUEST["tiposai"];
 $passo = $_REQUEST["passo"];
 $saida = $_REQUEST["saida"];
 $valbru = $_REQUEST["valbru2"];
+$valbru = number_format($valbru,2);
 $descper = $_REQUEST["descper2"];
 $descval = $_REQUEST["descval2"];
 $total = $_REQUEST["total2"];
