@@ -384,12 +384,12 @@ if ($linhas == 0) {
         $tpl->LISTA_COLUNA_ALINHAMENTO = "right";
         $tpl->LISTA_COLUNA_CLASSE = "";
         $tpl->LISTA_COLUNA_VALOR = "R$ " . number_format($valorbruto, 2, ',', '.');
-        $tpl->block("BLOCK_LISTA_COLUNA");        
-        
+        $tpl->block("BLOCK_LISTA_COLUNA");
+
 
         //Desconto
         $tpl->LISTA_COLUNA_ALINHAMENTO = "right";
-        $desconto = number_format($valorbruto - $valorliquido,2);
+        $desconto = number_format($valorbruto - $valorliquido, 2);
         if ($desconto == 0)
             $tpl->LISTA_COLUNA_CLASSE = "";
         else if ($desconto > 0)
@@ -508,7 +508,7 @@ if ($linhas == 0) {
                     $dados_ven = mysql_fetch_array($query_ven);
                     $ultimo = $dados_ven[0];
                     //Se esta Sa�da for a ultima Saída que o vendedor efetuou                   
-                    if (($numero == $ultimo)||($status==2)) {
+                    if (($numero == $ultimo) || ($status == 2)) {
                         if ($status == 1) { //Se a venda ja foi concluída o vendedor tem um limite de tempo para pode editá-la
                             $dataatual = date("Y-m-d");
                             $horaatual = date("H:i:s");
@@ -534,7 +534,7 @@ if ($linhas == 0) {
                             $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO");
                         }
                     } else {
-                        
+
                         $tpl->OPERACAO_NOME = "Você não pode editar vendas antigas! Se precisa alterar ou remover alguma venda, contate um supervisor!";
                         $tpl->ICONE_ARQUIVO = $icones . "editar_desabilitado.png";
                         $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_DESABILITADO");
@@ -571,17 +571,19 @@ if ($tipopagina == "saidas") {
             if (!$query8)
                 die("Erro SQL Vendedor Incompletas Botão cadastrar" . mysql_error());
             $linhas8 = mysql_num_rows($query8);
-            if ($linhas8 == 1) {
+            if ($linhas8 > 1) {
+                $tpl->CADASTRAR_NOME = "REALIZAR VENDA";
+                $dica="Você precisa finalizar as vendas incompletas primeiro para pode retornar a realizar novas vendas! Os vendedores só podem ter no máximo 2 vendas incompletas!";
+                $tpl->TITULO="$dica";
+                $tpl->block("BLOCK_RODAPE_BOTOES_DESABILITADOS");
+                $tpl->DICA_NOME = "REALIZAR VENDA";
+                /*$tpl->DICA = "$dica";
+                $tpl->DICA_ARQUIVO = $icones . "atencao.png";
+                $tpl->block("BLOCK_RODAPE_BOTOES_DICA");*/
+            } else {
                 $tpl->CADASTRAR_NOME = "REALIZAR VENDA";
                 $tpl->LINK_CADASTRO = "saidas_cadastrar.php?tiposaida=1";
                 $tpl->block("BLOCK_RODAPE_BOTOES");
-            } else {
-                $tpl->CADASTRAR_NOME = "REALIZAR VENDA";
-                $tpl->block("BLOCK_RODAPE_BOTOES_DESABILITADOS");
-                $tpl->DICA_NOME = "REALIZAR VENDA";
-                $tpl->DICA = "Você precisa finalizar as vendas incompletas primeiro para pode retornar a realizar novas vendas! Os vendedores só podem ter no máximo 2 vendas incompletas!";
-                $tpl->DICA_ARQUIVO = $icones . "recado.png";
-                $tpl->block("BLOCK_RODAPE_BOTOES_DICA");
             }
         } else {
             $tpl->CADASTRAR_NOME = "REALIZAR VENDA";
