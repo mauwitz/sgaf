@@ -29,13 +29,13 @@ function valida_filtro_saidas_devolucao_numero() {
         document.form_filtro.filtro_motivo.disabled = false;
         document.form_filtro.filtro_descricao.disabled = false;
         document.form_filtro.filtro_supervisor.disabled = false;
-        //document.formfiltro.filtro_fornecedor.disabled=false;
+    //document.formfiltro.filtro_fornecedor.disabled=false;
     }
     else {
         document.form_filtro.filtro_motivo.disabled = true;
         document.form_filtro.filtro_descricao.disabled = true;
         document.form_filtro.filtro_supervisor.disabled = true;
-        //document.formfiltro.filtro_fornecedor.disabled=true;
+    //document.formfiltro.filtro_fornecedor.disabled=true;
     }
 }
 function valida_filtro_acertos_revenda_numero() {
@@ -45,7 +45,7 @@ function valida_filtro_acertos_revenda_numero() {
         document.form_filtro.filtro_datafim.disabled = false;
         document.form_filtro.filtro_horaini.disabled = false;
         document.form_filtro.filtro_horafim.disabled = false;
-        //document.formfiltro.filtro_fornecedor.disabled=false;
+    //document.formfiltro.filtro_fornecedor.disabled=false;
     }
     else {
         document.form_filtro.filtro_supervisor.disabled = true;
@@ -283,22 +283,28 @@ function calcula_saldovalidade(valor) {
     var hoje = today;
     var validade = valor;
 
-    var dias = diasentredatas(hoje, validade);
-    if (dias >= 0)
-        $("span[name=saldovalidade]").html(dias + " dias");
+    var dias = diasentredatas(hoje, validade);    
+    if (dias >= 0) {        
+        $("span[name=saldovalidade]").attr('class', "dicacampo");
+        $("span[name=saldovalidade]").html("vencerá em "+dias + " dias");
+    }
+    else if (dias < 0) {
+        $("span[name=saldovalidade]").attr('class', "dicacampo-vermelho");
+        $("span[name=saldovalidade]").html("venceu a "+dias + " dias");
+    }
     else
         $("span[name=saldovalidade]").html("");
 }
 
 function diasentredatas(valor1, valor2) {
 
-    var date1 = valor1;
-    var date2 = valor2;
+    var date1 = valor2;
+    var date2 = valor1;
     date1 = date1.split("-");
     date2 = date2.split("-");
     var sDate = new Date(date1[0] + "/" + date1[1] + "/" + date1[2]);
     var eDate = new Date(date2[0] + "/" + date2[1] + "/" + date2[2]);
-    var daysApart = Math.abs(Math.round((sDate - eDate) / 86400000));
+    var daysApart = Math.round((sDate - eDate) / 86400000);
     return daysApart
 }
 
@@ -333,7 +339,7 @@ function mascara_pesoqtd() {
                 centsLimit: 0,
                 thousandsSeparator: '.'
             });
-            //alert("qtd");
+        //alert("qtd");
         } else {
             $('#qtd').priceFormat({
                 prefix: '',
@@ -341,7 +347,7 @@ function mascara_pesoqtd() {
                 centsLimit: 3,
                 thousandsSeparator: '.'
             });
-            //alert("peso");
+        //alert("peso");
         }
     });
     verifica_incluir();
@@ -504,15 +510,15 @@ function valida_cnpj(cnpj) {
 
     // Elimina CNPJs invalidos conhecidos
     if (cnpj == "00000000000000" ||
-            cnpj == "11111111111111" ||
-            cnpj == "22222222222222" ||
-            cnpj == "33333333333333" ||
-            cnpj == "44444444444444" ||
-            cnpj == "55555555555555" ||
-            cnpj == "66666666666666" ||
-            cnpj == "77777777777777" ||
-            cnpj == "88888888888888" ||
-            cnpj == "99999999999999") {
+        cnpj == "11111111111111" ||
+        cnpj == "22222222222222" ||
+        cnpj == "33333333333333" ||
+        cnpj == "44444444444444" ||
+        cnpj == "55555555555555" ||
+        cnpj == "66666666666666" ||
+        cnpj == "77777777777777" ||
+        cnpj == "88888888888888" ||
+        cnpj == "99999999999999") {
 
         alert("CNPJ Inválido");
         $("input[name=cnpj]").val("");
@@ -625,7 +631,7 @@ function verifica_cpf_cadastro(valor, valor2, pessoa_cod, operacao) {
                     alert("Este cpf já está cadastrado no sistema, por favor utilize os metodos de recuperação de senha!");
                     $("input[name=cpf]").val("");
                 } else {
-                    //Existe uma pessoa cadastrada com esse CPF
+                //Existe uma pessoa cadastrada com esse CPF
                 }
             } else if (valor2 == 2) {
                 //Esta parte refere-se a tela 'Esquecí minha senha''
@@ -660,7 +666,7 @@ function verifica_cpf_cadastro(valor, valor2, pessoa_cod, operacao) {
                     $("tr[id=tr_resposta]").hide();
                 }
             } else {
-                //alert("Erro de parametro na função verifica_cpf_cadastro");
+            //alert("Erro de parametro na função verifica_cpf_cadastro");
             }
 
         });
@@ -699,7 +705,7 @@ function verifica_cnpj_cadastro(valor, pessoa_cod, operacao) {
                 $("input[name=cnpj]").val("");
                 $("input[name=cnpj]").focus();
             } else {
-                //O CNPJ não está sendo usado por ninguém
+            //O CNPJ não está sendo usado por ninguém
             }
         });
     }
@@ -728,7 +734,7 @@ function verifica_metodo(valor) {
             $("tr[id=tr_pergunta]").hide();
             $("tr[id=tr_resposta]").hide();
         } else {
-            //alert("Erro grave de parametro");
+        //alert("Erro grave de parametro");
         }
     });
 
@@ -769,7 +775,8 @@ function popula_tipopessoa(valor) {
     if (valor == "") {
         $("select[name=tipopessoa]").html("<option value=''>Selecione</option>");
         $("select[name=fornecedor]").html("<option value=''>Selecione</option>");
-    } else {
+    }
+    else {
         $("select[name=fornecedor]").html("<option value=''>Selecione</option>");
         $.post("entradas_popula_tipopessoa.php", {
             tiponegociacao: valor

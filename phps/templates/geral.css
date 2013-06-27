@@ -161,3 +161,10 @@
     color: gray;
     font-style: italic;
 }
+.dicacampo-vermelho {
+    top: 30;
+    font-size: x-small;
+    color: red;
+    font-style: italic;    
+    font-weight: bold;
+}
