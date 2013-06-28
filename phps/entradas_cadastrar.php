@@ -77,7 +77,7 @@ if (($validade2 != "") && ($validade == "")) {
 $local = strtoupper($_POST['local']);
 
 
-//Caso seja precionado o bot�o cancelar a entrada deve ser pego por GET
+//Caso seja precionado o botão cancelar a entrada deve ser pego por GET
 $cancelar = $_GET["cancelar"];
 if ($cancelar == 1) {
     $entrada = $_GET['entrada'];
@@ -89,7 +89,7 @@ if ($cancelar == 1) {
     $passo = $_GET["passo"];
 }
 
-//Caso seja uma opera��o seja ver ou editar
+//Caso seja uma operação seja ver ou editar
 if (($operacao == 3) || ($operacao == 2)) {
     $entrada = $_GET['codigo'];
     $sql = "SELECT * FROM entradas join pessoas on (ent_fornecedor=pes_codigo)WHERE ent_codigo=$entrada";
@@ -107,7 +107,7 @@ $tpl->TIPONEGOCIACAO = $tiponegociacao;
 IF ($tiponegociacao == 2)
     $tpl->block(BLOCK_PERCENT);
 
-//Caso seja uma opera��o de Editar ent�o ir para o passo2
+//Caso seja uma operação de Editar ent�o ir para o passo2
 if ($operacao == 2) {
     $tpl->SUBTITULO = "EDITAR";
     $passo = 3;
@@ -575,7 +575,34 @@ if ($passo != "") {
                 $tpl->IMPRIMIR_LINK = "entradas_etiquetas.php?lote=$entrada&numero=$numero";
                 $tpl->IMPRIMIR = $icones . "etiquetas.png";
                 $tpl->ENTRADAS_VALIDADE= converte_data($dados[5]);
-                $tpl->block("BLOCK_LISTA_OPERACAO_EXCLUIR");
+                
+                //Verifica se ja foi efetuado Saídas quaisquer para o lote/entrada em questão
+                $prod=$dados["pro_codigo"];
+                $sql3 = "SELECT * FROM saidas_produtos WHERE saipro_lote=$entrada and saipro_produto=$prod ";
+                $query3 = mysql_query($sql3);
+                if (!$query3) {
+                    die("Erro SQL: " . mysql_error());
+                }
+                $linhas3 = mysql_num_rows($query3);
+                if ($linhas3 > 0) { 
+                    $nao_pode_excluir_item=1;
+                    $nao_pode_excluir_entrada=1;
+                } else {                    
+                    $nao_pode_excluir_item=0;                   
+                }
+                //Se já houve Saídas referentes a esta entrada então não pode-se excluir
+                if ($nao_pode_excluir_item == 1) {                    
+                    $tpl->ICONES_TITULO="Não pode excluir este item porque já existem vendas de pelo menos uma unidade ou quilo deste produto nesta entrada";
+                    $tpl->ICONES_ARQUIVO="remover_desabilitado.png";
+                    $tpl->block("BLOCK_LISTA_OPERACAO_EXCLUIR");                    
+                } else {                    
+                    $tpl->ICONES_TITULO="Remover";
+                    $tpl->ICONES_ARQUIVO="remover.png";
+                    $tpl->block("BLOCK_LISTA_OPERACAO_EXCLUIR_LINK");
+                    $tpl->block("BLOCK_LISTA_OPERACAO_EXCLUIR");
+                }                
+                
+                
                 $tpl->block("BLOCK_LISTA_OPERACAO_ETIQUETAS");
                 $tpl->block("BLOCK_LISTA_OPERACAO");
 
@@ -616,6 +643,17 @@ if ($passo != "") {
         $tpl->OPERACAO = $operacao;
         $tpl->INTERROMPER = "CANCELAR";
         $tpl->ENTRADA = $entrada;
+        
+        if ($nao_pode_excluir_entrada==1) {
+            $tpl->EXCLUIR_CLASSE=" ";
+            $tpl->EXCLUIR_TITULO=" Você não pode excluir esta entrada porque existem produtos dentro desta entrada que já foram vendido!";
+            $tpl->ELIMINAR_ENTRADA_DESABILITADO=" disabled";
+        } else {
+            $tpl->EXCLUIR_TITULO=" Excluir entrada ";
+            $tpl->EXCLUIR_CLASSE=" botaovermelho ";
+            $tpl->ELIMINAR_ENTRADA_DESABILITADO="";            
+            $tpl->block("BLOCK_BOTOES_EXCLUIR_LINK");
+        }
         $tpl->block("BLOCK_BOTOES");
         $tpl->block("BLOCK_PASSO3");
     } else {

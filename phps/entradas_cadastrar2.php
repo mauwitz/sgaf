@@ -16,7 +16,7 @@ $operacao = $_GET["operacao"];
 
 $erro = 0;
 
-print_r($_REQUEST);
+//print_r($_REQUEST);
 
 //Caso a operação seja SALVAR então apenas trocar o status da entrada para ATIVO
 //e inserir produtos no estoque

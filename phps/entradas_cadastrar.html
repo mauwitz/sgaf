@@ -404,8 +404,10 @@ function mascara_percent() {
             <!--  END BLOCK_LISTA_OPERACAO_ETIQUETAS -->
             <!--  BEGIN BLOCK_LISTA_OPERACAO_EXCLUIR -->
             <td align="center" class="fundo1">
+                <!--  BEGIN BLOCK_LISTA_OPERACAO_EXCLUIR_LINK -->
                 <a href="entradas_cadastrar.php?fornecedor={FORNECEDOR}&cancelar=1&passo=3&entrada={ENTRADA}&produto={PRODUTO}&item_numero={ENTRADAS_NUMERO}&tiponegociacao={TIPONEGOCIACAO}" class="link1">
-                    <img  width="15px"  src="{ICONES_CAMINHO}remover.png"  title="Remover" alt="Remover" />
+                <!--  END BLOCK_LISTA_OPERACAO_EXCLUIR_LINK -->                    
+                    <img  width="15px" src="{ICONES_CAMINHO}{ICONES_ARQUIVO}"  title="{ICONES_TITULO}" alt="Remover" />
                 </a>
             </td>
             <!--  END BLOCK_LISTA_OPERACAO_EXCLUIR -->
@@ -462,8 +464,10 @@ function mascara_percent() {
     <table border="0">
         <tr class="">
             <td width="100%" align="left">
+                <!-- BEGIN BLOCK_BOTOES_EXCLUIR_LINK -->
                 <a class="link" href="entradas_cancelar.php?codigo={ENTRADA}">
-                    <input type="button" class="botao botaovermelho fonte3" value="ELIMINAR ENTRADA">
+                <!-- END BLOCK_BOTOES_EXCLUIR_LINK -->
+                <input type="button" class="botao fonte3 {EXCLUIR_CLASSE}" value="ELIMINAR ENTRADA" {ELIMINAR_ENTRADA_DESABILITADO} title="{EXCLUIR_TITULO}">
                 </a>    
             </td>
             <td>

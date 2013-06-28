@@ -204,15 +204,15 @@ $sql = "
                 $status = $array['ent_status'];
                 $total = $array['ent_valortotal'];
 
-                //Verifica se ja foi efetuado Sa�das quaisquer para o lote/entrada em quest�o
+                /*
+                //Verifica se ja foi efetuado Saídas quaisquer para o lote/entrada em questão
                 $sql3 = "SELECT * FROM saidas_produtos WHERE saipro_lote=$codigo";
                 $query3 = mysql_query($sql3);
                 if (!$query3) {
                     die("Erro SQL: " . mysql_error());
                 }
                 $linhas3 = mysql_num_rows($query3);
-
-                //Se j� houve Sa�das referentes a esta entrada ent�o n�o pode-se exclui-la
+                //Se já houve Saídas referentes a esta entrada então não pode-se editá-la
                 if ($linhas3 > 0) {
                     $editar_ocultar = 1;
                     $editar_ocultar_motivo = "Foi vendido produtos desta entrada";
@@ -220,6 +220,7 @@ $sql = "
                     $editar_ocultar = 0;
                     $editar_ocultar_motivo = "";
                 }
+                 */
                 ?>
 
                 <tr class="lin <?php
