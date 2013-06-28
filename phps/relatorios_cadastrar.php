@@ -1,6 +1,6 @@
 <?php
 
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
 if ($permissao_relatorios_cadastrar <> 1) {
     header("Location: permissoes_semacesso.php");
@@ -17,7 +17,7 @@ if (empty($operacao))
 
 //TÃTULO PRINCIPAL
 $tpl_titulo = new Template("templates/titulos.html");
-$tpl_titulo->TITULO = "RELATÓRIOS";
+$tpl_titulo->TITULO = "RELATÃ“RIOS";
 $tpl_titulo->SUBTITULO = "CADASTRO";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
 $tpl_titulo->NOME_ARQUIVO_ICONE = "relatorios.png";
@@ -25,7 +25,7 @@ $tpl_titulo->show();
 
 
 
-//FORMULáRIO
+//FORMULï¿½RIO
 $tpl = new Template("templates/cadastro1.html");
 $codigo = $_GET["codigo"];
 
@@ -49,7 +49,7 @@ $tpl->block("BLOCK_FORM");
 $tpl->COLUNA_ALINHAMENTO = "right";
 $tpl->COLUNA_TAMANHO = "150px";
 $tpl->COLUNA_ROWSPAN = "";
-$tpl->TITULO = "Nome do Relatório";
+$tpl->TITULO = "Nome do RelatÃ³rio";
 $tpl->block("BLOCK_TITULO");
 $tpl->block("BLOCK_CONTEUDO");
 $tpl->block("BLOCK_COLUNA");
@@ -68,11 +68,11 @@ $tpl->block("BLOCK_COLUNA_PADRAO");
 $tpl->block("BLOCK_COLUNA");
 $tpl->block("BLOCK_LINHA");
 
-//Descrição
+//Descriï¿½ï¿½o
 $tpl->COLUNA_ALINHAMENTO = "right";
 $tpl->COLUNA_TAMANHO = "";
 $tpl->COLUNA_ROWSPAN = "";
-$tpl->TITULO = "Descrição";
+$tpl->TITULO = "DescriÃ§Ã£o";
 $tpl->block("BLOCK_TITULO");
 $tpl->block("BLOCK_CONTEUDO");
 $tpl->block("BLOCK_COLUNA");
@@ -146,7 +146,7 @@ $tpl->CAMPOOCULTO_NOME = "operacao";
 $tpl->CAMPOOCULTO_VALOR = "$operacao";
 $tpl->block("BLOCK_CAMPOOCULTO");
 
-//Campo Código
+//Campo Cï¿½digo
 $tpl->CAMPOOCULTO_NOME = "codigo";
 $tpl->CAMPOOCULTO_VALOR = "$codigo";
 $tpl->block("BLOCK_CAMPOOCULTO");

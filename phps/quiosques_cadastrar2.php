@@ -149,7 +149,7 @@ if ($codigo == "") {
             if ($erro == 0) {
                 echo "<b>Os dados foram salvos com sucesso!<b>";
             } else if ($erro == 1) {
-                echo "Houve altera��o de cooperativa, o sistema deve executar um script que faz a migra��o de um quiosque de uma cooperativa para outra. Esse processo � bem cauteloso, deve-se fazer uma analise aprofundada! para realizar esse proceso de forma automatizada!<b><br>A altera��o dos dados do quiosque foi cancelada!</b> <br>";
+                echo "Houve alteração de cooperativa, o sistema deve executar um script que faz a migração de um quiosque de uma cooperativa para outra. Esse processo é bem cauteloso, deve-se fazer uma analise aprofundada! para realizar esse proceso de forma automatizada!<b><br>A alteração dos dados do quiosque foi cancelada!</b> <br>";
             }
             ?>
         </td>

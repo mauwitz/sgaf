@@ -402,7 +402,7 @@ $tpl1->SELECT_NOME = "cooperativa";
 $tpl1->SELECT_ID = "cooperativa";
 $tpl1->SELECT_TAMANHO = "";
 $tpl1->block("BLOCK_SELECT_OBRIGATORIO");
-if (($usuario_grupo == 7) || ($usuario_grupo == 1))
+if ($usuario_grupo == 7)
     $sql = "SELECT * FROM cooperativas ORDER BY coo_abreviacao";
 else
     $sql = "SELECT * FROM cooperativas WHERE coo_codigo=$usuario_cooperativa";

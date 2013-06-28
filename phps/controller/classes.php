@@ -4,7 +4,7 @@ class banco {
 
     private $host = 'localhost';
     private $user = 'root';
-    private $pass = 'mautito';
+    private $pass = 'soli12ecoPORTAL';
     private $banco = 'sgaf';
 
     function conectar() {
