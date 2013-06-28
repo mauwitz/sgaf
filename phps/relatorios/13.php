@@ -245,7 +245,7 @@ $tpl_rel->COLUNA_TAMANHO = "";
 $tpl_rel->COLUNA_ROWSPAN = "";
 $tpl_rel->SELECT_NOME = "caderninho";
 $tpl_rel->SELECT_TAMANHO = "";
-$tpl_rel->SELECT_CLASSE = " campo_tamanho_6 ";
+$tpl_rel->SELECT_CLASSE = " campo_tamanho_3 ";
 $tpl_rel->block("BLOCK_SELECT_PADRAO");
 $tpl_rel->block("BLOCK_OPTION_TODOS");
 $tpl_rel->OPTION_VALOR = "0";
