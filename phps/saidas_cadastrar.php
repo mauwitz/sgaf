@@ -100,6 +100,8 @@ if ($retirar_produto == '1') {
         $qtdnoestoque = $_POST["qtdnoestoque"];
     }
 }
+
+
 //Verifica se a saida existe
 //(� necess�rio por que se o usu�rio abrir uma nova janela na tela saidas.php o sistema exclui
 //as saidas incompletas e vazias do usu�rio logado e portanto pode excluir a saida que est� 
@@ -466,6 +468,9 @@ if ($tiposaida == 3) {
     $tpl1->CAMPOOCULTO_NOME = "tiposaida";
     $tpl1->CAMPOOCULTO_VALOR = "$tiposaida";
     $tpl1->block("BLOCK_CAMPOSOCULTOS");
+    $tpl1->CAMPOOCULTO_NOME = "tiposaida";
+    $tpl1->CAMPOOCULTO_VALOR = "$tiposaida";
+    $tpl1->block("BLOCK_CAMPOSOCULTOS");
 }
 
 
@@ -702,7 +707,7 @@ if ($passo == 2) {
         $tpl1->block("BLOCK_SALVAR_DEVOLUCAO");
     }
     $tpl1->block("BLOCK_BOTOES_RODAPE_SALVAR");
-    $tpl1->LINK_CANCELAR = "saidas_deletar.php?codigo=$saida";
+    $tpl1->LINK_CANCELAR = "saidas_deletar.php?codigo=$saida&tiposaida=$tiposaida";
     $tpl1->block("BLOCK_BOTOES_RODAPE_ELIMINAR");
     if ($tiposaida == 1) {
         $tpl1->LINK_CANCELAR = "saidas.php";
