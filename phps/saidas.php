@@ -25,7 +25,7 @@ $filtro_numero = $_POST["filtro_numero"];
 $filtro_produto = $_POST["filtro_produto"];
 $filtro_consumidor = $_POST["filtro_consumidor"];
 $filtro_fornecedor = $_POST["filtro_fornecedor"];
-$filtro_vendedor = $_POST["filtro_vendedor"];
+$filtro_caixa = $_POST["filtro_caixa"];
 $filtro_tipo = $_POST["filtro_tipo"];
 $filtro_lote = $_POST["filtro_lote"];
 $tpl->LINK_FILTRO = "saidas.php";
@@ -152,7 +152,7 @@ $tpl->block("BLOCK_LISTA_CABECALHO");
 if ($usuario_grupo != 4) {
     $tpl->CABECALHO_COLUNA_TAMANHO = "";
     $tpl->CABECALHO_COLUNA_COLSPAN = "";
-    $tpl->CABECALHO_COLUNA_NOME = "VENDEDOR";
+    $tpl->CABECALHO_COLUNA_NOME = "CAIXA";
     $tpl->block("BLOCK_LISTA_CABECALHO");
 }
 
@@ -218,22 +218,22 @@ if ($filtro_lote <> "")
     $sql_filtro_lote = " and saipro_lote = $filtro_lote ";
 if ($filtro_consumidor <> "")
     $sql_filtro_consumidor = " and sai_consumidor = $filtro_consumidor ";
-if ($filtro_vendedor <> "")
-    $sql_filtro_vendedor = " and sai_consumidor = $filtro_vendedor ";
+if ($filtro_caixa <> "")
+    $sql_filtro_caixa = " and sai_consumidor = $filtro_caixa ";
 if ($filtro_fornecedor <> "")
     $sql_filtro_fornecedor = " and ent_fornecedor = $filtro_fornecedor ";
 if ($filtro_tipo <> "")
     $sql_filtro_tipo = " and sai_tipo = $filtro_tipo ";
-$sql_filtro = $sql_filtro_numero . " " . $sql_filtro_consumidor . " " . $sql_filtro_vendedor . " " . $sql_filtro_tipo . " " . $sql_filtro_produto . " " . $sql_filtro_lote . " " . $sql_filtro_fornecedor;
+$sql_filtro = $sql_filtro_numero . " " . $sql_filtro_consumidor . " " . $sql_filtro_caixa . " " . $sql_filtro_tipo . " " . $sql_filtro_produto . " " . $sql_filtro_lote . " " . $sql_filtro_fornecedor;
 if ($usuario_grupo == 4) {
-    $sql_filtro = $sql_filtro . " and sai_vendedor=$usuario_codigo";
+    $sql_filtro = $sql_filtro . " and sai_caixa=$usuario_codigo";
 }
 
 
 
 //SQL Principal das linhas
 $sql = "
-SELECT DISTINCT sai_codigo,sai_datacadastro,sai_horacadastro,sai_consumidor,sai_tipo,sai_totalliquido,sai_totalbruto,sai_status,sai_vendedor,sai_metpag,sai_areceber
+SELECT DISTINCT sai_codigo,sai_datacadastro,sai_horacadastro,sai_consumidor,sai_tipo,sai_totalliquido,sai_totalbruto,sai_status,sai_caixa,sai_metpag,sai_areceber
 FROM saidas 
 JOIN saidas_tipo on (sai_tipo=saitip_codigo) 
 left join saidas_produtos on (saipro_saida=sai_codigo)
@@ -281,7 +281,7 @@ if ($linhas == 0) {
         $data = $dados["sai_datacadastro"];
         $hora = $dados["sai_horacadastro"];
         $consumidor = $dados["sai_consumidor"];
-        $vendedor = $dados["sai_vendedor"];
+        $caixa = $dados["sai_caixa"];
         $tipo = $dados["sai_tipo"];
         $valorliquido = $dados["sai_totalliquido"];
         $valorbruto = $dados["sai_totalbruto"];
@@ -292,7 +292,7 @@ if ($linhas == 0) {
 
         //Cor de fundo da linha
         if ($status == 2) {
-            if ($usuario_codigo == $vendedor) {
+            if ($usuario_codigo == $caixa) {
                 $tpl->LISTA_LINHA_CLASSE = "tabelalinhafundovermelho negrito";
             } else {
                 $dataatual = date("Y-m-d");
@@ -346,10 +346,10 @@ if ($linhas == 0) {
         $tpl->block("BLOCK_LISTA_COLUNA");
 
         if ($usuario_grupo != 4) {
-            //Coluna Vendedor
+            //Coluna Caixa
             $tpl->LISTA_COLUNA_ALINHAMENTO = "";
             $tpl->LISTA_COLUNA_CLASSE = "";
-            $sql2 = "SELECT pes_nome FROM pessoas WHERE pes_codigo=$vendedor";
+            $sql2 = "SELECT pes_nome FROM pessoas WHERE pes_codigo=$caixa";
             $query2 = mysql_query($sql2);
             if (!$query2)
                 die("Erro: " . mysql_error());
@@ -432,7 +432,7 @@ if ($linhas == 0) {
 
         //Situação
         if ($status == 2) {
-            if ($usuario_codigo == $vendedor) {
+            if ($usuario_codigo == $caixa) {
                 $tpl->ICONE_ARQUIVO = $icones . "star_empty.png";
                 $tpl->OPERACAO_NOME = "Incompleta";
             } else {
@@ -446,7 +446,7 @@ if ($linhas == 0) {
                     $tpl->OPERACAO_NOME = "Incompleta";
                 } else {
                     $tpl->ICONE_ARQUIVO = $icones . "star_half_full.png";
-                    $tpl->OPERACAO_NOME = "Esta venda está em andamento por outro vendedor!";
+                    $tpl->OPERACAO_NOME = "Esta venda está em andamento por outro caixa!";
                     $editar_ocultar = 1;
                     $editar_ocultar_motivo = "";
                 }
@@ -498,24 +498,24 @@ if ($linhas == 0) {
                 $tpl->ICONE_ARQUIVO = $icones . "editar_desabilitado.png";
                 $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_DESABILITADO");
             } else {
-                //Se for um vendedor deve permitir a edição de apenas a ultima venda realizada por ele sob algumas condições
+                //Se for um caixa deve permitir a edição de apenas a ultima venda realizada por ele sob algumas condições
                 if ($usuario_grupo == 4) {
-                    //Verifica qual foi a ultima venda realizada por este vendedor
-                    $sql_ven = "SELECT max(sai_codigo) FROM saidas WHERE sai_vendedor=$usuario_codigo";
+                    //Verifica qual foi a ultima venda realizada por este caixa
+                    $sql_ven = "SELECT max(sai_codigo) FROM saidas WHERE sai_caixa=$usuario_codigo";
                     $query_ven = mysql_query($sql_ven);
                     if (!$query_ven)
-                        die("Erro de SQL Vendedor Ultima Venda:" . mysql_error());
+                        die("Erro de SQL Caixa Ultima Venda:" . mysql_error());
                     $dados_ven = mysql_fetch_array($query_ven);
                     $ultimo = $dados_ven[0];
-                    //Se esta Sa�da for a ultima Saída que o vendedor efetuou                   
+                    //Se esta Sa�da for a ultima Saída que o caixa efetuou                   
                     if (($numero == $ultimo) || ($status == 2)) {
-                        if ($status == 1) { //Se a venda ja foi concluída o vendedor tem um limite de tempo para pode editá-la
+                        if ($status == 1) { //Se a venda ja foi concluída o caixa tem um limite de tempo para pode editá-la
                             $dataatual = date("Y-m-d");
                             $horaatual = date("H:i:s");
                             $tempo1 = $data . "_" . $hora;
                             $tempo2 = $dataatual . "_" . $horaatual;
                             $total_segundos = diferenca_entre_datahora($tempo1, $tempo2);
-                            if ($total_segundos < 900) { //O vendedor tem 15 minutos ap�s o inicio para editar esta venda j� concluida 
+                            if ($total_segundos < 900) { //O caixa tem 15 minutos ap�s o inicio para editar esta venda j� concluida 
                                 $tpl->OPERACAO_NOME = "Editar";
                                 $tpl->LINK = "saidas_cadastrar.php";
                                 $tpl->LINK_COMPLEMENTO = "operacao=2&tiposaida=1";
@@ -526,7 +526,7 @@ if ($linhas == 0) {
                                 $tpl->ICONE_ARQUIVO = $icones . "editar_desabilitado.png";
                                 $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_DESABILITADO");
                             }
-                        } else { //Se for incompleta permitir que o vendedor possa continuar a venda
+                        } else { //Se for incompleta permitir que o caixa possa continuar a venda
                             $tpl->OPERACAO_NOME = "Editar";
                             $tpl->LINK = "saidas_cadastrar.php";
                             $tpl->LINK_COMPLEMENTO = "operacao=2&tiposaida=1";
@@ -564,16 +564,16 @@ if ($tipopagina == "saidas") {
                 SELECT sai_codigo 
                 FROM saidas
                 WHERE sai_tipo=1 
-                and sai_vendedor=$usuario_codigo
+                and sai_caixa=$usuario_codigo
                 and sai_status=2
             ";
             $query8 = mysql_query($sql8);
             if (!$query8)
-                die("Erro SQL Vendedor Incompletas Botão cadastrar" . mysql_error());
+                die("Erro SQL Caixa Incompletas Botão cadastrar" . mysql_error());
             $linhas8 = mysql_num_rows($query8);
             if ($linhas8 > 1) {
                 $tpl->CADASTRAR_NOME = "REALIZAR VENDA";
-                $dica="Você precisa finalizar as vendas incompletas primeiro para pode retornar a realizar novas vendas! Os vendedores só podem ter no máximo 2 vendas incompletas!";
+                $dica="Você precisa finalizar as vendas incompletas primeiro para pode retornar a realizar novas vendas! Os caixas só podem ter no máximo 2 vendas incompletas!";
                 $tpl->TITULO="$dica";
                 $tpl->block("BLOCK_RODAPE_BOTOES_DESABILITADOS");
                 $tpl->DICA_NOME = "REALIZAR VENDA";

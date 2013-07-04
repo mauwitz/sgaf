@@ -346,7 +346,7 @@ if (($saida == 0) && ($passo == 2)) {
     $datahoracadastro=$dataatual." ".$horaatual;
     $sql_saida = "
     INSERT INTO
-        saidas (sai_quiosque, sai_vendedor, sai_consumidor, sai_tipo, sai_saidajustificada,sai_descricao, sai_datacadastro, sai_horacadastro,sai_status,sai_datahoracadastro)
+        saidas (sai_quiosque, sai_caixa, sai_consumidor, sai_tipo, sai_saidajustificada,sai_descricao, sai_datacadastro, sai_horacadastro,sai_status,sai_datahoracadastro)
     VALUES
         ('$usuario_quiosque','$usuario_codigo','$consumidor','$tiposaida','$motivo','$descricao','$dataatual','$horaatual',2,'$datahoracadastro')        
     ";

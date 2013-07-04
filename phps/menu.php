@@ -89,6 +89,9 @@ if ($permissao_entradas_ver == 1) {
 //Saidas
 $tpl_menu->IMAGEM_TITULO = "Saídas";
 $tpl_menu->TITULO = "Saídas";
+
+
+
 if ($permissao_saidas_ver == 1) {
     if ($usuario_quiosque != 0) {
         $tpl_menu->IMAGEM_ARQUIVO = "saidas.png";

@@ -48,6 +48,7 @@ if (!isset($_SESSION["usuario_cpf"]) || !isset($_SESSION["usuario_nome"]) || !is
     $permissao_quiosque_excluir = $dados["gruper_quiosque_excluir"];
     $permissao_quiosque_definirsupervisores = $dados["gruper_quiosque_definirsupervisores"];
     $permissao_quiosque_definirvendedores = $dados["gruper_quiosque_definirvendedores"];
+    $permissao_quiosque_definircaixas = $dados["gruper_quiosque_definircaixas"];
     $permissao_quiosque_definircooperativa = $dados["gruper_quiosque_definircooperativa"];
     $permissao_pessoas_alterar_cooperativa = $dados["gruper_pessoas_alterar_cooperativa"];
     $permissao_pessoas_cadastrar = $dados["gruper_pessoas_cadastrar"];
@@ -55,6 +56,7 @@ if (!isset($_SESSION["usuario_cpf"]) || !isset($_SESSION["usuario_nome"]) || !is
     $permissao_pessoas_cadastrar_presidentes = $dados["gruper_pessoas_cadastrar_presidentes"];
     $permissao_pessoas_cadastrar_supervisores = $dados["gruper_pessoas_cadastrar_supervisores"];
     $permissao_pessoas_cadastrar_vendedores = $dados["gruper_pessoas_cadastrar_vendedores"];
+    $permissao_pessoas_cadastrar_caixas = $dados["gruper_pessoas_cadastrar_caixas"];
     $permissao_pessoas_cadastrar_fornecedores = $dados["gruper_pessoas_cadastrar_fornecedores"];
     $permissao_pessoas_cadastrar_consumidores = $dados["gruper_pessoas_cadastrar_consumidores"];
     $permissao_pessoas_excluir = $dados["gruper_pessoas_excluir"];
@@ -62,12 +64,14 @@ if (!isset($_SESSION["usuario_cpf"]) || !isset($_SESSION["usuario_nome"]) || !is
     $permissao_pessoas_excluir_presidentes = $dados["pessoas_gruper_excluir_presidentes"];
     $permissao_pessoas_excluir_supervisores = $dados["gruper_pessoas_excluir_supervisores"];
     $permissao_pessoas_excluir_vendedores = $dados["gruper_pessoas_excluir_vendedores"];
+    $permissao_pessoas_excluir_caixas = $dados["gruper_pessoas_excluir_caixas"];
     $permissao_pessoas_excluir_fornecedores = $dados["gruper_pessoas_excluir_fornecedores"];
     $permissao_pessoas_excluir_consumidores = $dados["gruper_pessoas_excluir_consumidores"];
     $permissao_pessoas_ver = $dados["gruper_pessoas_ver"];
     $permissao_pessoas_ver_presidentes = $dados["gruper_pessoas_ver_presidentes"];
     $permissao_pessoas_ver_supervisores = $dados["gruper_pessoas_ver_supervisores"];
     $permissao_pessoas_ver_vendedores = $dados["gruper_pessoas_ver_vendedores"];
+    $permissao_pessoas_ver_caixas = $dados["gruper_pessoas_ver_caixas"];
     $permissao_pessoas_ver_fornecedores = $dados["gruper_pessoas_ver_fornecedores"];
     $permissao_pessoas_ver_consumidores = $dados["gruper_pessoas_ver_consumidores"];
     $permissao_pessoas_ver_administradores = $dados["gruper_pessoas_ver_administradores"];
@@ -76,6 +80,7 @@ if (!isset($_SESSION["usuario_cpf"]) || !isset($_SESSION["usuario_nome"]) || !is
     $permissao_pessoas_definir_grupo_presidentes = $dados["gruper_pessoas_definir_grupo_presidentes"];
     $permissao_pessoas_definir_grupo_supervisores = $dados["gruper_pessoas_definir_grupo_supervisores"];
     $permissao_pessoas_definir_grupo_vendedores = $dados["gruper_pessoas_definir_grupo_vendedores"];
+    $permissao_pessoas_definir_grupo_caixas = $dados["gruper_pessoas_definir_grupo_caixas"];
     $permissao_pessoas_definir_grupo_fornecedores = $dados["gruper_pessoas_definir_grupo_fornecedores"];
     $permissao_pessoas_definir_grupo_consumidores = $dados["gruper_pessoas_definir_grupo_consumidores"];
     $permissao_pessoas_definir_quiosqueusuario = $dados["gruper_pessoas_definir_quiosqueusuario"];
@@ -134,6 +139,7 @@ if (!isset($_SESSION["usuario_cpf"]) || !isset($_SESSION["usuario_nome"]) || !is
     $permissao_taxas_aplicar = $dados["gruper_taxas_aplicar"];
     $permissao_quiosque_versupervisores = $dados["gruper_quiosque_versupervisores"];
     $permissao_quiosque_vervendedores = $dados["gruper_quiosque_vervendedores"];
+    $permissao_quiosque_vercaixas = $dados["gruper_quiosque_vercaixas"];
     $permissao_quiosque_vertaxas = $dados["gruper_quiosque_vertaxas"];
 }
 

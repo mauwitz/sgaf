@@ -139,7 +139,7 @@ $tpl->block("BLOCK_LISTA_CABECALHO");
 
 $tpl->CABECALHO_COLUNA_TAMANHO = "100px";
 $tpl->CABECALHO_COLUNA_COLSPAN = "2";
-$tpl->CABECALHO_COLUNA_NOME = "VENDED.";
+$tpl->CABECALHO_COLUNA_NOME = "CAIXA";
 $tpl->block("BLOCK_LISTA_CABECALHO");
 
 
@@ -257,22 +257,22 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl->LISTA_COLUNA2_VALOR = "($supervisores)";
     $tpl->block("BLOCK_LISTA_COLUNA2");
 
-    //Coluna Vendedores
+    //Coluna caixas
     $tpl->LISTA_COLUNA2_ALINHAMENTO = "right";
     $tpl->LISTA_COLUNA2_ALINHAMENTO2 = "left";
-    $sqltot = "SELECT * FROM quiosques_vendedores WHERE quiven_quiosque=$codigo";
+    $sqltot = "SELECT * FROM quiosques_caixas WHERE quicai_quiosque=$codigo";
     $querytot = mysql_query($sqltot);
     if (!$querytot)
         die("Erro: " . mysql_error());
-    $vendedores = mysql_num_rows($querytot);
-    if ($permissao_quiosque_vervendedores == 1) {
-        $tpl->LISTA_COLUNA2_LINK = "vendedores.php?quiosque=$codigo";
+    $caixas = mysql_num_rows($querytot);
+    if ($permissao_quiosque_vercaixas == 1) {
+        $tpl->LISTA_COLUNA2_LINK = "caixas.php?quiosque=$codigo";
         $tpl->DESABILITADO = "";
     } else {
         $tpl->LISTA_COLUNA2_LINK = "#";
         $tpl->DESABILITADO = "_desabilitado";
     }
-    $tpl->LISTA_COLUNA2_VALOR = "($vendedores)";
+    $tpl->LISTA_COLUNA2_VALOR = "($caixas)";
     $tpl->block("BLOCK_LISTA_COLUNA2");
 
 

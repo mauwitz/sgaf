@@ -101,7 +101,7 @@ $tpl_filtro->block("BLOCK_OPTION_PADRAO");
 $sql = "
     SELECT DISTINCT pes_codigo,pes_nome 
     FROM pessoas
-    JOIN saidas on (sai_vendedor=pes_codigo)    
+    JOIN saidas on (sai_caixa=pes_codigo)    
     WHERE sai_tipo=3
     ORDER BY pes_nome 
 ";
@@ -246,7 +246,7 @@ if (!empty($filtro_numero))
 if (!empty($filtro_motivo))
     $sql_filtro = " and sai_saidajustificada = $filtro_motivo ";
 if (!empty($filtro_supervisor))
-    $sql_filtro = " and sai_vendedor = $filtro_supervisor ";
+    $sql_filtro = " and sai_caixa = $filtro_supervisor ";
 if (!empty($filtro_fornecedor))
     $sql_filtro = " and ent_fornecedor = $filtro_fornecedor ";
 
@@ -256,7 +256,7 @@ $sql = "
     SELECT DISTINCT sai_codigo,sai_datacadastro,sai_horacadastro,saimot_nome,pes_nome,sai_totalbruto,sai_descricao,sai_status,pes_codigo
     FROM saidas
     JOIN saidas_motivo on (sai_saidajustificada=saimot_codigo)
-    JOIN pessoas on (sai_vendedor=pes_codigo)
+    JOIN pessoas on (sai_caixa=pes_codigo)
     left JOIN saidas_produtos on (saipro_saida=sai_codigo)
     left JOIN entradas on (ent_codigo=saipro_lote)
     WHERE sai_tipo=3

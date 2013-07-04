@@ -57,14 +57,14 @@ if ($linhas3 > 0) {
 }
 
 
-//Verifica se o esta pessoa é vendedor de algum quiosque
-$sql2 = "SELECT * FROM quiosques_vendedores WHERE quiven_vendedor=$codigo";
+//Verifica se o esta pessoa é caixa de algum quiosque
+$sql2 = "SELECT * FROM quiosques_caixas WHERE quicai_caixa=$codigo";
 $query2 = mysql_query($sql2);
 if (!$query2)
     die("Erro: 1" . mysql_error());
 $linhas2 = mysql_num_rows($query2);
 if ($linhas2 > 0) {
-    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa está atribuida como vendedora de algum quiosque. Se realmente deseja excluí-la, deve-se retirar ela do cargo de vendedora na tela de 'Vendedores do Quiosque'";
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa está atribuida como caixa de algum quiosque. Se realmente deseja excluí-la, deve-se retirar ela do cargo de caixa na tela de 'Caixas do Quiosque'";
     $tpl_notificacao->block("BLOCK_ERRO");
     $tpl_notificacao->block("BLOCK_NAOAPAGADO");
     $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");
@@ -89,7 +89,7 @@ if ($linhas4 > 0) {
 }
 
 
-//Verifica se ele � ja participou de entradas como fornecedor ou vendedor
+//Verifica se ele � ja participou de entradas como fornecedor ou caixa
 $sql = "SELECT * FROM entradas WHERE ent_supervisor=$codigo OR ent_fornecedor=$codigo";
 $query = mysql_query($sql);
 if (!$query) {
@@ -97,7 +97,7 @@ if (!$query) {
 }
 $linhas = mysql_num_rows($query);
 if ($linhas > 0) {
-    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa já realizou operações como vendedor ou fornecedor de algum quiosque";
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa já realizou operações como caixa ou fornecedor de algum quiosque";
     $tpl_notificacao->block("BLOCK_ERRO");
     $tpl_notificacao->block("BLOCK_NAOAPAGADO");
     
@@ -106,15 +106,15 @@ if ($linhas > 0) {
     exit;
 }
 
-//Verifica se ele � ja participou de saidas como consumidor ou vendedor
-$sql = "SELECT * FROM saidas WHERE sai_vendedor=$codigo OR sai_consumidor=$codigo";
+//Verifica se ele � ja participou de saidas como consumidor ou caixa
+$sql = "SELECT * FROM saidas WHERE sai_caixa=$codigo OR sai_consumidor=$codigo";
 $query = mysql_query($sql);
 if (!$query) {
     die("Erro SQL: " . mysql_error());
 }
 $linhas = mysql_num_rows($query);
 if ($linhas > 0) {
-    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa já participou de alguma Saída como vendedor ou consumidor de algum quiosque!";
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Esta pessoa já participou de alguma Saída como caixa ou consumidor de algum quiosque!";
     $tpl_notificacao->block("BLOCK_ERRO");
     $tpl_notificacao->block("BLOCK_NAOAPAGADO");
     $tpl_notificacao->block("BLOCK_BOTAO_VOLTAR");

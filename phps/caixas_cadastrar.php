@@ -2,7 +2,7 @@
 
 //Verifica se o usu�rio tem permiss�o para acessar este conte�do
 require "login_verifica.php";
-if ($permissao_quiosque_definirvendedores <> 1) {
+if ($permissao_quiosque_definircaixas <> 1) {
     header("Location: permissoes_semacesso.php");
     exit;
 }
@@ -13,14 +13,14 @@ include "includes.php";
 
 //Template de Título e Sub-título
 $tpl_titulo = new Template("templates/titulos.html");
-$tpl_titulo->TITULO = "VENDEDORES";
-$tpl_titulo->SUBTITULO = "CADASTRO DE VENDEDORES DO QUIOSQUE";
+$tpl_titulo->TITULO = "CAIXAS";
+$tpl_titulo->SUBTITULO = "CADASTRO DE CAIXAS DO QUIOSQUE";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
-$tpl_titulo->NOME_ARQUIVO_ICONE = "../pessoas2/vendedor.png";
+$tpl_titulo->NOME_ARQUIVO_ICONE = "../pessoas2/caixa.png";
 $tpl_titulo->show();
 
 //Pega todos os dados da tabela (Necess�rio caso seja uma edi��o)
-$vendedor = $_GET['codigo'];
+$caixa = $_GET['codigo'];
 $quiosque = $_GET['quiosque'];
 $operacao = $_GET['operacao'];
 
@@ -32,19 +32,19 @@ $array = mysql_fetch_assoc($query);
 $coo=$array["qui_cooperativa"];
 $quiosque_nome=$array["qui_nome"];
 
-if ($vendedor != "") {
+if ($caixa != "") {
     
-    $sql = "SELECT * FROM quiosques_vendedores WHERE quiven_vendedor='$vendedor'";
+    $sql = "SELECT * FROM quiosques_caixas WHERE quicai_caixa='$caixa'";
     $query = mysql_query($sql);
     if (!$query)
         die("Erro2:" . mysql_error());
     $array = mysql_fetch_assoc($query); 
-    $datafuncao=  converte_data($array['quiven_datafuncao']);
+    $datafuncao=  converte_data($array['quicai_datafuncao']);
 }
 
 //Estrutura dos campos de cadastro
 $tpl1 = new Template("templates/cadastro_edicao_detalhes_2.html");
-$tpl1->LINK_DESTINO = "vendedores_cadastrar2.php";
+$tpl1->LINK_DESTINO = "caixas_cadastrar2.php";
 
 //Quiosque
 $tpl1->TITULO = "Quiosque";
@@ -67,12 +67,12 @@ $tpl1->block("BLOCK_ITEM");
 
 
 
-//Vendedor
-$tpl1->TITULO = "Vendedor";
+//caixa
+$tpl1->TITULO = "Caixa";
 $tpl1->block("BLOCK_TITULO");
-$tpl1->SELECT_NOME = "vendedor";
+$tpl1->SELECT_NOME = "caixa";
 $tpl1->CAMPO_DICA = "";
-$tpl1->SELECT_ID = "vendedor";
+$tpl1->SELECT_ID = "caixa";
 $tpl1->SELECT_TAMANHO = "";
 $tpl1->block("BLOCK_SELECT_OBRIGATORIO");
 $tpl1->block("BLOCK_SELECT_OPTION_PADRAO");
@@ -93,7 +93,7 @@ if (!$query)
 while ($dados = mysql_fetch_assoc($query)) {
     $tpl1->OPTION_VALOR = $dados["pes_codigo"];
     $tpl1->OPTION_NOME = $dados["pes_nome"];
-    if ($vendedor == $dados["pes_codigo"]) {
+    if ($caixa == $dados["pes_codigo"]) {
         $tpl1->block("BLOCK_SELECT_OPTION_SELECIONADO");
     }
     $tpl1->block("BLOCK_SELECT_OPTION");
@@ -134,7 +134,7 @@ if (($operacao == "editar") || ($operacao == "cadastrar")) {
 
     //Bot�o Cancelar
     if ($codigo != $usuario_codigo) {
-        $tpl1->BOTAO_LINK = "vendedores.php?quiosque=$quiosque";
+        $tpl1->BOTAO_LINK = "caixas.php?quiosque=$quiosque";
         $tpl1->block("BLOCK_BOTAO_CANCELAR");
     }
     

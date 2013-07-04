@@ -2,7 +2,7 @@
 
 //Verifica se o usuário tem permissõo para acessar este conteúdo
 require "login_verifica.php";
-if ($permissao_quiosque_vervendedores <> 1) {
+if ($permissao_quiosque_vercaixas <> 1) {
     header("Location: permissoes_semacesso.php");
     exit;
 }
@@ -12,10 +12,10 @@ include "includes.php";
 
 //Template de Título e Sub-título
 $tpl_titulo = new Template("templates/titulos.html");
-$tpl_titulo->TITULO = "VENDEDORES";
-$tpl_titulo->SUBTITULO = "LISTA DE VENDEDORES DO QUIOSQUE";
+$tpl_titulo->TITULO = "CAIXAS";
+$tpl_titulo->SUBTITULO = "LISTA DE CAIXAS DO QUIOSQUE";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
-$tpl_titulo->NOME_ARQUIVO_ICONE = "../pessoas2/vendedor.png";
+$tpl_titulo->NOME_ARQUIVO_ICONE = "../pessoas2/caixa.png";
 $tpl_titulo->show();
 
 $tpl = new Template("templates/listagem_2.html");
@@ -35,10 +35,10 @@ $tpl->CAMPO_TAMANHO = "";
 $tpl->block("BLOCK_FILTRO_CAMPO_DESABILITADO");
 $tpl->block("BLOCK_FILTRO_CAMPO");
 $tpl->block("BLOCK_FILTRO_COLUNA");
-if ((($permissao_quiosque_definirvendedores == 1)&&($quiosque==$usuario_quiosque))||($usuario_grupo==1)){
+if ((($permissao_quiosque_definircaixas == 1)&&($quiosque==$usuario_quiosque))||($usuario_grupo==1)){
 
-    $tpl->LINK = "vendedores_cadastrar.php?quiosque=$quiosque&operacao=cadastrar";
-    $tpl->BOTAO_NOME = "INCLUIR VENDEDOR";
+    $tpl->LINK = "caixas_cadastrar.php?quiosque=$quiosque&operacao=cadastrar";
+    $tpl->BOTAO_NOME = "INCLUIR CAIXA";
     
     $tpl->block("BLOCK_AUTOFOCO");
     $tpl->block("BLOCK_RODAPE_BOTAO_MODELO");
@@ -80,7 +80,7 @@ $tpl->CABECALHO_COLUNA_TAMANHO = "";
 $tpl->CABECALHO_COLUNA_COLSPAN = "";
 $tpl->CABECALHO_COLUNA_NOME = "DATA DE ADMISSÃO";
 $tpl->block("BLOCK_LISTA_CABECALHO");
-IF ($permissao_quiosque_definirvendedores == 1) {
+IF ($permissao_quiosque_definircaixas == 1) {
     $tpl->CABECALHO_COLUNA_COLSPAN = "2";
     $tpl->CABECALHO_COLUNA_TAMANHO = "";
     $tpl->CABECALHO_COLUNA_NOME = "OPERAÇÕES";
@@ -91,10 +91,10 @@ $sql = "
  SELECT DISTINCT
     *
 FROM
-    quiosques_vendedores
-    JOIN pessoas on (quiven_vendedor=pes_codigo)
+    quiosques_caixas
+    JOIN pessoas on (quicai_caixa=pes_codigo)
 WHERE    
-    quiven_quiosque=$quiosque
+    quicai_quiosque=$quiosque
 ORDER BY
     pes_nome";
 
@@ -122,7 +122,7 @@ $query = mysql_query($sql);
 if (!$query)
     die("Erro: " . mysql_error());
 while ($dados = mysql_fetch_assoc($query)) {
-    $vendedor = $dados["quiven_vendedor"];
+    $caixa = $dados["quicai_caixa"];
 
     //Coluna ID
     $tpl->LISTA_COLUNA_VALOR = $dados["pes_id"];
@@ -145,22 +145,22 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl->block("BLOCK_LISTA_COLUNA");
 
     //Coluna Data de Admissão
-    if ($dados['quiven_datafuncao'] == "0000-00-00")
+    if ($dados['quicai_datafuncao'] == "0000-00-00")
         $tpl->LISTA_COLUNA_VALOR = "";
     else
-        $tpl->LISTA_COLUNA_VALOR = converte_data($dados['quiven_datafuncao']);
+        $tpl->LISTA_COLUNA_VALOR = converte_data($dados['quicai_datafuncao']);
     $tpl->block("BLOCK_LISTA_COLUNA");
-    IF ($permissao_quiosque_definirvendedores == 1) {
+    IF ($permissao_quiosque_definircaixas == 1) {
         //editar
-        $tpl->CODIGO = $vendedor;
-        $tpl->LINK = "vendedores_cadastrar.php";
-        $tpl->LINK_COMPLEMENTO = "vendedor=$vendedor&quiosque=$quiosque&operacao=editar";
+        $tpl->CODIGO = $caixa;
+        $tpl->LINK = "caixas_cadastrar.php";
+        $tpl->LINK_COMPLEMENTO = "caixa=$caixa&quiosque=$quiosque&operacao=editar";
 
         $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_EDITAR");
 
         //excluir
-        $tpl->LINK = "vendedores_deletar.php";
-        $tpl->LINK_COMPLEMENTO = "vendedor=$vendedor&quiosque=$quiosque&operacao=excluir";
+        $tpl->LINK = "caixas_deletar.php";
+        $tpl->LINK_COMPLEMENTO = "caixa=$caixa&quiosque=$quiosque&operacao=excluir";
         $tpl->block("BLOCK_LISTA_COLUNA_OPERACAO_EXCLUIR");
     }
     $tpl->block("BLOCK_LISTA");

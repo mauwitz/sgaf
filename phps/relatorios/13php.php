@@ -8,7 +8,7 @@ include "cabecalho1.php";
 $quiosque = $_REQUEST["quiosque"];
 $datade = $_REQUEST["datade"];
 $dataate = $_REQUEST["dataate"];
-$vendedor = $_REQUEST["vendedor"];
+$caixa = $_REQUEST["caixa"];
 $consumidor = $_REQUEST["consumidor"];
 $metpag = $_REQUEST["metpag"];
 $caderninho = $_REQUEST["caderninho"];
@@ -86,23 +86,23 @@ $tpl_campos->block("BLOCK_LINHA");
 
 
 
-//Vendedor
+//caixa
 $tpl_campos->COLUNA_ALINHAMENTO = "right";
 $tpl_campos->COLUNA_TAMANHO = "200px";
-$tpl_campos->TITULO = "Vendedor";
+$tpl_campos->TITULO = "Caixa";
 $tpl_campos->block("BLOCK_TITULO");
 $tpl_campos->block("BLOCK_CONTEUDO");
 $tpl_campos->block("BLOCK_COLUNA");
 $tpl_campos->COLUNA_ALINHAMENTO = "left";
 $tpl_campos->COLUNA_TAMANHO = "600px";
 $tpl_campos->CAMPO_TIPO = "text";
-$tpl_campos->CAMPO_NOME = "vendedor";
+$tpl_campos->CAMPO_NOME = "caixa";
 $tpl_campos->CAMPO_TAMANHO = "";
-if ($vendedor != "") {
+if ($caixa != "") {
     $sql = "
         SELECT pes_nome 
         FROM pessoas
-        WHERE pes_codigo=$vendedor
+        WHERE pes_codigo=$caixa
     ";
     $query = mysql_query($sql);
     if (!$query)
@@ -338,8 +338,8 @@ $tpl_lista->block("BLOCK_CORPO");
 $sql_filtro = "";
 if ($quiosque != "")
     $sql_filtro = $sql_filtro . " and sai_quiosque=$quiosque ";
-if ($vendedor != "")
-    $sql_filtro = $sql_filtro . " and sai_vendedor=$vendedor ";
+if ($caixa != "")
+    $sql_filtro = $sql_filtro . " and sai_caixa=$caixa ";
 if ($consumidor != "")
     $sql_filtro = $sql_filtro . " and sai_consumidor=$consumidor ";
 if ($metpag != "")

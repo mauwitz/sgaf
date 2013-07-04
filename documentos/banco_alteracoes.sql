@@ -201,8 +201,26 @@ INSERT INTO metodos_pagamento (metpag_codigo, metpag_nome) VALUES
 ALTER TABLE  saidas ADD  sai_areceber BOOLEAN NOT NULL ,
 ADD  sai_metpag TINYINT NOT NULL ,
 ADD INDEX (  sai_metpag );
+-----------------------
 
+# Fiz hoje 04/07/2013
+ALTER TABLE  `grupo_permissoes` ADD  `gruper_quiosque_definircaixas` TINYINT( 1 ) NOT NULL ,
+ADD  `gruper_quiosque_vercaixas` TINYINT( 1 ) NOT NULL ,
+ADD  `gruper_pessoas_cadastrar_caixas` TINYINT( 1 ) NOT NULL ,
+ADD  `gruper_pessoas_ver_caixas` TINYINT( 1 ) NOT NULL ,
+ADD  `gruper_pessoas_definir_grupo_caixas` TINYINT( 1 ) NOT NULL
 
+exportar a entidade grupos_permissoes, foi feito várias alterações
+
+RENAME TABLE  `cooesperanca`.`quiosques_vendedores` TO  `cooesperanca`.`quiosques_caixas` ;
+
+ALTER TABLE  `quiosques_caixas` CHANGE  `quicai_quiosque`  `quicai_quiosque` TINYINT( 4 ) NOT NULL ,
+CHANGE  `quicai_vendedor`  `quicai_vendedor` BIGINT( 20 ) NOT NULL ,
+CHANGE  `quicai_datafuncao`  `quicai_datafuncao` DATE NULL DEFAULT NULL
+
+ALTER TABLE  `saidas` CHANGE  `sai_vendedor`  `sai_caixa` BIGINT( 20 ) NOT NULL
+
+ALTER TABLE  `quiosques_caixas` CHANGE  `quicai_caixas`  `quicai_caixa` BIGINT( 20 ) NOT NULL
 
 
 

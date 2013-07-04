@@ -25,15 +25,15 @@ $tpl_notificacao->DESTINO = "quiosques.php";
 $tpl_notificacao->ICONES = $icones;
 
 
-//Verifica se h� vendedores
-$sql = "SELECT * FROM quiosques_vendedores WHERE quiven_quiosque=$codigo";
+//Verifica se h� caixas
+$sql = "SELECT * FROM quiosques_caixas WHERE quicai_quiosque=$codigo";
 $query = mysql_query($sql);
 if (!$query) {
     die("Erro SQL1: " . mysql_error());
 }
 $linhas = mysql_num_rows($query);
 if ($linhas > 0) {
-    $tpl_notificacao->MOTIVO_COMPLEMENTO = "vendedores";
+    $tpl_notificacao->MOTIVO_COMPLEMENTO = "Caixas";
     $tpl_notificacao->block("BLOCK_ERRO");
     $tpl_notificacao->block("BLOCK_NAOAPAGADO");
     $tpl_notificacao->block("BLOCK_MOTIVO_EMUSO");

@@ -19,7 +19,7 @@
             $("span[id=span_administrador]").show(); 
             $("span[id=span_presidente]").show(); 
             $("span[id=span_supervisor]").show(); 
-            $("span[id=span_vendedor]").show();             
+            $("span[id=span_caixa]").show();             
         } else if (valor==2) { //Pessoa Jurídica
             //alert('2');
             $("tr[id=tr_categoria]").show(); 
@@ -35,7 +35,7 @@
             $("span[id=span_administrador]").hide(); 
             $("span[id=span_presidente]").hide(); 
             $("span[id=span_supervisor]").hide(); 
-            $("span[id=span_vendedor]").hide(); 
+            $("span[id=span_caixa]").hide(); 
         } else {
             alert("Erro de envio de parametros para a função");
         }       
@@ -98,7 +98,7 @@ if ($usuario_codigo != $codigo) {
                 header("Location: permissoes_semacesso.php");
                 exit;
             }
-            if (($tipo == 4) && ($permissao_pessoas_ver_vendedores == 0)) {
+            if (($tipo == 4) && ($permissao_pessoas_ver_caixas == 0)) {
                 header("Location: permissoes_semacesso.php");
                 exit;
             }
@@ -822,7 +822,7 @@ $tpl1->TITULO = "Tipo";
 $tipo_administrador = 0;
 $tipo_presidente = 0;
 $tipo_supervisor = 0;
-$tipo_vendedor = 0;
+$tipo_caixa = 0;
 $tipo_fornecedor = 0;
 $tipo_consumidor = 0;
 if (($operacao == "editar") || ($operacao == "ver")) {
@@ -839,7 +839,7 @@ if (($operacao == "editar") || ($operacao == "ver")) {
         if ($tipo == 3)
             $tipo_supervisor = 1;
         if ($tipo == 4)
-            $tipo_vendedor = 1;
+            $tipo_caixa = 1;
         if ($tipo == 5)
             $tipo_fornecedor = 1;
         if ($tipo == 6)
@@ -943,18 +943,18 @@ if ($usuario_codigo != $codigo) {
         $tpl1->block("BLOCK_CHECKBOX");
     }
 
-    //Tipo Vendedor
-    if (($permissao_pessoas_cadastrar_vendedores == 1) || (($permissao_pessoas_ver_vendedores == 1) && ($operacao = 'ver'))) {
+    //Tipo caixa
+    if (($permissao_pessoas_cadastrar_caixas == 1) || (($permissao_pessoas_ver_caixas == 1) && ($operacao = 'ver'))) {
         $tpl1->CHECKBOX_NOME = "box[3]";
         $tpl1->CHECKBOX_ID = "vend";
         $tpl1->CHECKBOX_VALOR = "4";
-        $tpl1->LABEL_NOME = "Vendedor";
-        if ($tipo_vendedor == 1)
+        $tpl1->LABEL_NOME = "Caixa";
+        if ($tipo_caixa == 1)
             $tpl1->block("BLOCK_CHECKBOX_SELECIONADO");
         //Se for edi��o de pessoa
         if ($operacao == "editar") {
             //Verifica se a pessoa em quest�o � supervisor de algum quiosque, se sim ent�o desabilitar esse check
-            $sql2 = "SELECT * FROM quiosques_vendedores WHERE quiven_vendedor=$codigo";
+            $sql2 = "SELECT * FROM quiosques_caixas WHERE quicai_caixa=$codigo";
             $query2 = mysql_query($sql2);
             if (!$query2)
                 die("Erro: 1" . mysql_error());
@@ -962,7 +962,7 @@ if ($usuario_codigo != $codigo) {
             if ($total2 > 0) {
                 $tpl1->block("BLOCK_CHECKBOX_DESABILITADO");
                 $tpl1->CHECKBOX_ICONE_ARQUIVO = "../imagens/icones/geral/info.png";
-                $tpl1->CHECKBOX_ICONE_MENSAGEM = "Você não pode desmarcar esta opção porque esta pessoa atualmente é vendedora de algum quiosque";
+                $tpl1->CHECKBOX_ICONE_MENSAGEM = "Você não pode desmarcar esta opção porque esta pessoa atualmente é caixa de algum quiosque";
                 $tpl1->block("BLOCK_CHECKBOX_ICONE");
                 //Chama o campo oculto caso o checkbox fique desabilitado
                 $tpl1->CAMPOOCULTO_NOME = "box[3]";
@@ -977,7 +977,7 @@ if ($usuario_codigo != $codigo) {
         } else {
             $tpl1->CHECKBOX_SPAN_CLASSE = "";
         }
-        $tpl1->CHECKBOX_SPAN_ID = "span_vendedor";
+        $tpl1->CHECKBOX_SPAN_ID = "span_caixa";
         $tpl1->block("BLOCK_CHECKBOX");
     }
 
@@ -1156,8 +1156,8 @@ if ($operacao == "editar") {
         $linhas = mysql_num_rows($query);
 
 
-        //Verifica se o esta pessoa é vendedor de algum quiosque
-        $sql2 = "SELECT qui_nome FROM quiosques JOIN quiosques_vendedores on (quiven_quiosque=qui_codigo)  WHERE quiven_vendedor=$codigo";
+        //Verifica se o esta pessoa é caixa de algum quiosque
+        $sql2 = "SELECT qui_nome FROM quiosques JOIN quiosques_caixas on (quicai_quiosque=qui_codigo)  WHERE quicai_caixa=$codigo";
         $query2 = mysql_query($sql2);
         if (!$query2)
             die("Erro: 1" . mysql_error());
@@ -1206,7 +1206,7 @@ if ($operacao == "editar") {
         if ($linhas5 == 0) {
             $tpl1->block("BLOCK_SELECT_DESABILITADO");
             $tpl1->COMPLEMENTO_ICONE_ARQUIVO = "../imagens/icones/geral/info.png";
-            $tpl1->COMPLEMENTO_ICONE_MENSAGEM = "Esta pessoa não pode ter acesso ao sistema porque ela não é presidente, supervisora, vendedora ou fornecedora de algum quiosque de sua cooperativa. Para ser considerado um fornecedor, não basta apenas marcar o tipo 'Fornecedor' nesta tela, é necessário ter pelo menos uma entrada! Para ser Supervisor ou Vendedor de um quiosque, esta pessoa deve ser vinculadas a um quiosque na tela de 'Quiosques'! E para ser um presidente contatar um administrador! :)";
+            $tpl1->COMPLEMENTO_ICONE_MENSAGEM = "Esta pessoa não pode ter acesso ao sistema porque ela não é presidente, supervisora, caixa ou fornecedora de algum quiosque de sua cooperativa. Para ser considerado um fornecedor, não basta apenas marcar o tipo 'Fornecedor' nesta tela, é necessário ter pelo menos uma entrada! Para ser Supervisor ou caixa de um quiosque, esta pessoa deve ser vinculadas a um quiosque na tela de 'Quiosques'! E para ser um presidente contatar um administrador! :)";
             $tpl1->block("BLOCK_COMPLEMENTO_ICONE");
             $tpl1->block("BLOCK_SELECT_OPTION_SELECIONADO");
         }
@@ -1242,7 +1242,7 @@ if ($operacao == "editar") {
         $tpl1->block("BLOCK_ITEM");
 
 
-        //Se a pessoa estiver setada como vendedor, supervisor ou fornecedor de algum quiosque ent�o liberar acesso ao sistema
+        //Se a pessoa estiver setada como caixa, supervisor ou fornecedor de algum quiosque ent�o liberar acesso ao sistema
         if ($linhas5 > 0) {
 
             //Senha Nova
@@ -1360,9 +1360,9 @@ if ($operacao == "editar") {
                     }
                 }
 
-                //Verifica se o esta pessoa é vendedor de algum quiosque
+                //Verifica se o esta pessoa é caixa de algum quiosque
                 if ($grupo_codigo == 4) {
-                    $sql2 = "SELECT qui_nome FROM quiosques JOIN quiosques_vendedores on (quiven_quiosque=qui_codigo)  WHERE quiven_vendedor=$codigo";
+                    $sql2 = "SELECT qui_nome FROM quiosques JOIN quiosques_caixas on (quicai_quiosque=qui_codigo)  WHERE quicai_caixa=$codigo";
                     $query2 = mysql_query($sql2);
                     if (!$query2)
                         die("Erro: 1" . mysql_error());
@@ -1420,9 +1420,9 @@ if ($operacao == "editar") {
                 $sql = "
             SELECT qui_codigo,qui_nome 
             FROM quiosques 
-            join quiosques_vendedores on (quiven_quiosque=qui_codigo)
+            join quiosques_caixas on (quicai_quiosque=qui_codigo)
             WHERE qui_cooperativa=$cooperativa
-            AND quiven_vendedor=$codigo
+            AND quicai_caixa=$codigo
         ";
             } else IF ($usuario_grupo == 5) {
                 $sql = "

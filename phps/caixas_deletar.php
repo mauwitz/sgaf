@@ -1,7 +1,7 @@
 <?php
-//Verifica se o usuário tem permissão para acessar este conteúdo
+//Verifica se o usuï¿½rio tem permissï¿½o para acessar este conteï¿½do
 require "login_verifica.php";
-if ($permissao_quiosque_definirvendedores <> 1) {
+if ($permissao_quiosque_definircaixas <> 1) {
     header("Location: permissoes_semacesso.php");
     exit;
 }
@@ -11,30 +11,30 @@ include "includes.php";
 
 //Template de TÃ­tulo e Sub-tÃ­tulo
 $tpl_titulo = new Template("templates/titulos.html");
-$tpl_titulo->TITULO = "VENDEDORES";
+$tpl_titulo->TITULO = "CAIXAS";
 $tpl_titulo->SUBTITULO = "DELETAR/APAGAR";
 $tpl_titulo->ICONES_CAMINHO = "$icones";
-$tpl_titulo->NOME_ARQUIVO_ICONE = "../pessoas2/vendedor.png";
+$tpl_titulo->NOME_ARQUIVO_ICONE = "../pessoas2/caixa.png";
 $tpl_titulo->show();
 
-//Inicio da exclusão de entradas
+//Inicio da exclusï¿½o de entradas
 $quiosque = $_GET["quiosque"];
-$vendedor = $_GET["vendedor"];
+$caixa = $_GET["caixa"];
 
-//Limpa o grupo de permissÃµes do usuário da pessoa
+//Limpa o grupo de permissÃµes do usuï¿½rio da pessoa
 $sql = "
 UPDATE
     pessoas
 SET
     pes_grupopermissoes=''           
 WHERE
-    pes_codigo = '$vendedor'
+    pes_codigo = '$caixa'
 ";
 if (!mysql_query($sql))
     die("Erro: " . mysql_error());
 
-//Excluir a pessoa da função de vendedor
-$sql2 = "DELETE FROM quiosques_vendedores WHERE quiven_vendedor='$vendedor' and quiven_quiosque=$quiosque";
+//Excluir a pessoa da funï¿½ï¿½o de caixa
+$sql2 = "DELETE FROM quiosques_caixas WHERE quicai_caixa='$caixa' and quicai_quiosque=$quiosque";
 $query2 = mysql_query($sql2);
 if (!$query2) {
     die("Erro SQL: " . mysql_error());
@@ -43,7 +43,7 @@ if (!$query2) {
 $tpl_notificacao = new Template("templates/notificacao.html");
 $tpl_notificacao->ICONES = $icones;
 $tpl_notificacao->MOTIVO_COMPLEMENTO = "";
-$tpl_notificacao->DESTINO = "vendedores.php?quiosque=$quiosque";
+$tpl_notificacao->DESTINO = "caixas.php?quiosque=$quiosque";
 $tpl_notificacao->block("BLOCK_CONFIRMAR");
 $tpl_notificacao->block("BLOCK_APAGADO");
 $tpl_notificacao->block("BLOCK_BOTAO");

@@ -34,10 +34,10 @@ else
     $tpl->DESTINO = "saidas.php";
 
 
-//Se for um vendedor só pode deletar as vendas que ele fez 
+//Se for um caixa só pode deletar as vendas que ele fez 
 if ($usuario_grupo == 4) {
     //Verifica se a saida que está sendo deletada é dele
-    $sql = "SELECT sai_codigo FROM saidas WHERE sai_vendedor=$usuario_codigo and sai_codigo=$saida";
+    $sql = "SELECT sai_codigo FROM saidas WHERE sai_caixa=$usuario_codigo and sai_codigo=$saida";
     $query = mysql_query($sql);
     if (!$query)
         die("Erro de SQL (1):" . mysql_error());

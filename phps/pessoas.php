@@ -72,7 +72,7 @@ ORDER BY
         if ((($tipo == 1) && ($permissao_pessoas_ver_administradores == 1)) ||
                 (($tipo == 2) && ($permissao_pessoas_ver_presidentes == 1)) ||
                 (($tipo == 3) && ($permissao_pessoas_ver_supervisores == 1)) ||
-                (($tipo == 4) && ($permissao_pessoas_ver_vendedores == 1)) ||
+                (($tipo == 4) && ($permissao_pessoas_ver_caixas == 1)) ||
                 (($tipo == 5) && ($permissao_pessoas_ver_fornecedores == 1)) ||
                 (($tipo == 6) && ($permissao_pessoas_ver_supervisores == 1))
         ) {
@@ -234,7 +234,7 @@ if ($permissao_pessoas_ver_supervisores == 0) {
     else
         $sql_filtro2 = $sql_filtro2 . " or mespestip_tipo=3";
 }
-if ($permissao_pessoas_ver_vendedores == 0) {
+if ($permissao_pessoas_ver_caixas == 0) {
     $cont++;
     if ($cont == 1)
         $sql_filtro2 = $sql_filtro2 . " mespestip_tipo=4";
@@ -352,7 +352,7 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tipo_administrador = 0;
     $tipo_presidente = 0;
     $tipo_supervisor = 0;
-    $tipo_vendedor = 0;
+    $tipo_caixa = 0;
     $tipo_fornecedor = 0;
     $tipo_consumidor = 0;
     while ($dados_tipo = mysql_fetch_assoc($query_tipo)) {
@@ -368,7 +368,7 @@ while ($dados = mysql_fetch_assoc($query)) {
             $tipo_supervisor = 1;
         }
         if ($tipo == 4) {
-            $tipo_vendedor = 1;
+            $tipo_caixa = 1;
         }
         if ($tipo == 5) {
             $tipo_fornecedor = 1;
@@ -436,18 +436,18 @@ while ($dados = mysql_fetch_assoc($query)) {
 
 
 
-        //Vendedor
-        $tpl->IMAGEM_TITULO = "Vendedor";
-        if ($tipo_vendedor == 1) {
+        //caixa
+        $tpl->IMAGEM_TITULO = "Caixa";
+        if ($tipo_caixa == 1) {
             $tpl->LINK = "#";
             $tpl->IMAGEM_PASTA = "$icones2";
-            $tpl->IMAGEM_NOMEARQUIVO = "vendedor.png";
+            $tpl->IMAGEM_NOMEARQUIVO = "caixa.png";
             $tpl->block("BLOCK_LISTA_COLUNA_IMAGEM");
         } else {
             $tpl->LINK = "#";
             $tpl->IMAGEM_TAMANHO = $icone_tamanho;
             $tpl->IMAGEM_PASTA = "$icones2";
-            $tpl->IMAGEM_NOMEARQUIVO = "vendedor2.png";
+            $tpl->IMAGEM_NOMEARQUIVO = "caixa2.png";
             $tpl->block("BLOCK_LISTA_COLUNA_IMAGEM");
         }
     }

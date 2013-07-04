@@ -322,11 +322,11 @@ while ($dados = mysql_fetch_assoc($query)) {
                 die("Erro SQL" . mysql_error());
             $linhas3 = mysql_num_rows($query3);
             if ($linhas3 > 0)
-                $tpl2->ICONE_NOMEARQUIVO = "vendedor.png";
+                $tpl2->ICONE_NOMEARQUIVO = "caixa.png";
             else
-                $tpl2->ICONE_NOMEARQUIVO = "vendedor2.png";
-            $tpl2->ICONE_DICA = "Vendedor";
-            $tpl2->ICONE_NOMEALTERNATIVO = "Vendedor";
+                $tpl2->ICONE_NOMEARQUIVO = "caixa2.png";
+            $tpl2->ICONE_DICA = "Caixa";
+            $tpl2->ICONE_NOMEALTERNATIVO = "Caixa";
         } else if ($tipo == 5) {
             $sql3 = "
                 SELECT *

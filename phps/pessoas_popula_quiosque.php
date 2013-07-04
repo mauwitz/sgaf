@@ -24,9 +24,9 @@ if ($grupo_permissao == "") {
         $sql = "
             SELECT qui_codigo,qui_nome 
             FROM quiosques 
-            join quiosques_vendedores on (quiven_quiosque=qui_codigo)
+            join quiosques_caixas on (quicai_quiosque=qui_codigo)
             WHERE qui_cooperativa=$cooperativa
-            AND quiven_vendedor=$pessoa
+            AND quicai_caixa=$pessoa
         ";        
      } else IF ($grupo_permissao==5){
         $sql = "
