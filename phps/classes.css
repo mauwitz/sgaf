@@ -443,3 +443,9 @@
     font-size: xx-small;
 }
 
+.aparece {
+    display: block;
+}
+.some {
+    display: none;
+}

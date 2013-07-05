@@ -4,8 +4,8 @@ class banco {
 
     private $host = 'localhost';
     private $user = 'root';
-    private $pass = 'soli12ecoPORTAL';
-    private $banco = 'sgaf';
+    private $pass = 'mautito';
+    private $banco = 'cooesperanca';
 
     function conectar() {
         $con = mysql_connect($this->host, $this->user, $this->pass) or die($this->erro(mysql_error()));

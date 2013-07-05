@@ -27,19 +27,22 @@ $passa = $_REQUEST["passa"];
 $tipopagina = "acertos";
 include "includes.php";
 
-
+//print_r($_REQUEST);
 //Variaveis
 if ($passo == "")
     $passo = 1;
 
 if ($passo == 1) {
     $codigo = $_GET["codigo"];
+    $dataate = date("Y-m-d");
 } else {
     if ($operacao <> 'simular') {
         $operacao = $_POST["operacao"];
         $codigo = $_POST["codigo"];
         $fornecedor = $_POST["fornecedor"];
         $tipopessoa = $_POST["tipopessoa"];
+        $datade = $_POST["datade2"];
+        $dataate = $_POST["dataate"];
     }
 }
 
@@ -145,6 +148,8 @@ $tpl1->block("BLOCK_TITULO");
 $tpl1->SELECT_NOME = "fornecedor";
 $tpl1->CAMPO_DICA = "";
 $tpl1->SELECT_ID = "fornecedor";
+$tpl1->SELECT_ONCHANGE = "popula_acertos_dataminmax(this.value)";
+$tpl1->block("BLOCK_SELECT_ONCHANGE");
 $tpl1->SELECT_TAMANHO = "";
 $tpl1->block("BLOCK_SELECT_OBRIGATORIO");
 $tpl1->block("BLOCK_SELECT_OPTION_PADRAO");
@@ -180,6 +185,49 @@ $tpl1->block("BLOCK_CONTEUDO");
 $tpl1->block("BLOCK_ITEM");
 
 
+//Data De Até
+$dataatual = date("Y-m-d");
+$tpl1->TITULO = "Período";
+$tpl1->block("BLOCK_TITULO");
+$tpl1->CAMPO_TIPO = "date";
+$tpl1->CAMPO_QTD_CARACTERES = "";
+$tpl1->CAMPO_NOME = "datade";
+$tpl1->CAMPO_DICA = "";
+$tpl1->CAMPO_ID = "";
+$tpl1->CAMPO_TAMANHO = "";
+$tpl1->CAMPO_VALOR = "$datade";
+$tpl1->CAMPO_QTD_CARACTERES = "";
+$tpl1->block("BLOCK_CAMPO_NORMAL");
+$tpl1->block("BLOCK_CAMPO_DESABILITADO");
+$tpl1->block("BLOCK_CAMPO");
+$tpl1->TEXTO_ID = "";
+$tpl1->TEXTO = " até ";
+$tpl1->block("BLOCK_TEXTO");
+$tpl1->block("BLOCK_CONTEUDO");
+$tpl1->CAMPO_TIPO = "date";
+$tpl1->CAMPO_QTD_CARACTERES = "";
+$tpl1->CAMPO_NOME = "dataate";
+$tpl1->CAMPO_DICA = "";
+$tpl1->CAMPO_ID = "";
+if ($passo == 2) {
+    $tpl1->block("BLOCK_CAMPO_DESABILITADO");
+}
+$tpl1->CAMPO_TAMANHO = "";
+$tpl1->CAMPO_VALOR = "$dataate";
+$tpl1->CAMPO_QTD_CARACTERES = "";
+$tpl1->block("BLOCK_CAMPO_OBRIGATORIO");
+$tpl1->block("BLOCK_CAMPO_NORMAL");
+$tpl1->block("BLOCK_CAMPO");
+$tpl1->block("BLOCK_CONTEUDO");
+if ($passo == 1) {
+
+    $tpl1->LINHA_CLASSE = "some";
+    $tpl1->block("BLOCK_LINHA_CLASSE");
+}
+$tpl1->LINHA_ID = "periodo";
+$tpl1->block("BLOCK_LINHA_ID");
+
+$tpl1->block("BLOCK_ITEM");
 
 
 
@@ -200,6 +248,11 @@ $tpl1->block("BLOCK_CAMPOSOCULTOS");
 $tpl1->CAMPOOCULTO_NOME = "operacao";
 $tpl1->CAMPOOCULTO_VALOR = "$operacao";
 $tpl1->block("BLOCK_CAMPOSOCULTOS");
+
+$tpl1->CAMPOOCULTO_NOME = "datade2";
+$tpl1->CAMPOOCULTO_VALOR = "$datade";
+$tpl1->block("BLOCK_CAMPOSOCULTOS");
+
 
 //Bot�o Continuar
 if ($passo == 1) {
@@ -233,6 +286,7 @@ if ($passo == 2) {
             ent_quiosque=$usuario_quiosque and
             ent_tiponegociacao=1 and
             sai_tipo=1 and
+            sai_datacadastro BETWEEN '$datade' AND '$dataate' and
             sai_status=1
         GROUP BY 
             saipro_produto
@@ -295,6 +349,7 @@ if ($passo == 2) {
             ent_quiosque=$usuario_quiosque and
             sai_tipo=1 and
             ent_tiponegociacao=1 and
+            sai_datacadastro BETWEEN '$datade' AND '$dataate' and
             sai_status=1
         GROUP BY 
             saipro_produto
@@ -395,7 +450,7 @@ if ($passo == 2) {
         $query = mysql_query($sql);
         if (!$query)
             die("Erro43" . mysql_error());
-        $taxas=0;
+        $taxas = 0;
         while ($dados = mysql_fetch_assoc($query)) {
             $tpl5->LISTA_CLASSE = "tab_linhas2";
             $tpl5->block("BLOCK_LISTA_CLASSE");
@@ -407,7 +462,7 @@ if ($passo == 2) {
 
             $tpl5->LISTA_COLUNA_ALINHAMENTO = "right";
             $tpl5->LISTA_COLUNA_CLASSE = "";
-            $taxas=$taxas+$dados["quitax_valor"];
+            $taxas = $taxas + $dados["quitax_valor"];
             $tpl5->LISTA_COLUNA_VALOR = number_format($dados["quitax_valor"], 2, ',', '.');
             $tpl5->block("BLOCK_LISTA_COLUNA");
 
@@ -431,15 +486,15 @@ if ($passo == 2) {
         $tpl5->LISTA_COLUNA_ALINHAMENTO = "left";
         $tpl5->LISTA_COLUNA_VALOR = "Fornecedor";
         $tpl5->block("BLOCK_LISTA_COLUNA");
-        $taxa_fornecedor=100-$taxas;
+        $taxa_fornecedor = 100 - $taxas;
         $tpl5->LISTA_COLUNA_ALINHAMENTO = "right";
-        $tpl5->LISTA_COLUNA_VALOR = number_format($taxa_fornecedor,2,',','.');
+        $tpl5->LISTA_COLUNA_VALOR = number_format($taxa_fornecedor, 2, ',', '.');
         $tpl5->block("BLOCK_LISTA_COLUNA");
         $tpl5->LISTA_COLUNA_ALINHAMENTO = "left";
         $tpl5->LISTA_COLUNA_VALOR = "%";
         $tpl5->block("BLOCK_LISTA_COLUNA");
         $tpl5->LISTA_COLUNA_ALINHAMENTO = "right";
-        $valor_fornecedor=$total_bruto-$valtaxtot;
+        $valor_fornecedor = $total_bruto - $valtaxtot;
         $tpl5->LISTA_COLUNA_VALOR = "R$ " . number_format($valor_fornecedor, 2, ",", ".");
         $tpl5->block("BLOCK_LISTA_COLUNA");
         $tpl5->block("BLOCK_LISTA");
@@ -582,6 +637,14 @@ if ($passo == 2) {
 
         $tpl4->CAMPOOCULTO_NOME = "hora";
         $tpl4->CAMPOOCULTO_VALOR = "$hora";
+        $tpl4->block("BLOCK_CAMPOSOCULTOS");
+
+        $tpl4->CAMPOOCULTO_NOME = "datade2";
+        $tpl4->CAMPOOCULTO_VALOR = "$datade";
+        $tpl4->block("BLOCK_CAMPOSOCULTOS");
+
+        $tpl4->CAMPOOCULTO_NOME = "dataate2";
+        $tpl4->CAMPOOCULTO_VALOR = "$dataate";
         $tpl4->block("BLOCK_CAMPOSOCULTOS");
 
         $tpl4->CAMPOOCULTO_NOME = "$supervisor";

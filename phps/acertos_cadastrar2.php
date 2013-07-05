@@ -21,9 +21,12 @@ $valortaxas = $_POST["valtaxas"];
 $valorpendenteanterior = $_POST["valpen"];
 $valortotal = number_format($_POST["valtot"],2,'.',''); //N�o precisa usar replace nos , e . pois ele ja vem no formato de banco
 $valorpago = $_POST["valpago"];
+$datade = $_POST["datade2"];
+$dataate = $_POST["dataate2"];
 $valorpago = dinheiro_para_numero($valorpago);
 $valorpendenteatual = $valortotal - $valorpago;
 
+//print_r($_REQUEST);
 
 $tpl_titulo = new Template("templates/titulos.html");
 $tpl_titulo->TITULO = "ACERTOS DE CONSIGNAÇÕES";
@@ -53,6 +56,7 @@ $sql = "
             saipro_acertado=0 and
             ent_tiponegociacao=1 and
             ent_fornecedor=$fornecedor and
+            sai_datacadastro BETWEEN '$datade' AND '$dataate' and
             ent_quiosque=$usuario_quiosque and
             sai_tipo=1 and
             sai_status=1
@@ -89,7 +93,9 @@ INSERT INTO
         ace_valorpendenteanterior,
         ace_valortotal,
         ace_valorpago,        
-        ace_quiosque
+        ace_quiosque,
+        ace_dataini,
+        ace_datafim
     )
 VALUES (
     '$data',
@@ -102,7 +108,9 @@ VALUES (
     '$valorpendenteanterior',
     '$valortotal',
     '$valorpago',    
-    '$usuario_quiosque'        
+    '$usuario_quiosque',
+    '$datade',
+    '$dataate'
     )
 ";
 $query = mysql_query($sql);
@@ -161,6 +169,7 @@ SET
 WHERE 
     saipro_acertado=0 and
     ent_fornecedor=$fornecedor and
+    sai_datacadastro BETWEEN '$datade' AND '$dataate' and
     ent_quiosque=$usuario_quiosque and
     ent_tiponegociacao=1 and
     sai_tipo=1 and

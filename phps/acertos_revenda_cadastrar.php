@@ -135,7 +135,6 @@ $horaini = $horaini[0] . ":" . $horaini[1];
 $datafim_minimo = $dataini;
 $horafim_minimo = $horaini;
 
-
 //De
 $tpl->COLUNA_ALINHAMENTO = "right";
 $tpl->COLUNA_TAMANHO = "200px";

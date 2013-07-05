@@ -857,3 +857,18 @@ function quiosque_taxas_popula_taxa (valor) {
     
     
 }
+function popula_acertos_dataminmax(valor) {
+    $.post("acertos_popula_dataminmax.php", {
+        fornecedor: valor
+    }, function(valor2) {        
+        //alert(valor2);
+        if (valor2=='0000-00-00') {
+            alert("Este fornecedor não possui vendas a ser acertado!");        
+             $("tr[id=periodo]").hide();
+        } else {            
+            $("tr[id=periodo]").show();
+            $("input[name=datade]").val(valor2);
+            $("input[name=datade2]").val(valor2);
+        }
+    });     
+}
