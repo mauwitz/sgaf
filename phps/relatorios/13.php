@@ -67,11 +67,13 @@ $tpl_rel->block("BLOCK_CAMPO_OBRIGATORIO");
 $tpl_rel->CAMPO_CLASSE = " campo_tamanho_5 ";
 $tpl_rel->block("BLOCK_CAMPO_PADRAO");
 $tpl_rel->block("BLOCK_CAMPO");
-
 $tpl_rel->TEXTO_NOME = "";
 $tpl_rel->TEXTO_ID = "";
 $tpl_rel->TEXTO_CLASSE = "";
 $tpl_rel->TEXTO_VALOR = " até ";
+$dataatual = date("Y-m-d");
+$tpl_rel->CAMPO_MAX="$dataatual";
+$tpl_rel->block("BLOCK_CAMPO_MAX");
 $tpl_rel->block("BLOCK_TEXTO");
 $tpl_rel->block("BLOCK_CONTEUDO");
 
@@ -97,7 +99,7 @@ $tpl_rel->block("BLOCK_LINHA");
 
 
 
-//Xaixas
+//Caixas
 $tpl_rel->COLUNA_ALINHAMENTO = "right";
 $tpl_rel->COLUNA_TAMANHO = "200px";
 $tpl_rel->COLUNA_ROWSPAN = "";
@@ -203,6 +205,7 @@ $tpl_rel->block("BLOCK_SELECT_PADRAO");
 $tpl_rel->block("BLOCK_OPTION_TODOS");
 $tpl_rel->OPTION_VALOR = "0";
 $tpl_rel->OPTION_TEXTO = "Não";
+$tpl_rel->block("BLOCK_OPTION_SELECIONADO");
 $tpl_rel->block("BLOCK_OPTION");
 $tpl_rel->OPTION_VALOR = "1";
 $tpl_rel->OPTION_TEXTO = "Sim";

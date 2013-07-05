@@ -81,6 +81,12 @@
     .texto {
         
     }
+    .texto_vermelho {
+        color: red;
+    }
+    .texto_azul {
+        color: blue;
+    }
     .linha_nada {
         color: red;
         font-weight: bold;        
@@ -177,7 +183,11 @@
                 
                 
                 <!-- BEGIN BLOCK_TEXTO -->             
-                <span class="texto">{TEXTO}</span>                        
+                <span class="texto 
+                      <!-- BEGIN BLOCK_TEXTO_CLASSE_EXTRA -->             
+                      {TEXTO_CLASSE}
+                      <!-- END BLOCK_TEXTO_CLASSE_EXTRA -->             
+                ">{TEXTO}</span>                        
                 <!-- END BLOCK_TEXTO -->  
                 
                 

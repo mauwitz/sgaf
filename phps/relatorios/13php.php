@@ -271,63 +271,66 @@ $tpl_lista->block("BLOCK_COLUNA_PADRAO");
 $tpl_lista->block("BLOCK_TEXTO");
 $tpl_lista->block("BLOCK_CONTEUDO");
 $tpl_lista->block("BLOCK_COLUNA");
-$tpl_lista->TEXTO = "VAL. REC.";
-$tpl_lista->COLUNA_ALINHAMENTO = "center";
-$tpl_lista->COLUNA_TAMANHO = "70px";
-$tpl_lista->COLUNA_COLSPAN = "";
-$tpl_lista->block("BLOCK_COLUNA_PADRAO");
-$tpl_lista->block("BLOCK_TEXTO");
-$tpl_lista->block("BLOCK_CONTEUDO");
-$tpl_lista->block("BLOCK_COLUNA");
-$tpl_lista->TEXTO = "TROCO";
-$tpl_lista->COLUNA_ALINHAMENTO = "center";
-$tpl_lista->COLUNA_TAMANHO = "70px";
-$tpl_lista->COLUNA_COLSPAN = "";
-$tpl_lista->block("BLOCK_COLUNA_PADRAO");
-$tpl_lista->block("BLOCK_TEXTO");
-$tpl_lista->block("BLOCK_CONTEUDO");
-$tpl_lista->block("BLOCK_COLUNA");
-$tpl_lista->TEXTO = "TROCO DEV.";
-$tpl_lista->COLUNA_ALINHAMENTO = "center";
-$tpl_lista->COLUNA_TAMANHO = "70px";
-$tpl_lista->COLUNA_COLSPAN = "";
-$tpl_lista->block("BLOCK_COLUNA_PADRAO");
-$tpl_lista->block("BLOCK_TEXTO");
-$tpl_lista->block("BLOCK_CONTEUDO");
-$tpl_lista->block("BLOCK_COLUNA");
-$tpl_lista->TEXTO = "FALTA TROCO";
-$tpl_lista->COLUNA_ALINHAMENTO = "center";
-$tpl_lista->COLUNA_TAMANHO = "70px";
-$tpl_lista->COLUNA_COLSPAN = "";
-$tpl_lista->block("BLOCK_COLUNA_PADRAO");
-$tpl_lista->block("BLOCK_TEXTO");
-$tpl_lista->block("BLOCK_CONTEUDO");
-$tpl_lista->block("BLOCK_COLUNA");
-$tpl_lista->TEXTO = "TOT. LIQ.";
-$tpl_lista->COLUNA_ALINHAMENTO = "center";
-$tpl_lista->COLUNA_TAMANHO = "70px";
-$tpl_lista->COLUNA_COLSPAN = "";
-$tpl_lista->block("BLOCK_COLUNA_PADRAO");
-$tpl_lista->block("BLOCK_TEXTO");
-$tpl_lista->block("BLOCK_CONTEUDO");
-$tpl_lista->block("BLOCK_COLUNA");
-$tpl_lista->TEXTO = "MET. PAG.";
-$tpl_lista->COLUNA_ALINHAMENTO = "center";
-$tpl_lista->COLUNA_TAMANHO = "";
-$tpl_lista->COLUNA_COLSPAN = "";
-$tpl_lista->block("BLOCK_COLUNA_PADRAO");
-$tpl_lista->block("BLOCK_TEXTO");
-$tpl_lista->block("BLOCK_CONTEUDO");
-$tpl_lista->block("BLOCK_COLUNA");
-/*
-$tpl_lista->TEXTO = "CADERN.";
-$tpl_lista->COLUNA_ALINHAMENTO = "center";
-$tpl_lista->COLUNA_TAMANHO = "";
-$tpl_lista->COLUNA_COLSPAN = "";
-$tpl_lista->block("BLOCK_COLUNA_PADRAO");
-$tpl_lista->block("BLOCK_TEXTO");
-$tpl_lista->block("BLOCK_CONTEUDO");
-$tpl_lista->block("BLOCK_COLUNA");*/
+if ($caderninho == 0) {
+
+    $tpl_lista->TEXTO = "VAL. REC.";
+    $tpl_lista->COLUNA_ALINHAMENTO = "center";
+    $tpl_lista->COLUNA_TAMANHO = "70px";
+    $tpl_lista->COLUNA_COLSPAN = "";
+    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+    $tpl_lista->block("BLOCK_TEXTO");
+    $tpl_lista->block("BLOCK_CONTEUDO");
+    $tpl_lista->block("BLOCK_COLUNA");
+    $tpl_lista->TEXTO = "TROCO";
+    $tpl_lista->COLUNA_ALINHAMENTO = "center";
+    $tpl_lista->COLUNA_TAMANHO = "70px";
+    $tpl_lista->COLUNA_COLSPAN = "";
+    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+    $tpl_lista->block("BLOCK_TEXTO");
+    $tpl_lista->block("BLOCK_CONTEUDO");
+    $tpl_lista->block("BLOCK_COLUNA");
+    $tpl_lista->TEXTO = "TROCO DEV.";
+    $tpl_lista->COLUNA_ALINHAMENTO = "center";
+    $tpl_lista->COLUNA_TAMANHO = "70px";
+    $tpl_lista->COLUNA_COLSPAN = "";
+    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+    $tpl_lista->block("BLOCK_TEXTO");
+    $tpl_lista->block("BLOCK_CONTEUDO");
+    $tpl_lista->block("BLOCK_COLUNA");
+    $tpl_lista->TEXTO = "FALTA TROCO";
+    $tpl_lista->COLUNA_ALINHAMENTO = "center";
+    $tpl_lista->COLUNA_TAMANHO = "70px";
+    $tpl_lista->COLUNA_COLSPAN = "";
+    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+    $tpl_lista->block("BLOCK_TEXTO");
+    $tpl_lista->block("BLOCK_CONTEUDO");
+    $tpl_lista->block("BLOCK_COLUNA");
+    $tpl_lista->TEXTO = "TOT. LIQ.";
+    $tpl_lista->COLUNA_ALINHAMENTO = "center";
+    $tpl_lista->COLUNA_TAMANHO = "70px";
+    $tpl_lista->COLUNA_COLSPAN = "";
+    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+    $tpl_lista->block("BLOCK_TEXTO");
+    $tpl_lista->block("BLOCK_CONTEUDO");
+    $tpl_lista->block("BLOCK_COLUNA");
+    $tpl_lista->TEXTO = "MET. PAG.";
+    $tpl_lista->COLUNA_ALINHAMENTO = "center";
+    $tpl_lista->COLUNA_TAMANHO = "";
+    $tpl_lista->COLUNA_COLSPAN = "";
+    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+    $tpl_lista->block("BLOCK_TEXTO");
+    $tpl_lista->block("BLOCK_CONTEUDO");
+    $tpl_lista->block("BLOCK_COLUNA");
+    /*
+      $tpl_lista->TEXTO = "CADERN.";
+      $tpl_lista->COLUNA_ALINHAMENTO = "center";
+      $tpl_lista->COLUNA_TAMANHO = "";
+      $tpl_lista->COLUNA_COLSPAN = "";
+      $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+      $tpl_lista->block("BLOCK_TEXTO");
+      $tpl_lista->block("BLOCK_CONTEUDO");
+      $tpl_lista->block("BLOCK_COLUNA"); */
+}
 $tpl_lista->LINHA_CLASSE = "tab_cabecalho";
 $tpl_lista->block("BLOCK_LINHA_DINAMICA");
 $tpl_lista->block("BLOCK_LINHA");
@@ -401,7 +404,14 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl_lista->COLUNA_COLSPAN = "";
     $desconto = $dados["sai_totalbruto"] - $dados["sai_totalcomdesconto"];
     $desconto_total+=$desconto;
-    $tpl_lista->TEXTO = "R$ " . number_format(-$desconto, 2, ',', '.');
+    $tpl_lista->TEXTO = "R$ " . number_format($desconto, 2, ',', '.');
+    if ($desconto == 0)
+        $tpl_lista->TEXTO_CLASSE = "";
+    else if ($desconto > 0)
+        $tpl_lista->TEXTO_CLASSE = "texto_vermelho";
+    else
+        $tpl_lista->TEXTO_CLASSE = "texto_azul";
+    $tpl_lista->block("BLOCK_TEXTO_CLASSE_EXTRA");
     $tpl_lista->COLUNA_ALINHAMENTO = "right";
     $tpl_lista->block("BLOCK_COLUNA_PADRAO");
     $tpl_lista->block("BLOCK_TEXTO");
@@ -418,85 +428,95 @@ while ($dados = mysql_fetch_assoc($query)) {
     $tpl_lista->block("BLOCK_CONTEUDO");
     $tpl_lista->block("BLOCK_COLUNA");
 
-    //Valor Recebido
-    $tpl_lista->COLUNA_COLSPAN = "";
-    $tpl_lista->TEXTO = "R$ " . number_format($dados["sai_valorecebido"], 2, ',', '.');
-    $tpl_lista->COLUNA_ALINHAMENTO = "right";
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
+    if ($caderninho == 0) {
+        //Valor Recebido
+        $tpl_lista->COLUNA_COLSPAN = "";
+        $tpl_lista->TEXTO = "R$ " . number_format($dados["sai_valorecebido"], 2, ',', '.');
+        $tpl_lista->COLUNA_ALINHAMENTO = "right";
+        $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+        $tpl_lista->block("BLOCK_TEXTO");
+        $tpl_lista->block("BLOCK_CONTEUDO");
+        $tpl_lista->block("BLOCK_COLUNA");
 
-    //Troco
-    $tpl_lista->COLUNA_COLSPAN = "";
-    $tpl_lista->TEXTO = "R$ " . number_format($dados["sai_troco"], 2, ',', '.');
-    $tpl_lista->COLUNA_ALINHAMENTO = "right";
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
+        //Troco
+        $tpl_lista->COLUNA_COLSPAN = "";
+        $tpl_lista->TEXTO = "R$ " . number_format($dados["sai_troco"], 2, ',', '.');
+        $tpl_lista->COLUNA_ALINHAMENTO = "right";
+        $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+        $tpl_lista->block("BLOCK_TEXTO");
+        $tpl_lista->block("BLOCK_CONTEUDO");
+        $tpl_lista->block("BLOCK_COLUNA");
 
-    //Troco devolvido
-    $tpl_lista->COLUNA_COLSPAN = "";
-    $tpl_lista->TEXTO = "R$ " . number_format($dados["sai_trocodevolvido"], 2, ',', '.');
-    $tpl_lista->COLUNA_ALINHAMENTO = "right";
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
+        //Troco devolvido
+        $tpl_lista->COLUNA_COLSPAN = "";
+        $tpl_lista->TEXTO = "R$ " . number_format($dados["sai_trocodevolvido"], 2, ',', '.');
+        $tpl_lista->COLUNA_ALINHAMENTO = "right";
+        $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+        $tpl_lista->block("BLOCK_TEXTO");
+        $tpl_lista->block("BLOCK_CONTEUDO");
+        $tpl_lista->block("BLOCK_COLUNA");
 
-    //Falta de troco
-    $tpl_lista->COLUNA_COLSPAN = "";
-    $faltadetroco = -$dados["sai_descontoforcado"] + $dados["sai_acrescimoforcado"];
-    $faltadetroco_total+=$faltadetroco;
-    $tpl_lista->TEXTO = "R$ " . number_format($faltadetroco, 2, ',', '.');
-    $tpl_lista->COLUNA_ALINHAMENTO = "right";
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
+        //Falta de troco
+        $tpl_lista->COLUNA_COLSPAN = "";
+        $faltadetroco = -$dados["sai_descontoforcado"] + $dados["sai_acrescimoforcado"];
+        $faltadetroco_total+=$faltadetroco;
+        if ($faltadetroco == 0) {
+            $tpl_lista->TEXTO_CLASSE = "";
+        } else if ($faltadetroco > 0) {
+            $tpl_lista->TEXTO_CLASSE = "texto_azul";
+        } else {
+            $tpl_lista->TEXTO_CLASSE = "texto_vermelho";
+        }
+        $faltadetroco_abs = abs($faltadetroco);
+        $tpl_lista->TEXTO = "R$ " . number_format($faltadetroco_abs, 2, ',', '.');
+        $tpl_lista->block("BLOCK_TEXTO_CLASSE_EXTRA");
+        $tpl_lista->COLUNA_ALINHAMENTO = "right";
+        $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+        $tpl_lista->block("BLOCK_TEXTO");
+        $tpl_lista->block("BLOCK_CONTEUDO");
+        $tpl_lista->block("BLOCK_COLUNA");
 
-    //Liquido
-    $tpl_lista->COLUNA_COLSPAN = "";
-    $tpl_lista->TEXTO = "R$ " . number_format($dados["sai_totalliquido"], 2, ',', '.');
-    $liquido_total+=$dados["sai_totalliquido"];
-    $tpl_lista->COLUNA_ALINHAMENTO = "right";
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
+        //Liquido
+        $tpl_lista->COLUNA_COLSPAN = "";
+        $tpl_lista->TEXTO = "R$ " . number_format($dados["sai_totalliquido"], 2, ',', '.');
+        $liquido_total+=$dados["sai_totalliquido"];
+        $tpl_lista->COLUNA_ALINHAMENTO = "right";
+        $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+        $tpl_lista->block("BLOCK_TEXTO");
+        $tpl_lista->block("BLOCK_CONTEUDO");
+        $tpl_lista->block("BLOCK_COLUNA");
 
-    //Método de pagamento
-    $metodo = $dados["sai_metpag"];
-    $tpl_lista->COLUNA_COLSPAN = "";
-    $sql_1 = "SELECT metpag_nome FROM metodos_pagamento WHERE metpag_codigo=$metodo";
-    $query_1 = mysql_query($sql_1);
-    if (!$query_1)
-        die("Erro sql metodos de pagamento listagem item" . mysql_error());
-    $dados_1 = mysql_fetch_array($query_1);
-    $metodo_nome = $dados_1[0];
-    $tpl_lista->TEXTO = "$metodo_nome";
-    $tpl_lista->COLUNA_ALINHAMENTO = "right";
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
-/*
-    //Caderninho    
-    $tpl_lista->COLUNA_COLSPAN = "";
-    $caderni = $dados["sai_areceber"];
-    if ($caderni == 1)
-        $tpl_lista->TEXTO = "Sim";
-    else
-        $tpl_lista->TEXTO = "Não";
+        //Método de pagamento
+        $metodo = $dados["sai_metpag"];
+        $tpl_lista->COLUNA_COLSPAN = "";
+        $sql_1 = "SELECT metpag_nome FROM metodos_pagamento WHERE metpag_codigo=$metodo";
+        $query_1 = mysql_query($sql_1);
+        if (!$query_1)
+            die("Erro sql metodos de pagamento listagem item" . mysql_error());
+        $dados_1 = mysql_fetch_array($query_1);
+        $metodo_nome = $dados_1[0];
+        $tpl_lista->TEXTO = "$metodo_nome";
+        $tpl_lista->COLUNA_ALINHAMENTO = "right";
+        $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+        $tpl_lista->block("BLOCK_TEXTO");
+        $tpl_lista->block("BLOCK_CONTEUDO");
+        $tpl_lista->block("BLOCK_COLUNA");
+        /*
+          //Caderninho
+          $tpl_lista->COLUNA_COLSPAN = "";
+          $caderni = $dados["sai_areceber"];
+          if ($caderni == 1)
+          $tpl_lista->TEXTO = "Sim";
+          else
+          $tpl_lista->TEXTO = "Não";
 
-    $tpl_lista->COLUNA_ALINHAMENTO = "right";
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
-*/
-
+          $tpl_lista->COLUNA_ALINHAMENTO = "right";
+          $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+          $tpl_lista->block("BLOCK_TEXTO");
+          $tpl_lista->block("BLOCK_CONTEUDO");
+          $tpl_lista->block("BLOCK_COLUNA");
+         */
+    }
     $tpl_lista->block("BLOCK_LINHA");
 }
 
@@ -525,8 +545,12 @@ if (mysql_num_rows($query) == 0) {
 
     //Rodapé Desconto
     $tpl_lista->COLUNA_COLSPAN = "";
-    $tpl_lista->TEXTO = "R$ -" . number_format($desconto_total, 2, ',', '.');
+    $tpl_lista->TEXTO = "R$ " . number_format($desconto_total, 2, ',', '.');
     $tpl_lista->COLUNA_ALINHAMENTO = "right";
+    if ($desconto_total > 0) {
+        $tpl_lista->TEXTO_CLASSE = "texto_vermelho";
+        $tpl_lista->block("BLOCK_TEXTO_CLASSE_EXTRA");
+    }
     $tpl_lista->block("BLOCK_COLUNA_PADRAO");
     $tpl_lista->block("BLOCK_TEXTO");
     $tpl_lista->block("BLOCK_CONTEUDO");
@@ -540,42 +564,50 @@ if (mysql_num_rows($query) == 0) {
     $tpl_lista->block("BLOCK_TEXTO");
     $tpl_lista->block("BLOCK_CONTEUDO");
     $tpl_lista->block("BLOCK_COLUNA");
+    if ($caderninho == 0) {
+        $tpl_lista->COLUNA_COLSPAN = "3";
+        $tpl_lista->TEXTO = "";
+        $tpl_lista->COLUNA_ALINHAMENTO = "";
+        $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+        $tpl_lista->block("BLOCK_TEXTO");
+        $tpl_lista->block("BLOCK_CONTEUDO");
+        $tpl_lista->block("BLOCK_COLUNA");
 
-    $tpl_lista->COLUNA_COLSPAN = "3";
-    $tpl_lista->TEXTO = "";
-    $tpl_lista->COLUNA_ALINHAMENTO = "";
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
+        //Falta de troco
+        $tpl_lista->COLUNA_COLSPAN = "";
+        if ($faltadetroco_total == 0) {
+            $tpl_lista->TEXTO_CLASSE = "";
+        } else if ($faltadetroco_total > 0) {
+            $tpl_lista->TEXTO_CLASSE = "texto_azul";
+        } else {
+            $tpl_lista->TEXTO_CLASSE = "texto_vermelho";
+        }
+        $tpl_lista->TEXTO = "R$ " . number_format($faltadetroco_total, 2, ',', '.');
+        $tpl_lista->COLUNA_ALINHAMENTO = "right";
+        $tpl_lista->block("BLOCK_TEXTO_CLASSE_EXTRA");
+        $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+        $tpl_lista->block("BLOCK_TEXTO");
+        $tpl_lista->block("BLOCK_CONTEUDO");
+        $tpl_lista->block("BLOCK_COLUNA");
 
-    //Falta de troco
-    $tpl_lista->COLUNA_COLSPAN = "";
-    $tpl_lista->TEXTO = "R$ " . number_format($faltadetroco_total, 2, ',', '.');
-    $tpl_lista->COLUNA_ALINHAMENTO = "right";
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
+        //Liquido
+        $tpl_lista->COLUNA_COLSPAN = "";
+        $tpl_lista->TEXTO = "R$ " . number_format($liquido_total, 2, ',', '.');
+        $tpl_lista->COLUNA_ALINHAMENTO = "right";
+        $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+        $tpl_lista->block("BLOCK_TEXTO");
+        $tpl_lista->block("BLOCK_CONTEUDO");
+        $tpl_lista->block("BLOCK_COLUNA");
+        $tpl_lista->COLUNA_COLSPAN = "3";
+        $tpl_lista->TEXTO = "";
+        $tpl_lista->COLUNA_ALINHAMENTO = "";
 
-    //Liquido
-    $tpl_lista->COLUNA_COLSPAN = "";
-    $tpl_lista->TEXTO = "R$ " . number_format($liquido_total, 2, ',', '.');
-    $tpl_lista->COLUNA_ALINHAMENTO = "right";
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
+        $tpl_lista->block("BLOCK_COLUNA_PADRAO");
+        $tpl_lista->block("BLOCK_TEXTO");
+        $tpl_lista->block("BLOCK_CONTEUDO");
+        $tpl_lista->block("BLOCK_COLUNA");
 
-    $tpl_lista->COLUNA_COLSPAN = "3";
-    $tpl_lista->TEXTO = "";
-    $tpl_lista->COLUNA_ALINHAMENTO = "";
-    
-    $tpl_lista->block("BLOCK_COLUNA_PADRAO");
-    $tpl_lista->block("BLOCK_TEXTO");
-    $tpl_lista->block("BLOCK_CONTEUDO");
-    $tpl_lista->block("BLOCK_COLUNA");
-
+    }
     $tpl_lista->LINHA_CLASSE = "tab_cabecalho";
     $tpl_lista->block("BLOCK_LINHA_DINAMICA");
     $tpl_lista->block("BLOCK_LINHA");
