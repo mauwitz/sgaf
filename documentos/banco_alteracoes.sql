@@ -330,5 +330,10 @@ ALTER TABLE  quiosques_caixas CHANGE  quicai_vendedor  quicai_caixa BIGINT( 20 )
 ALTER TABLE  acertos ADD  ace_dataini DATE NOT NULL ,
 ADD  ace_datafim DATE NOT NULL;
 
+
+ALTER TABLE  cooperativas ADD  coo_versaosistema VARCHAR( 8 ) NOT NULL;
+
 # -----------------------------------------------------
 # Versão 1.3
+
+
