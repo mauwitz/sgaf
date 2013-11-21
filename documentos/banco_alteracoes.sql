@@ -16,6 +16,7 @@ INSERT INTO pessoas_categoria (pescat_codigo, pescat_nome) VALUES
 (5, 'Outro');
 
 
+
 /*  TIPO DE PESSOA, AGORA NO CADASTRO TEM 2 TIPOS, FÍSICA E JURÍDICA */
 CREATE TABLE IF NOT EXISTS pessoas_tipopessoa (
   pestippes_codigo tinyint(4) NOT NULL,
@@ -334,6 +335,14 @@ ADD  ace_datafim DATE NOT NULL;
 ALTER TABLE  cooperativas ADD  coo_versaosistema VARCHAR( 8 ) NOT NULL;
 
 # -----------------------------------------------------
-# Versão 1.3
+# Versão 1.3 SGAF ONLINE
 
+ALTER TABLE  `cooperativas` CHANGE  `coo_presidente`  `coo_presidente` INT( 11 ) NULL ;
 
+UPDATE  `sgaf`.`grupo_permissoes` SET  `gruper_quiosque_ver` =  '0',
+`gruper_quiosque_cadastrar` =  '0',
+`gruper_quiosque_editar` =  '0',
+`gruper_quiosque_excluir` =  '0' WHERE  `grupo_permissoes`.`gruper_codigo` =7;
+
+ALTER TABLE  `produtos` ADD  `pro_idunico` VARCHAR( 100 ) NOT NULL ;
+ALTER TABLE  `quiosques` ADD  `qui_idunico` VARCHAR( 100 ) NOT NULL ;

@@ -177,7 +177,7 @@ if ($permissao_quiosque_definircooperativa == 0) {
 }
 
 //Inicio das tuplas
-$sql = "
+echo $sql = "
 SELECT
     *
 FROM
